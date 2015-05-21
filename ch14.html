@@ -405,26 +405,21 @@ Perl
 @_ 中 shift 出来）是类名。（参考 <a
 href="ch14.html#ch14exa04">例 14.4</a>
 了解怎样调用）这个子程序的任务就是把引用“祝福”成某个类的成员，然后返回这个引用。这个子程序可以被称为<strong>方法</strong>，而返回的东西被称为是<strong>对象</strong>。整个包被称为是一个<strong>类</strong>。</p>
-<p class="sb-indenthangingN"><a id="page_460"/><strong>3.</strong> The first argument received by this
-type of subroutine is the name of the package or class, in this case
-<em>House</em>. This is another difference between a method and a
-subroutine. The first argument of a method is the name of either a class or
-an object.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> The reference <em>$house_obj</em> is assigned the
-address of an anonymous hash (object). There are three keys with values. The
-value of <em>&#34;Payment&#34;</em> is assigned <em>undef,</em> meaning the
-values at this time are undefined and will be defined later. These key/value
-pairs serve as default attributes/properties for the <em>house</em>
-object. You could leave the hash empty and set the properties later; for
-example, <em>$house_obj = {}</em>;. They can be set or modified by instance
-methods defined in <a href="ch14.html#ch14exa03">Example 14.3</a>.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> The reference, <em>$house_obj</em>, is the first
-argument to the <em>bless()</em> function, and the name of the class is the
-second argument. The blessing does not bless the reference. It blesses the
-location that the reference points to, called the
-<strong>referent</strong>. It tags that location with the class name,
-transforming the ordinary reference into a reference to an object.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> A reference to the object is returned to the caller.</p>
+<p class="sb-indenthangingN"><a id="page_460"/><strong>3.</strong>
+这类子程序收到的第一个参数是包名（也就是类名），这里是
+<em>House</em>。这也是方法和普通子程序的另一个区别所在。方法的第一个参数是类名，或者可以说成是对象名。</p>
+<p class="sb-indenthangingN"><strong>4.</strong> 这个 <em>$house_obj</em>
+对象引用被指向一个匿名哈希。其中 <em>Payment</em>
+得到的值是
+<em>undef</em>，也就是说目前这个字段的值无法确定。这些键值对的存在是为了给
+<em>house</em>
+对象提供默认值。你也可以使用一个空哈希来产生对象，比如
+<em>$house_obj = {}</em>。这些值可以通过<a
+href="ch14.html#ch14exa03">例 14.3</a>定义的方法来存取。</p>
+<p class="sb-indenthangingN"><strong>5.</strong> 引用 <em>$house_obj</em> 作为 <em>bless()</em>
+函数的第一个参数，而此函数的第二个参数是类名。得到“祝福”的其实不是引用，而是引用指向的东西，或者称为
+<strong>referent</strong>。于是我们会给这个地址存储的东西打上一个类名标签，使得一个普通引用变成一个对象引用。</p>
+<p class="sb-indenthangingN"><strong>6.</strong> 现在可以把对象引用返回给调用者。</p>
 <hr/></div>
 <div class="heading">
 <h5 id="ch14lev3sec9">Creating the Instance Methods</h5>
