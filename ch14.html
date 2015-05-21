@@ -480,22 +480,16 @@ $self-&gt;{"Payment"};</span><br/>&#160;&#160;&#160;}</p>
 <p class="sb-indenthangingN"><strong>7.</strong> 这里返回的是 <em>Owner</em> 属性的值。</p>
 <hr/></div>
 <div class="heading">
-<h5 id="ch14lev3sec10"><a id="page_462"/>Invoking the Methods (User Interaction)</h5>
-<p class="noindent">Now that we have created the class and its methods, it is time to invoke the
-methods. For this example the methods and user interaction will be in one
-file, but in the next section, there will be two files: a file containing
-the class module (a <em>.pm</em> file), and a separate file for the user
-interface. Whether defined within one file or more, the class definition is
-a separate from the main program. In the following example, some of the
-instance methods have been cut out to reduce the size of the example and to
-enhance the section where the user comes in.</p>
+<h5 id="ch14lev3sec10"><a id="page_462"/>调用方法（用户端）</h5>
+<p class="noindent">目前我们已经创建了类和方法，现在是时间来调用方法了。在这里，我们把方法的定义和使用放在一个文件里。不过，到了下一节我们就会把它们分成两个文件：一个是类模块文件（<em>.pm</em>
+结尾），另一个是用户端的逻辑。不论是使用一个文件还是多个，类的定义总是要和主程序分开的。在下面的例子中，实例方法定义被裁剪了，以便缩短样例代码的长度。</p>
 </div>
 <div class="fig-heading">
 <div class="image"><a id="ch14fig03"/><img src="graphics/14fig03.jpg" alt="Image"/></div>
-<p class="fig-caption"><strong>Figure 14.3</strong> Two houses with different addresses.</p>
+<p class="fig-caption"><strong>图 14.3</strong> 不同地址的两所房子</p>
 </div>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa04"/>EXAMPLE 14.4</p>
+<p class="title"><a id="ch14exa04"/>例 14.4</p>
 <p class="codelink1"><a id="p14exa04" href="ch14_images.html#p14exa04a">Click here to view code
 image</a></p>
 <p class="pre1"># <span class="EmpItalic">The Class Definition Outside the Main Part of the
@@ -529,37 +523,39 @@ class="EmpItalic">'Color' =&gt; 'Beige'</span><br/>&#160;&#160;&#160;&#160;&#160
 class="EmpItalic">}, 'House' );</span></p>
 <hr/></div>
 <div class="sidebar"><hr/>
-<p class="title"><a id="page_464"/>Explanation</p>
-<p class="sb-indenthangingN"><strong>1.</strong> The <em>House</em> class is declared.</p>
-<p class="sb-indenthangingN"><strong>2.</strong> This is the constructor method that gives us the
-reference to our new house and blesses it into the class; meaning, it
-creates an instance of the <em>House</em> class.</p>
-<p class="sb-indenthangingN"><strong>3.</strong> Now the instance methods are defined in order to set
-values or retrieve values from a house object.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> This is a &#8220;getter&#8221; method designed to
-retrieve data from house objects.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> Now the user is ready to create more house objects. This
-is a call to the <em>new()</em> constructor method. The first argument is on
-the left-hand side of the arrow; this is the name of the class. A reference
-to a blessed house object is returned and assigned to <em>$house1</em>.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> Another house object, <em>$house2</em>, is created and
-its reference returned.</p>
-<p class="sb-indenthangingN"><strong>7.</strong> Once we have an instance of the object, we can go to
-that address and set values. The instance method, <em>set_owner()</em>,
-implicitly gets <em>$house2</em> as its first argument, that is what is on
-the left-hand side of the arrow. Getting the address of the second house as
-its first argument ensures that Perl sets data at the correct location. The
-second argument, <em>&#34;Mr. T&#34;,</em> is supplied by the user. This
-will override the default value set in the constructor, <em>&#34;Planet
-Bank&#34;.</em></p>
-<p class="sb-indenthangingN"><strong>8.</strong> Now we retrieve the value of the owner for the first
-house with the <em>get_owner()</em> method.</p>
-<p class="sb-indenthangingN"><strong>9.</strong> The <em>Data::Dumper</em> function displays the values
-of both houses. (You could save this data in a file and reconstruct the
-objects with it.) If you set <em>$Data::Dumper::Terse=1</em>, the
-<em>$VAR1</em> and <em>$VAR2</em> variables will be omitted in the
-display. For serialization of the objects, see <em><a
-href="http://perl.find-info.ru/perl/025/advperl2-chp-4-sect-2.html">http://perl.find-info.ru/perl/025/advperl2-chp-4-sect-2.html</a></em>.</p>
+<p class="title"><a id="page_464"/>注解</p>
+<p class="sb-indenthangingN"><strong>1.</strong> 申明  <em>House</em> 类。</p>
+<p class="sb-indenthangingN"><strong>2.</strong>
+这里的构造器方法创建了新房屋的引用，然后祝福称为类。换句话说，它创建了
+<em>House</em> 类的一个实例。</p>
+<p class="sb-indenthangingN"><strong>3.</strong>
+现在开始创建实例方法，从而为房屋对象设置属性或者读取属性。</p>
+<p class="sb-indenthangingN"><strong>4.</strong>
+这里定义的是一个读取方法，用于从房屋对象获取数据。</p>
+<p class="sb-indenthangingN"><strong>5.</strong>
+现在用户可以开始创建访问对象的实例了。方法是通过
+<em>new()</em>
+这个构造器方法。第一个参数其实是箭头左边的类名。返回的是一个“祝福”过的房屋对象，被存放到
+<em>$house1</em> 变量中。</p>
+<p class="sb-indenthangingN"><strong>6.</strong> 这里又创建了另一个房屋对象
+<em>$house2</em>，返回的同样是它的引用。</p>
+<p class="sb-indenthangingN"><strong>7.</strong>
+一旦我们得到了对象的实例，就可以通过引用定位并为它赋值了。这里的实例方法
+<em>set_owner()</em> 默认会收到 <em>$house2</em>
+作为第一个参数，也就是箭头左边的变量。这里 Perl
+会正确的定位到第二所房子，并且设置它的主人，也就是第二个参数中的
+<em>Mr. T</em>。从而覆盖构造器默认填充的属性值 <em>Planet
+Bank</em>。</p>
+<p class="sb-indenthangingN"><strong>8.</strong>
+现在我们会从第一所房子里读取它的主人信息，通过的是
+<em>get_owner()</em> 方法。</p>
+<p class="sb-indenthangingN"><strong>9.</strong> 这里用 <em>Data::Dumper</em>
+函数来显示两所房子的数据。（其实你可以把打印出来的东西存到一个文件里面去，用来重新构造两个对象。）如果你在打印之前设置
+<em>$Data::Dumper::Terse=1</em> 的话，输出的 <em>$VAR1</em> 和
+<em>$VAR2</em>
+变量名就会省去。想要了解更多对象序列化的专题知识的话，请参考
+<em><a
+href="http://perl.find-info.ru/perl/025/advperl2-chp-4-sect-2.html">http://perl.find-info.ru/perl/025/advperl2-chp-4-sect-2.html</a></em>。</p>
 <hr/></div>
 <div class="heading">
 <h4 id="ch14lev2sec8">14.2.5 Creating an Object-Oriented Module</h4>
@@ -769,7 +765,7 @@ Dupont</span><br/><span class="EmpItalic">Address&#160;&#160;&#160;10 Pacific Ri
 <hr/></div>
 <div class="sidebar"><hr/>
 <p class="title">代码解读</p>
-<p class="sb-indenthangingN"><strong>1.</strong> The <em>House</em> class is declared.</p>
+<p class="sb-indenthangingN"><strong>1.</strong> 申明  <em>House</em> 类。</p>
 <p class="sb-indenthangingN"><strong>2.</strong> The <em>new</em> method is a constructor. The object is
 an empty anonymous hash. The key/value pairs, the
 <strong>properties</strong>, or <strong>attributes</strong>, of the object
