@@ -422,30 +422,19 @@ href="ch14.html#ch14exa03">例 14.3</a>定义的方法来存取。</p>
 <p class="sb-indenthangingN"><strong>6.</strong> 现在可以把对象引用返回给调用者。</p>
 <hr/></div>
 <div class="heading">
-<h5 id="ch14lev3sec9">Creating the Instance Methods</h5>
-<p class="noindent">Outside of the constructor method, other methods can be defined. In the
-object-oriented world, these methods are called public methods, and they are
-the way you get access to the object, but not until an instance of it
-exists. They often describe behaviors of the object; meaning, what it can do
-or what can be done to it. In fact, the methods should be the only way to
-get access to the object.</p>
+<h5 id="ch14lev3sec9">创建实例方法</h5>
+<p class="noindent">在构造器方法以外，还可以定义其他方法。在面向对象的世界里，这些方法被称为公共方法，也就是用来访问对象的方法（只是必须等到对象创建以后）。它们定义了对象的动作，也就是可以对它做点什么，或者它可以做点什么。实际上，方法应该是访问对象的唯一途径才对。</p>
 </div>
-<p class="indent">For our <em>house</em> object, one method to access the house might be to
-move in, another to clean it, another to display it, and so on. Methods in
-Perl are just glorified subroutines. In the following example, we add three
-instance (mutators or setters) methods to the <em>House</em> class. These
-methods, <em>set_owner()</em>, <em>set_color()</em>, and
-<em>set_price()</em> all assume that an instance of the object has already
-been created; in other words, you can&#8217;t own, paint, or make payments
-on the house if it doesn&#8217;t exist. <strong>The instance methods always
-get a reference to the object as their first argument.</strong> Once the
-method has the address of the object and knows what class it belongs to
-(blessing), it will go to that address and perform whatever tasks it is
-programmed to do, such as set values, return values, change the defaults;
-for example, calculate the mortgage, add a garage, clean the kitchen, tear
-it down, and so forth.</p>
+<p class="indent">对我们的 <em>house</em>
+对象来说，应该有个一方法叫做迁入，另一个方法可能叫做打扫，还有展示等等。对于
+Perl
+来说，方法其实就是升级版的子程序。下面我们就定义
+<em>House</em>
+类的三个实例方法（或者叫做赋值方法、存取方法等等）。这三个方法包括
+<em>set_owner()</em>、<em>set_color()</em> 和
+<em>set_price()</em>，其实都需要等到对象实例创建之后才能用。换句话说，你不可能对一个尚不存在的房子做许多奇怪的动作，比如刷墙或出售。<strong>实例方法的第一个参数永远是对象引用。</strong>一旦方法获取了对象的地址，就能知道它属于哪个类（或者说它被祝福成了那个类），也就可以按照相应的类定义的代码来执行（比如设定值、返回值、修改默认值；或者是例子中的计算按揭额度、修建车库、打扫厨房、拆毁房子等等）。</p>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa03"/>EXAMPLE 14.3</p>
+<p class="title"><a id="ch14exa03"/>例 14.3</p>
 <p class="codelink1"><a id="p14exa03" href="ch14_images.html#p14exa03a">Click here to view code
 image</a></p>
 <p class="pre1">1&#160;&#160;package House;&#160;&#160;&#160;# <span class="EmpItalic">Name
@@ -473,25 +462,22 @@ $self-&gt;{"Payment"};</span><br/>&#160;&#160;&#160;}</p>
 <hr/></div>
 <div class="sidebar"><hr/>
 <p class="title">代码解读</p>
-<p class="sb-indenthangingN"><strong>1.</strong> The class is <em>House</em>.</p>
-<p class="sb-indenthangingN"><strong>2.</strong> The constructor is defined with default properties.</p>
-<p class="sb-indenthangingN"><strong>3.</strong> The instance methods are defined here. This is the
-<em>set_owner</em> method, called a &#8220;setter&#8221; (mutator). It
-stores the data in the object.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> The first argument received by the <em>set_owner</em>
-method is a reference to the object. It is called <em>$self. $self</em> is
-commonly used, but the method can be called any valid variable name. The
-second argument is the value of the <em>Owner</em> property for the
-object. When the method is called by the user, Perl implicitly sends a
-reference to the object first and then any other arguments sent by the user.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> A reference to the object is stored in
-<em>$self</em>. The value of the <em>Owner</em> property is assigned to the
-object via this reference.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> This method is called a &#8220;getter.&#8221; It
-retrieves (gets) information from the object. The first argument is the
-address of the object, <em>$self</em>.</p>
-<p class="sb-indenthangingN"><strong>7.</strong> The value of the <em>Owner</em> property is retrieved
-and returned to the user.</p>
+<p class="sb-indenthangingN"><strong>1.</strong> 这个类名叫 <em>House</em>。</p>
+<p class="sb-indenthangingN"><strong>2.</strong> 构造器定义了默认属性。</p>
+<p class="sb-indenthangingN"><strong>3.</strong> 以下开始定义实例方法。现在定义的是
+<em>set_owner</em>
+方法，算是一个赋值方法（或者称为存取方法）。它的作用就是为对象存入数据。</p>
+<p class="sb-indenthangingN"><strong>4.</strong> 这里 <em>set_owner</em>
+收到的第一个参数是对象引用，被赋值到 <em>$self</em>
+变量中，这是一个常用变量名，当然也可以使用你喜欢的任何其他名字。第二个参数才是这个对象将要获取的
+<em>Owner</em> 属性值。当用户调用这个方法的时候，Perl
+会默默的把对象引用作为第一个参数传递过去，然后才是用户代码中的其他参数。</p>
+<p class="sb-indenthangingN"><strong>5.</strong> 通过 <em>$self</em> 这个对象引用来设置
+<em>Owner</em> 属性的值。</p>
+<p class="sb-indenthangingN"><strong>6.</strong>
+这个方法叫做读取方法，作用就是从对象中取出数据。第一个参数仍然是对象地址，进入变量
+<em>$self</em> 中。</p>
+<p class="sb-indenthangingN"><strong>7.</strong> 这里返回的是 <em>Owner</em> 属性的值。</p>
 <hr/></div>
 <div class="heading">
 <h5 id="ch14lev3sec10"><a id="page_462"/>Invoking the Methods (User Interaction)</h5>
