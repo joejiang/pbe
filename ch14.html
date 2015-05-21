@@ -558,28 +558,26 @@ Bank</em>。</p>
 href="http://perl.find-info.ru/perl/025/advperl2-chp-4-sect-2.html">http://perl.find-info.ru/perl/025/advperl2-chp-4-sect-2.html</a></em>。</p>
 <hr/></div>
 <div class="heading">
-<h4 id="ch14lev2sec8">14.2.5 Creating an Object-Oriented Module</h4>
-<p class="noindent">In the last example, all of the code was contained within a single package
-in a single file. Now it&#8217;s time to create a module.</p>
+<h4 id="ch14lev2sec8">14.2.5 创建一个面向对象模块</h4>
+<p class="noindent">在上一个例子中，所有的代码都是都堆放在了一个单独的包文件中。现在是时候来创建一个模块了。</p>
 </div>
-<p class="indent"><a href="ch14.html#ch14fig04">Figure 14.4</a> illustrates the layout of a
-simple object-oriented module and the user interface. The <em>.pm</em> file
-where the class is defined is a module. In this example, the <em>.pm</em>
-file is <em>House.pm</em>. The file consists of one package declaration. The
-package will be called a <em>class</em>; so, this is the <em>House</em>
-class. Normally the class name is the same as the module name minus the
-<em>.pm</em> extension. The class consists of subroutines, now called
-<em>methods</em>, as shown in the previous example. The first method in the
-sample program is called <em>new</em>, a constructor method. It is the
-method that will define and create (construct) the object. When a user of
-this module calls the method <em>new</em>, he will get back a reference to
-the newly blessed <em>House</em> object (the address of the house). The
-instance methods store and fetch the data from the object. Once the user has
-a reference to the object, it will be used to call the instance methods.</p>
+<p class="indent"><a href="ch14.html#ch14fig04">图
+14.4</a>展示了一个简单的面向对象模块的结构，以及用户接口。这里，包装在
+<em>.pm</em>
+文件里面的是一个模块的定义。文件中的包将被称为是<em>类</em>，也就是
+<em>House</em>
+类。一般来说，类名要和模块文件名相对应，也就是去掉
+<em>.pm</em>
+这个附属名的结果。类定义中的子程序，现在叫做
+<em>methods</em>
+方法，之前的例子中就是这样的。这里定义的第一个方法名叫
+<em>new</em>，是一个构造器方法。它的作用是定义并创建对象。用户调用这个模块的这个方法，就可以获得一个新的
+<em>House</em>
+对象实例。而其他的实例方法则负责存取对象数据。并且只能在拥有对象实例引用的时候，才能调用实例方法。</p>
 <div class="fig-heading">
 <div class="box">
 <hr/>
-<p class="noindent"><a id="ch14fig04"/>The Module Filename: <em>House.pm</em></p>
+<p class="noindent"><a id="ch14fig04"/>模块文件，名为 <em>House.pm</em></p>
 <hr/>
 <p class="codelink"><a id="p465pro01" href="ch14_images.html#p465pro01a">Click here to view code
 image</a></p>
