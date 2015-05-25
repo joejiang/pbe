@@ -670,47 +670,45 @@ href="ch14.html#ch14lev1sec5">14.5
 节“古老文档，给模块建档”</a>来了解如何用  Perl
 的风格来给模块书写档案。）</p>
 <p class="sb-indenthangingN"><strong>2.</strong> 类方法 <em>new</em> 被定义成构造器。</p>
-<p class="sb-indenthangingN"><strong>3.</strong> The first argument to the class method is the name of
-the class (package).</p>
-<p class="sb-indenthangingN"><strong>4.</strong> The &#8220;instance variables&#8221; are created from
-the remainder of the @_ array.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> The address of an anonymous hash is assigned to the
-reference <em>$ref</em>. The keys are hard coded and the values are supplied
-from the instance variables.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> The &#8220;thing&#8221; the reference <em>$ref</em>
-points to is blessed into the class and becomes the new object.</p>
-<p class="sb-indenthangingN"><strong>7.</strong> The value of the reference <em>$ref</em> will be
-returned when the method is called. The subroutine <em>display_object</em>
-is an instance method. It is defined in this class.</p>
-<p class="sb-indenthangingNP">The first argument to the instance method is the reference to the object.</p>
-<p class="sb-indenthangingN"><strong>8.</strong> The <em>foreach</em> loop is used with the <em>keys</em>
-function to get the keys from the hash (object) referenced by
-<em>$self,</em> and in the block of the loop to print both keys and values.</p>
-<p class="sb-indenthangingN"><strong>9.</strong> The user of the class loads <em>House.pm</em> into his
-namespace.</p>
-<p class="sb-indenthangingN1"><strong>10.</strong> The <em>new</em> method is called with three arguments,
-<em>House</em>, <em>Tom Savage,</em> and <em>250000</em>. The first argument
-is the name of the class. You don&#8217;t see it, but Perl implictly sends
-it to the constructor. The next two arguments are sent explicitly by the
-user of the class. The only requirement here is that the <em>Owner</em>
-value is the first argument and the <em>Price</em> value is the second
-argument. There is no error checking. The example simply shows how to pass
-arguments to a constructor. A reference to a new <em>House</em> object is
-returned and assigned to <em>$house1,</em> a reference to a hash.</p>
-<p class="sb-indenthangingN1"><strong>11.</strong> The <em>new</em> method is called again with different
-arguments, <em>Devin Quigley</em> and <em>55000.</em> The value returned to
-<em>$house2</em> is a reference to another object. The <em>new</em> method
-has been used to create two <em>House</em> objects. You can create as many
-objects as you want. They will all have unique addresses, as shown in the
-output at line 14. Since the objects were blessed in the constructor, Perl
-knows that the objects are in the <em>House</em> class.</p>
-<p class="sb-indenthangingN1"><strong>12.</strong> The instance method is called to display the data for
-the object referenced by <em>$house1</em>.</p>
-<p class="sb-indenthangingN1"><strong>13.</strong> The instance method is called again but to display the
-data of the object referenced by <em>$house2</em>.</p>
-<p class="sb-indenthangingN1"><strong>14.</strong> The addresses of the two objects are printed. You can
-see that the addresses have been tagged as belonging to the <em>House</em>
-class.</p>
+<p class="sb-indenthangingN"><strong>3.</strong> 类方法的第一个参数是类名（或包名）。</p>
+<p class="sb-indenthangingN"><strong>4.</strong> 使用 @_
+数组的其余参数来构造所谓“实例变量”。</p>
+<p class="sb-indenthangingN"><strong>5.</strong> 给引用 <em>$ref</em>
+赋值一个匿名哈希的地址。其中的键名是固定的，而键值则来自实例变量。</p>
+<p class="sb-indenthangingN"><strong>6.</strong> 引用 <em>$ref</em>
+指向的内存被“祝福”成了一个类的对象。</p>
+<p class="sb-indenthangingN"><strong>7.</strong> 引用 <em>$ref</em>
+会被返回，作为方法调用的结果。下面的
+<em>display_object</em>
+子程序是一个实例方法。也在类中定义。</p>
+<p class="sb-indenthangingNP">实例方法的第一个参数是对象引用。</p>
+<p class="sb-indenthangingN"><strong>8.</strong> 这里的 <em>foreach</em> 循环是要对 <em>keys</em>
+函数返回的所有哈希（通过 <em>$self</em>
+找到的）键进行处理，而实际完成的工作就是打印键值对。</p>
+<p class="sb-indenthangingN"><strong>9.</strong> 这里 <em>House.pm</em>
+被类的用户代码载入名空间。</p>
+<p class="sb-indenthangingN1"><strong>10.</strong> 这里调用 <em>new</em>
+方法的时候带上了三个参数：<em>House</em>、<em>Tom Savage</em>
+和
+<em>250000</em>。第一个参数是类名（没有显式发送，而是由
+Perl
+自动发送的）。剩下的两个参数才是用户显式发送的。这里对参数次序的要求就是：第一个发送的必须是
+<em>Owner</em> 值，第二个是 <em>Price</em>
+的值。这里没有输入错误的检查代码，因为这个例子只是要展示如何向构造器发送参数。最后，构造器返回的对象引用被赋值到
+<em>$house1</em> 变量中。</p>
+<p class="sb-indenthangingN1"><strong>11.</strong> 这里再次调用 <em>new</em>
+方法来创建对象，参数是不同的：<em>Devin Quigley</em> 和
+<em>55000</em>。这个对象被赋值到 <em>$house2</em>
+中。你可以如此这样，反复调用 <em>new</em>
+方法来创建多个对象。如同第十四行所示，每个对象会拥有不同的地址。而且，因为构造器中的“祝福”，Perl
+知道这些对象都是属于 <em>House</em> 类的。</p>
+<p class="sb-indenthangingN1"><strong>12.</strong> 这里调用实例方法来打印 <em>$house1</em>
+对象的数据。</p>
+<p class="sb-indenthangingN1"><strong>13.</strong> 这里再次调用同一个方法，不过打印的是
+<em>$house2</em> 对象的数据。</p>
+<p class="sb-indenthangingN1"><strong>14.</strong>
+这里打印了两个对象的地址。这里能看到，两个地址都打上了
+<em>House</em> 类的标签。</p>
 <hr/></div>
 <div class="heading">
 <h5 id="ch14lev3sec12">Passing Parameters to Instance Methods</h5>
