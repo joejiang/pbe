@@ -622,31 +622,20 @@ method;</span><br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&
 data with the get_owner access method</span></p>
 <hr/></div>
 </div>
-<p class="fig-caption"><strong>Figure 14.4</strong> A simple object-oriented module.</p>
-<p class="indent">Another little detail: when the class is separated from the user interface,
-as in the procedural modules we created in <a href="ch13.html#ch13">Chapter
-13</a>, &#8220;<a href="ch13.html#ch13">Modularize It, Package It, and Send
-It to the Library!</a>&#8221; it <span class="underline">must return a true
-value</span> by placing a <em>1;</em> at the end of the module.</p>
-<p class="indent"><a id="page_465"/>The user of the module, must designate the module to be
-included with the <em>use Module</em> directive, also discussed in <a
-href="ch13.html#ch13">Chapter 13</a>.</p>
-<p class="indent">There are many ways the module can be designed. This is just one simple
-approach.</p>
+<p class="fig-caption"><strong>图 14.4</strong> 一个简单的面向对象模块。</p>
+<p class="indent">请注意：还记得我们在<a href="ch13.html#ch13">第 13 章
+模块、封包和发布！</a>部分提醒大家的么？这里的类定义也许多在结尾部分返回真值，也就是用
+<em>1;</em> 作为结尾。</p>
+<p class="indent"><a id="page_465"/>模块的用户代码需要使用 <em>use Module</em>
+语句来载入模块，这个在<a href="ch13.html#ch13">第 13
+章</a>中也有提到。</p>
+<p class="indent">这个模块可以有很多的实现方法，这里只是其中一种比较简单的。</p>
 <div class="heading">
-<h5 id="ch14lev3sec11"><a id="page_466"/>Passing Arguments to Methods</h5>
-<p class="noindent">Instance variables are used to initialize the object when it is created. In
-this way, each time the object is created, it can be customized. The
-properties that describe the object may be passed as arguments to the
-constructor method and assigned to instance variables. They are called
-<strong>instance variables</strong> because they come into existence when
-the object is created, or instantiated. Either an anonymous hash or an
-anonymous array is commonly used to hold the instance variables. In the
-following example, the object &#8220;has a&#8221; or &#8220;contains
-a&#8221; owner and a price.</p>
+<h5 id="ch14lev3sec11"><a id="page_466"/>给方法传递参数</h5>
+<p class="noindent">实例变量是用来初始化新创建的对象的。这样，每当创建对象的时候，就可以对它进行定制。另外，也可以通过构造函数的参数来对实例变量进行设置。这个变量叫做<strong>实例变量</strong>，这是因为它们的创建是在对象实例得到创建时。有时候我们使用匿名哈希，或者匿名数组来存放实例变量。下面的例子中的对象有的是房主和价格属性变量。</p>
 </div>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa05"/>EXAMPLE 14.5</p>
+<p class="title"><a id="ch14exa05"/>例 14.5</p>
 <p class="codelink1"><a id="p14exa05" href="ch14_images.html#p14exa05a">Click here to view code
 image</a></p>
 <p class="pre1">(The Module: <span class="EmpItalic">House.pm</span>)<br/>1&#160;&#160;<span class="EmpStrong">package House;</span><br/>2&#160;&#160;<span class="EmpStrong">sub
@@ -674,7 +663,7 @@ ways.</span><br/>10 <span class="EmpStrong">my $house1 = House-&gt;new("Tom Sava
 created</span><br/>12 <span class="EmpStrong">$house1-&gt;display_object();</span><br/>13 <span class="EmpStrong">$house2-&gt;display_object();</span><br/>14 print "$house1, $house2\n";<br/><br/>(Output)<br/>12 <span class="EmpItalic">Owner: Tom Savage</span><br/>&#160;&#160;&#160;<span class="EmpItalic">Price: 250000</span><br/>13 <span class="EmpItalic">Owner: Devin Quigley</span><br/>&#160;&#160;&#160;<span class="EmpItalic">Price: 55000</span><br/>14 <span class="EmpItalic">House=HASH(0x9d450), House=HASH(0xa454c)</span></p>
 <hr/></div>
 <div class="sidebar"><hr/>
-<p class="title"><a id="page_467"/>Explanation</p>
+<p class="title">解读</p>
 <p class="sb-indenthangingN"><strong>1.</strong> The package <em>House</em> is declared. (At this point,
 the program has not provided any instructions describing what this class
 does or how to use it. Documentation explaining how to use a class is called
