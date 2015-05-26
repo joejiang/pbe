@@ -711,18 +711,16 @@ Perl
 <em>House</em> 类的标签。</p>
 <hr/></div>
 <div class="heading">
-<h5 id="ch14lev3sec12">Passing Parameters to Instance Methods</h5>
-<p class="noindent">The first argument to an instance method is always a reference to the
-object. In the called method, this value is typically shifted from the
-<em>@_</em> array and stored in a variable called <em>$self</em> or
-<em>$this</em>, although it doesn&#8217;t matter what you call the
-variable. The remaining arguments are then processed as they are in any
-regular subroutine.</p>
+<h5 id="ch14lev3sec12">向实例方法发送参数</h5>
+<p class="noindent">实例方法的第一个参数总是对象引用。在被调用的代码中，这个值通常是从
+<em>@_</em> 数组中 shift 出来，然后存在一个名叫 <em>$self</em>
+或者 <em>$this</em>
+的变量中（变量名可以随意选择）。这样，剩下的参数处理起来就和正常的子程序没什么区别了。</p>
 </div>
-<p class="indent"><a id="page_468"/>The following example demonstrates an instance method that
-is sent additional arguments when called.</p>
+<p class="indent"><a
+id="page_468"/>下面的例子展示了带有多个参数的实例方法的调用方法。</p>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa06"/>EXAMPLE 14.6</p>
+<p class="title"><a id="ch14exa06"/>例 14.6</p>
 <p class="codelink1"><a id="p14exa06" href="ch14_images.html#p14exa06a">Click here to view code
 image</a></p>
 <p class="pre1">&#160;&#160;&#160;#!/bin/perl<br/>&#160;&#160;&#160;# <span class="EmpItalic">Program to demonstrate passing
@@ -748,11 +746,10 @@ Dupont</span><br/><span class="EmpItalic">Address&#160;&#160;&#160;10 Pacific Ri
 <div class="sidebar"><hr/>
 <p class="title">代码解读</p>
 <p class="sb-indenthangingN"><strong>1.</strong> 声明 <em>House</em> 类。</p>
-<p class="sb-indenthangingN"><strong>2.</strong> The <em>new</em> method is a constructor. The object is
-an empty anonymous hash. The key/value pairs, the
-<strong>properties</strong>, or <strong>attributes</strong>, of the object
-will be assigned later. The object, referenced by <em>$ref</em>, is blessed
-into the <em>House</em> class.</p>
+<p class="sb-indenthangingN"><strong>2.</strong> 这个 <em>new</em>
+方法是构造器。对象来自于一个空的匿名哈希。哈希的键值对，也就是对象的<strong>属性</strong>会稍后赋值。这个
+<em>$ref</em> 引用指向的对象，被祝福成属于 <em>House</em>
+类。</p>
 <p class="sb-indenthangingN"><strong>3.</strong> The instance method <em>set_props</em> is defined.</p>
 <p class="sb-indenthangingN"><strong>4.</strong> The first argument is a reference to a <em>House</em>
 object. It is shifted from the @_ array and assigned to
