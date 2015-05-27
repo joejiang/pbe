@@ -750,52 +750,40 @@ Dupont</span><br/><span class="EmpItalic">Address&#160;&#160;&#160;10 Pacific Ri
 方法是构造器。对象来自于一个空的匿名哈希。哈希的键值对，也就是对象的<strong>属性</strong>会稍后赋值。这个
 <em>$ref</em> 引用指向的对象，被祝福成属于 <em>House</em>
 类。</p>
-<p class="sb-indenthangingN"><strong>3.</strong> The instance method <em>set_props</em> is defined.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> The first argument is a reference to a <em>House</em>
-object. It is shifted from the @_ array and assigned to
-<em>$object</em>. The name of the reference could be <em>$this</em> or
-<em>$self</em>. It doesn&#8217;t matter.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> The second argument is a shifted from the <em>@_</em>
-array. It is a reference to an array.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> The reference, <em>$val_ptr,</em> is dereferenced to get
-a list of the values passed to this method.</p>
-<p class="sb-indenthangingN"><strong>7.</strong> The values passed to the method are now assigned to the
-object.</p>
-<p class="sb-indenthangingN"><strong>8.</strong> The instance methods for retrieving values from the
-object are defined.</p>
-<p class="sb-indenthangingN"><strong>9.</strong> The selected values from the hash are printed.</p>
-<p class="sb-indenthangingN1"><strong>10.</strong> The built-in <em>ref</em> function, when given an
-object as its argument, returns the name of the class where the object was
-created.</p>
-<p class="sb-indenthangingN1"><strong>11.</strong> Since the object is a reference to a hash, we
-dereference it, <em>%$self</em>, to get to its key/value pairs. The user of
-the class then loads the module into his program.</p>
-<p class="sb-indenthangingN1"><strong>13.</strong> A call to the constructor <em>new()</em> returns a
-newly blessed house.</p>
-<p class="sb-indenthangingN1"><strong>14.</strong> The instance method, <em>set_props()</em>, is provided
-with arguments. The first implicit one is a reference to the object (what is
-on the left-hand side of the arrow). The second argument is a reference to
-an anonymous array (square brackets) containing a list of values that will
-be set as properties for the object.</p>
-<p class="sb-indenthangingN1"><strong>15.</strong> The instance method, <em>set_props()</em>, for the
-second house is given a reference to a list of values.</p>
+<p class="sb-indenthangingN"><strong>3.</strong> 这里定义的是实例方法 <em>set_props</em>。</p>
+<p class="sb-indenthangingN"><strong>4.</strong> 第一个参数是对 <em>House</em>
+对象的引用。这个参数从 @_ 数组 shift 出来之后赋值给
+<em>$object</em>。其实这个变量名可以是 <em>$this</em> 或者
+<em>$self</em>，都可以。</p>
+<p class="sb-indenthangingN"><strong>5.</strong> 第二个参数也从 <em>@_</em> 中 shift
+出来，这次是一个数组引用。</p>
+<p class="sb-indenthangingN"><strong>6.</strong> 这里把 <em>$val_ptr</em>
+解引用成一个列表，从而获取传入的数据。</p>
+<p class="sb-indenthangingN"><strong>7.</strong> 现在把传入的数据赋值到对象里面。</p>
+<p class="sb-indenthangingN"><strong>8.</strong>
+这里定义的都是从对象中读取数据的实例方法。</p>
+<p class="sb-indenthangingN"><strong>9.</strong> 这里打印哈希中的所有属性的值。</p>
+<p class="sb-indenthangingN1"><strong>10.</strong> 这里调用内建函数
+<em>ref</em>，对于输入的对象引用来说，会返回对应的类名。</p>
+<p class="sb-indenthangingN1"><strong>11.</strong>
+因为对象实际上是一个哈希引用，所以我们可以用
+<em>%$self</em>
+来解引用，获得键值对。下面，模块的用户代码就把这个模块载入代码中。</p>
+<p class="sb-indenthangingN1"><strong>13.</strong> 对于构造器 <em>new()</em>
+的调用返回一个新的、祝福过的房子。</p>
+<p class="sb-indenthangingN1"><strong>14.</strong> 这里通过 <em>set_props()</em>
+实例方法来设置属性的值。第一个隐含的参数是对象引用（箭头操作符左边的东西）。第二个参数是一个匿名数组的引用（在方括号里面的东西），其中的元素会用来设置对象的属性。</p>
+<p class="sb-indenthangingN1"><strong>15.</strong> 同样通过 <em>set_props()</em>
+这个实例方法来为第二个对象属性赋值。</p>
 <hr/></div>
 <div class="heading">
-<h5 id="ch14lev3sec13"><a id="page_470"/>Named Parameters and Data Checking</h5>
-<p class="noindent">All of the examples so far have used a <em>House</em> object. In the next
-example, we will create an <em>Employee</em> object. The <em>Employee</em>
-constructor will take parameters to be used as properties of an employee. If
-a constructor method is expecting a name, address, and salary to be passed
-in that order, it would be a problem if the arguments were sent in the wrong
-order, causing the address to be assigned to the name, or the name to the
-salary, and so on. One way to prevent that would be to pass arguments as a
-hash when calling methods. In this way when received by the method as
-parameters, they will be in the form of key/value pairs. (Of course,
-spelling the expected keys incorrectly could be a problem.) The following
-example demonstrates how to use named parameters.</p>
+<h5 id="ch14lev3sec13"><a id="page_470"/>命名参数和数据检查</h5>
+<p class="noindent">目前所有的例子都是关于 <em>House</em>
+对象的。下面的例子中，我们会创建一个 <em>Employee</em>
+对象。它的构造器会使用参数来设置员工的属性。如果构造器规定了名字、地址和工资的输入顺序，那么参数的顺序出错就会带来没必须要的麻烦：地址成了名字、或者名字成了工资，等等。要避免这样的麻烦，其中一个方法就是用哈希来传递参数。这样的键值对形式就会比较容易一些（当然，拼写错误也会带来其他的问题）。下面的例子展示了如何使用命名参数。</p>
 </div>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa07"/>EXAMPLE 14.7</p>
+<p class="title"><a id="ch14exa07"/>例 14.7</p>
 <p class="codelink1"><a id="p14exa07" href="ch14_images.html#p14exa07a">Click here to view code
 image</a></p>
 <p class="pre1">&#160;&#160;&#160;# <span class="EmpItalic">User of Employee.pm--See Example
@@ -815,26 +803,26 @@ class="EmpStrong">);</span><br/>&#160;&#160;&#160;print "\nThe statistics for $n
 Somewhere, CA</span><br/><span class="EmpItalic">Enter the employee's basepay. 2200</span><br/><br/><span class="EmpItalic">The statistics for Daniel Savage are:</span><br/><span class="EmpItalic">Address = 999 Mission Ave, Somewhere, CA</span><br/><span class="EmpItalic">PayCheck = 2200</span><br/><span class="EmpItalic">IdNum = Employee Id not provided!</span><br/><span class="EmpItalic">Extension = 2534</span><br/><span class="EmpItalic">Name = Daniel Savage</span></p>
 <hr/></div>
 <div class="sidebar"><hr/>
-<p class="title"><a id="page_471"/>Explanation</p>
-<p class="sb-indenthangingN"><strong>1.</strong> The <em>Employee.pm</em> module will be used by this
-program.</p>
-<p class="sb-indenthangingN"><strong>2.</strong> <em>warnings</em> will be issued for possible errors,
-and the <em>strict</em> pragma will track global and undefined variables,
-barewords, and so forth.</p>
-<p class="sb-indenthangingN"><strong>3.</strong> A list of lexical private variables is created.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> The user of the program will be asked for the
-information that will be passed to the <em>Employee</em> module.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> The constructor is called to pass arguments as key/value
-pairs; that is, a hash is passed to the constructor in the <em>Employee</em>
-module. A reference to the object is returned and assigned to
-<em>$employee</em>.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> The instance method <em>get_stats</em> is called to
-display the employee&#8217;s attributes.</p>
+<p class="title"><a id="page_471"/>注释</p>
+<p class="sb-indenthangingN"><strong>1.</strong> 这个程序会用到 <em>Employee.pm</em> 模块。</p>
+<p class="sb-indenthangingN"><strong>2.</strong> 为了避免可能的错误，用到了
+<em>warnings</em>。而 <em>strict</em>
+的使用则是为了跟踪全局变量，以及未定义的变量的意外使用，还有裸字等等。</p>
+<p class="sb-indenthangingN"><strong>3.</strong> 创建了一系列的词法私有变量。</p>
+<p class="sb-indenthangingN"><strong>4.</strong>
+运行此程序的时候，用户会被提示输入一些信息，然后传递给
+<em>Employee</em> 模块。</p>
+<p class="sb-indenthangingN"><strong>5.</strong>
+调用构造器的时候发送给它的参数是键值对。也就是说发送给
+<em>Employee</em>
+的构造器的是一个哈希。结果是返回了一个对象引用，并赋值到
+<em>$employee</em>。</p>
+<p class="sb-indenthangingN"><strong>6.</strong> 调用实例方法 <em>get_stats</em>
+来打印员工的属性。</p>
 <hr/></div>
-<p class="indent">In the next example, let&#8217;s see how the module handles it&#8217;s named
-parameters.</p>
+<p class="indent">下面的例子则显示了模块是如果处理命名参数的。</p>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa08"/>EXAMPLE 14.8</p>
+<p class="title"><a id="ch14exa08"/>例 14.8</p>
 <p class="codelink1"><a id="p14exa08" href="ch14_images.html#p14exa08a">Click here to view code
 image</a></p>
 <p class="pre1">&#160;&#160;&#160;# <span class="EmpItalic">Module Employee.pm--See Example
@@ -865,46 +853,46 @@ $self-&gt;{$key}, "\n";<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#16
 <div class="sidebar"><hr/>
 <p class="title"><a id="page_472"/>Explanation</p>
 <p class="sb-indenthangingN"><strong>1.</strong> The class <em>Employee</em> is declared.</p>
-<p class="sb-indenthangingN"><strong>2.</strong> The <em>Carp</em> module from the standard Perl library
-is used to handle error messages. Instead of using the built-in <em>die</em>
-function, we can use the <em>croak</em> method from the <em>Carp</em> module
-to exit when there is an error, with a little more detail on what caused the
-error.</p>
-<p class="sb-indenthangingN"><strong>3.</strong> The constructor method <em>new</em> is defined.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> The first argument to the constructor method is the name
-of the class. It is shifted from the <em>@_</em> array and assigned to
-<em>$class</em>.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> The rest of the arguments in the <em>@_</em> array are
-assigned to the hash <em>%params</em>. They were sent to the constructor as
-a set of key/value pairs in the @_.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> A reference, <em>$ref</em>, is assigned the address of
-an anonymous hash.</p>
-<p class="sb-indenthangingN"><strong>7.</strong> The key <em>Name</em> is assigned a value, retrieved
-from the <em>%params</em> hash. Error checking is done here. If a
-corresponding value for the key <em>Name</em> is not provided, the
-<em>croak</em> function will be executed, letting the user know that he did
-not assign a value to the <em>Name</em>, and the program will exit.</p>
-<p class="sb-indenthangingN"><strong>8.</strong> The <em>Address</em> property is assigned by getting its
-value from the <em>%params</em> hash.</p>
-<p class="sb-indenthangingN"><strong>9.</strong> This is an example of how you can make sure the user of
-the module passed the expected arguments. The conditional statement reads:
-If the <em>%params</em> has a key called <em>IdNum</em> defined, then get
-its value and assign it to <em>IdNum</em>; otherwise, when the program runs,
-tell the user he forgot to include this parameter. In the examples using
-<em>croak</em>, the program will die if the user doesn&#8217;t provide input
-when asked for it, whereas in this form of checking, the program will
-continue to run.</p>
-<p class="sb-indenthangingN1"><strong>10.</strong> After assigning properties, a reference to the object
-is blessed into the class and returned to the caller.</p>
-<p class="sb-indenthangingN1"><strong>11.</strong> The instance method <em>get_stats</em> is defined.</p>
-<p class="sb-indenthangingN1"><strong>12.</strong> The first argument is shifted from the <em>@_</em>
-array and assigned to <em>$self</em>. It is a pointer to the object.</p>
-<p class="sb-indenthangingN1"><strong>13.</strong> The <em>foreach</em> loop is entered. The built-in
-<em>keys</em> function extracts all the keys from the object. The keys and
-values are printed on the next line.</p>
+<p class="sb-indenthangingN"><strong>2.</strong> 标准 Perl 库中输出的 <em>Carp</em>
+模块可以辅助对错误信息进行打印。所以，这里我们没有用内建的
+<em>die</em> 函数，而是使用 <em>Carp</em> 模块提供的
+<em>croak</em>
+方法来捕获错误并退出，同时打印错误的详细信息。</p>
+<p class="sb-indenthangingN"><strong>3.</strong> 这里定义了构造器方法 <em>new</em>。</p>
+<p class="sb-indenthangingN"><strong>4.</strong>
+构造器方法的第一个参数是类名。这里我们把它从
+<em>@_</em> 数组 shift 出来，并赋值给 <em>$class</em>。</p>
+<p class="sb-indenthangingN"><strong>5.</strong> 这里把 <em>@_</em> 数组剩余的参数赋值给
+<em>%params</em>
+这个哈希。而它们是通过键值对的顺序发送给构造器的。</p>
+<p class="sb-indenthangingN"><strong>6.</strong> 这里把一个匿名哈希的引用赋值到
+<em>$ref</em> 中去。</p>
+<p class="sb-indenthangingN"><strong>7.</strong> 这里的键 <em>Name</em>
+被赋予一个值，而值的来源是 <em>%params</em>
+哈希。所以，有必要进行错误检查。如果 <em>Name</em>
+键没有对应的值，<em>croak</em>
+函数就会被调用并退出，从而使用户知道因为 <em>Name</em>
+键没有对应的值而导致程序退出。</p>
+<p class="sb-indenthangingN"><strong>8.</strong> 同样的方法从 <em>%params</em> 哈希中拷贝得
+<em>Address</em> 属性的值。</p>
+<p class="sb-indenthangingN"><strong>9.</strong>
+这个例子展示了如何检查用户向模块输入的参数。这里的条件赋值语句可以这样读：如果
+<em>%params</em> 中有个名为 <em>IdNum</em>
+的键有定义的值，那么将这个值赋值给
+<em>IdNum</em>；否则就提示用户忘记了输入这个参数。前面的例子中使用了
+<em>croak</em>
+函数，会因为参数为空导致程序退出。而这里因为采用了不同的检查方法，就可以让程序继续运行下去。</p>
+<p class="sb-indenthangingN1"><strong>10.</strong>
+在属性赋值之后，对象引用被祝福成类的成员，并返回给调用者。</p>
+<p class="sb-indenthangingN1"><strong>11.</strong> 这里定义了实例方法 <em>get_stats</em>。</p>
+<p class="sb-indenthangingN1"><strong>12.</strong> 第一个参数从 <em>@_</em> 数组中 shift
+出来，并赋值给 <em>$self</em>。这是一个对象的引用。</p>
+<p class="sb-indenthangingN1"><strong>13.</strong> 这里进入了 <em>foreach</em>
+循环。调用了内置的 <em>keys</em>
+函数来获取对象的所有键。下一行打印所有的键和对应的值。</p>
 <hr/></div>
 <div class="heading">
-<h4 id="ch14lev2sec9">14.2.6 Polymorphism and Runtime Binding</h4>
+<h4 id="ch14lev2sec9">14.2.6 多态和运行时绑定</h4>
 <p class="noindent"><em>Webster&#8217;s Dictionary</em> defines polymorphism as follows:</p>
 </div>
 <p class="blockquote">polymorphism: <em>n.</em> 1. the state or condition of being
