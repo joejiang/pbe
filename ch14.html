@@ -893,24 +893,17 @@ $self-&gt;{$key}, "\n";<br/>&#160;&#160;&#160;&#160;&#160;&#160;}<br/>&#160;&#16
 <hr/></div>
 <div class="heading">
 <h4 id="ch14lev2sec9">14.2.6 多态和运行时绑定</h4>
-<p class="noindent"><em>Webster&#8217;s Dictionary</em> defines polymorphism as follows:</p>
+<p class="noindent"><em>韦氏字典</em>把多态定义为：</p>
 </div>
-<p class="blockquote">polymorphism: <em>n.</em> 1. the state or condition of being
-polymorphous.<sup><a id="ch14fn5a" href="ch14.html#ch14fn5">5</a></sup></p>
+<p class="blockquote">多态：<em>名词</em> 呈现多种形状的状态或条件。<sup><a
+id="ch14fn5a" href="ch14.html#ch14fn5">5</a></sup></p>
 <p class="footnote"><a id="ch14fn5" href="ch14.html#ch14fn5a">5</a>. <em>Webster&#8217;s
 Encyclopedic Unabridged Dictionary of the English Language</em>, Random
 House Value Publishing: Avenel, NJ, 1996, p. 1500.</p>
-<p class="noindent">There, that should clear things up! Here&#8217;s another definition from
-Webopedia.com:</p>
-<p class="blockquote">Generally, the ability to appear in many forms. In object-oriented
-programming, polymorphism refers to a programming language&#8217;s ability
-to process objects differently depending on their data type or class.</p>
-<p class="indent"><a id="page_473"/>Polymorphism can be described in many ways, and it&#8217;s
-a word that is inherently part of the object-oriented lingo, meaning the
-name of a method can have many behaviors. You can define a method with the
-same name in different classes and when you call the method, it will do the
-right thing; or you could say when the reference to the object invokes the
-method, it will go to the class where the object belongs.</p>
+<p class="noindent">哦，这等于是说 1+1=2！下面的定义来自 Webopedia.com：</p>
+<p class="blockquote">也就是说，呈现多种形式的能力。对于面向对象编程来说，多态意味着编程语言有能力对不同的对象（按照数据类型或类的不同而）执行不同的逻辑的能力。</p>
+<p class="indent"><a
+id="page_473">多态也可以换成其他的专业词汇来描述，而且不论哪种面向对象的术语都绕不开这个概念。中心思想就是同样的方法名可以对应不同的处理逻辑。换句话说，你可以给多个类定义同样名字的方法，而调用的时候不会搞混了。也就是说，只要对象引用正确的话，相应的类总是能找到正确的方法来调用。</p>
 <p class="indent">Let&#8217;s move on to a new example. Let&#8217;s start with three modules,
 <em>BasketballPlayer.pm</em>, <em>Director.pm,</em> and
 <em>Rifleman.pm,</em> each of which have a <em>shoot()</em> method. The
