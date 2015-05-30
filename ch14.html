@@ -904,26 +904,15 @@ House Value Publishing: Avenel, NJ, 1996, p. 1500.</p>
 <p class="blockquote">也就是说，呈现多种形式的能力。对于面向对象编程来说，多态意味着编程语言有能力对不同的对象（按照数据类型或类的不同而）执行不同的逻辑的能力。</p>
 <p class="indent"><a
 id="page_473">多态也可以换成其他的专业词汇来描述，而且不论哪种面向对象的术语都绕不开这个概念。中心思想就是同样的方法名可以对应不同的处理逻辑。换句话说，你可以给多个类定义同样名字的方法，而调用的时候不会搞混了。也就是说，只要对象引用正确的话，相应的类总是能找到正确的方法来调用。</p>
-<p class="indent">Let&#8217;s move on to a new example. Let&#8217;s start with three modules,
-<em>BasketballPlayer.pm</em>, <em>Director.pm,</em> and
-<em>Rifleman.pm,</em> each of which have a <em>shoot()</em> method. The
-driver, or user, program will use all three modules. A blessed reference to
-each of the objects is returned when its respective class constructors are
-called. When the instance methods are called, recall that Perl sends that
-object&#8217;s reference as the first argument so that Perl knows which
-method to call and to which class it belongs, even though the methods have
-the same name. Perl determines which class the invoking object belongs to
-and looks in that class (package) for the method being called. The ability
-to call the right method demonstrates polymorphism.</p>
-<p class="indent">When you call a function or method in a program, the method call must be
-associated with or bound to the definition for that method. This happens
-either at compile time or runtime. Runtime or dynamic binding allows the
-program to defer calling the correct method until the program is running;
-meaning, once it knows what object (reference) will be sent to the
-method. Along with polymorphism and runtime binding, the program can tie the
-correct method to its associated class without using <em>if</em> statements
-to determine which method to call. This provides a great deal of flexibility
-and is necessary for inheritance to work properly.</p>
+<p class="indent">现在让我们进入下一个例子。这次我们来看三个模块：<em>BasketballPlayer.pm</em>、<em>Director.pm</em>
+和 <em>Rifleman.pm</em>。这些模块都有一个叫做 <em>shoot()</em>
+的方法。而调用模块的代码会载入这三个模块。在它们的构造器得到调用的时候，会返回相应的祝福过的对象引用。当实例方法被调用的时候，因为
+Perl 会发送对象引用作为方法的第一个参数，所以 Perl
+明白对象属于哪个类，也知道要调用的方法是哪个（哪怕方法的名字完全一样）。Perl
+能够查找到对象所属的类（也就是包）中正确的方法来调用，这个能力就是所谓的多态。</p>
+<p class="indent">当你调用函数或者方法的时候，调用必须关联到（或者说绑定）函数或方法的定义代码。这会发生在编译时或者运行时。运行时绑定，它能允许程序推后方法的判定，直到程序运行起来以后。也就是说，一旦程序知道调用方法的对象是什么，它就能正确绑定。通过多态和运行时绑定，程序就可以在不使用
+<em>if</em>
+语句的情况下正确调用（所属类的）方法。这使得继承机制能够非常灵活的实施。</p>
 <p class="indent">To take advantage of polymorphism and runtime binding, the object-oriented
 syntax must be used rather than the <em>::</em> syntax. Let&#8217;s say you
 have two classes, <em>Director</em> and <em>Rifleman,</em> and both classes
