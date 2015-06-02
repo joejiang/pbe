@@ -913,35 +913,28 @@ Perl 会发送对象引用作为方法的第一个参数，所以 Perl
 <p class="indent">当你调用函数或者方法的时候，调用必须关联到（或者说绑定）函数或方法的定义代码。这会发生在编译时或者运行时。运行时绑定，它能允许程序推后方法的判定，直到程序运行起来以后。也就是说，一旦程序知道调用方法的对象是什么，它就能正确绑定。通过多态和运行时绑定，程序就可以在不使用
 <em>if</em>
 语句的情况下正确调用（所属类的）方法。这使得继承机制能够非常灵活的实施。</p>
-<p class="indent">To take advantage of polymorphism and runtime binding, the object-oriented
-syntax must be used rather than the <em>::</em> syntax. Let&#8217;s say you
-have two classes, <em>Director</em> and <em>Rifleman,</em> and both classes
-contain an instance method called <em>shoot</em>, you can write
-<em>$object</em>-<em>&gt;shoot()</em>, and Perl will know which class the
-object belongs to because the first argument sent to the <em>shoot()</em>
-method will be a reference to the object. (It determined the correct class
-at compile time during the blessing.) In this way, the <em>Director</em>
-will not shoot bullets at his cast, and the <em>Rifleman</em> will not try
-to shoot movies on the rifle range. It is also possible to add another
-class, such as a <em>BasketballPlayer</em> class, with a different
-<em>shoot()</em> method and be sure that the appropriate method will be
-called for that class. Without runtime binding and polymorphism, the correct
-class would be determined based on the outcome of some condition, as shown
-here:</p>
+<p class="indent">要想使用多态和运行时绑定的特性，就必须通过面向对象语法来调用，而不能使用
+<em>::</em> 语法。假设你有两个类：<em>Director</em> 和
+<em>Rifleman</em>。而这两个类都有一个实例方法叫做
+<em>shoot</em>。只要你书写 <em>$object</em>-<em>&gt;shoot()</em>
+这样的代码，Perl 就能了解到对象所属的类，因为
+<em>shoot()</em>
+的第一个参数永远都是对象引用（是在构造器中用“祝福”的方法打上编译时的类标签的）。这样就可以放心，<em>Director</em>
+不会在开机时射出子弹，而 <em>Rifleman</em>
+也不会用摄像机瞄准猎物。当然，你也可以增加更多的类，比如
+<em>BasketballPlayer</em>，也带有一个 <em>shoot()</em>
+方法。并且，这时候所有的机制仍然可以正常工作。倘若没有运行时绑定和多态，就只能（像下面的例子一样）通过许多条件语句来找到正确的方法调用了：</p>
 <p class="codelink"><a id="p473pro01" href="ch14_images.html#p473pro01a">Click here to view code
 image</a></p>
 <p class="pre">if ( ref($object1) eq "Director") {<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;Director::shoot($object1);<br/>elsif ( ref($object2) eq "Rifleman" ){<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;Rifleman::shoot($object2);<br/>else{<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;BasketballPlayer::shoot($object3);<br/>}</p>
-<p class="noindent">And what if you sent the <em>shoot()</em> method the wrong object? With the
-object-oriented syntax, a reference to the object is implicitly passed to
-the method. Since Perl sends the object to the instance method as its first
-argument and the object has been blessed into the proper class, Perl can
-implement polymorphism and do the right thing! Assume that, as in the <a
-id="page_474"/>following example, <em>$object1</em> was created as an object
-in the <em>Director</em> class, <em>$object2</em> as an object in the
-<em>Rifleman</em> class, and <em>$object3</em> as an object in the
-<em>BasketballPlayer</em> class.</p>
+<p class="noindent">只是，万一你调用 <em>shoot()</em>
+的时候发送了错误的对象参数呢？使用面向对象语法的时候就不必担心这点，因为对象引用是自动发送的。所以，就是通过这种类似于潜意识的对象参数发送，以及在祝福时候进行类标记，Perl
+就能够实现多态调用机制。如同下面的例子所示，我们用
+<em>Director</em> 类来创建 <em>$object1</em>，用 <em>Rifleman</em>
+类来创建 <em>$object2</em>，而 <em>$object3</em> 则是用
+<em>BasketballPlayer</em> 类创建的。</p>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa09"/>EXAMPLE 14.9</p>
+<p class="title"><a id="ch14exa09"/>例 14.9</p>
 <p class="codelink1"><a id="p14exa09" href="ch14_images.html#p14exa09a">Click here to view code
 image</a></p>
 <p class="pre1">$object1-&gt;shoot;&#160;&#160;&#160;&#160;&#160;&#160;<span
@@ -950,17 +943,15 @@ class="EmpItalic">evaluates to</span>&#160;&#160;Rifleman::shoot($object2);<br/>
 class="EmpItalic">evaluates
 to</span>&#160;&#160;BasketballPlayer::shoot($object3);</p>
 <hr/></div>
-<p class="indent">The following example demonstrates polymorphism. There are three
-classes. Each class has a constructor method (not all with the same name),
-and each class has an instance method, all called <em>shoot()</em>.</p>
-<p class="indent">The user program includes all three modules and creates instances of each of
-the classes. Each time the <em>shoot()</em> method is called, Perl sends a
-reference to its object. Since the <em>shoot()</em> method will receive a
-blessed reference to the object that called it, there is no confusion as to
-which method the object belongs to. Perl just goes to the address for that
-object of that class and calls the method.</p>
+<p class="indent">下面的例子就是用来说明多态的。下面的三个类，都有各自的构造器（并不是同样的方法名），而
+<em>shoot()</em> 这个方法则是三个类共同拥有的。</p>
+<p class="indent">用户代码会载入所有三个模块并且创建每个类的实例。每当
+<em>shoot()</em> 方法被调用的时候，Perl
+总会默默发送对象引用参数。因为 <em>shoot()</em>
+会收到祝福过的对象引用，就不会弄错该调用的代码。Perl
+能正确定位到所属类当中的方法代码，并运行。</p>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa10"/>EXAMPLE 14.10</p>
+<p class="title"><a id="ch14exa10"/>例 14.10</p>
 <p class="codelink1"><a id="p14exa10" href="ch14_images.html#p14exa10a">Click here to view code
 image</a></p>
 <p class="pre1">&#160;&#160;&#160;#----------File: BasketballPlayer.pm<br/>1&#160;&#160;<span class="EmpStrong">package
@@ -994,43 +985,42 @@ Slave.</span><br/>16 <span class="EmpItalic">Lucas McCain went to the North Fork
 to shoot targets.</span></p>
 <hr/></div>
 <div class="sidebar"><hr/>
-<p class="title"><a id="page_476"/>Explanation</p>
-<p class="sb-indenthangingN"><strong>1.</strong> This is the <em>BasketballPlayer</em> class, containing
-its own constructor and instance variables.</p>
-<p class="sb-indenthangingN"><strong>2.</strong> This is the <em>shoot()</em> instance method for the
-<em>BasketballPlayer</em> class.</p>
-<p class="sb-indenthangingN"><strong>3.</strong> Now we are in the <em>Director</em> class, which has its
-own constructor method called <em>new()</em> and instance variables.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> The <em>Director</em> class has defined its own
-<em>shoot()</em> method.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> The class called <em>Rifleman</em> has defined a
-constructor called <em>init()</em> with instance variables pertaining to a
-rifleman.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> The <em>Rifleman</em> class has also defined a
-<em>shoot()</em> method.</p>
-<p class="sb-indenthangingN"><strong>7.</strong> The driver/user program uses all three classes, the
-<em>BasketballPlayer</em>, the <em>Director</em>, and the <em>Rifleman</em>.</p>
-<p class="sb-indenthangingN"><strong>8.</strong> A call to the <em>BasketballPlayer</em> constructor
-returns a reference to a new <em>BasketballPlayer</em> object.</p>
-<p class="sb-indenthangingN"><strong>9.</strong> A call to the <em>Director</em> constructor returns a
-reference to a new <em>Director</em> object.</p>
-<p class="sb-indenthangingN1"><strong>10.</strong> And a call to the <em>Rifleman</em> constructor returns
-a reference to a new <em>Rifleman</em> object.</p>
-<p class="sb-indenthangingN1"><strong>11.</strong> The Perl built-in <em>ref</em> function, when given an
-object as its argument, will return the class name of the object rather than
-its data type. For an unblessed reference, the return value would have been
-<em>HASH</em>. You can see that the address contains the name of the class.</p>
-<p class="sb-indenthangingN4"><strong>14&#8211;16.</strong> Polymorphism is demonstrated when all three
-objects make a call to their respective <em>shoot()</em> methods. Because
-Perl sends the blessed reference to the method as its first argument, Perl
-knows what class to go to, as you can see here. The references for the
-blessed objects are:</p>
+<p class="title"><a id="page_476"/>代码解读</p>
+<p class="sb-indenthangingN"><strong>1.</strong> 这是 <em>BasketballPlayer</em>
+类，带有构造器和实例变量。</p>
+<p class="sb-indenthangingN"><strong>2.</strong> 这是 <em>BasketballPlayer</em> 类的 <em>shoot()</em>
+实例方法。</p>
+<p class="sb-indenthangingN"><strong>3.</strong> 现在进入 <em>Director</em> 类，也带有名为
+<em>new()</em> 的构造器和实例变量。</p>
+<p class="sb-indenthangingN"><strong>4.</strong> 这是 <em>Director</em> 类的 <em>shoot()</em>
+实例方法。</p>
+<p class="sb-indenthangingN"><strong>5.</strong> 现在进入 <em>Rifleman</em> 类，带有名为
+<em>init()</em> 的构造器和实例变量。</p>
+<p class="sb-indenthangingN"><strong>6.</strong> 这是 <em>Rifleman</em> 类的 <em>shoot()</em>
+实例方法。</p>
+<p class="sb-indenthangingN"><strong>7.</strong>
+用户程序首先载入三个类：<em>BasketballPlayer</em>、<em>Director</em>
+和 <em>Rifleman</em>。</p>
+<p class="sb-indenthangingN"><strong>8.</strong> 调用 <em>BasketballPlayer</em> 的构造器来获得
+<em>BasketballPlayer</em> 类新实例的引用。</p>
+<p class="sb-indenthangingN"><strong>9.</strong> 调用 <em>Director</em> 的构造器来获得
+<em>Director</em> 类新实例的引用。</p>
+<p class="sb-indenthangingN1"><strong>10.</strong> 调用 <em>Rifleman</em> 的构造器来获得
+<em>Rifleman</em> 类新实例的引用。</p>
+<p class="sb-indenthangingN1"><strong>11.</strong> Perl 内置的 <em>ref</em>
+函数，调用参数是对象引用，返回的结果是类名（而不是对象变量类型）。对于未被祝福过的引用，返回的结果就是类似于
+<em>HASH</em>
+这样的字符串。这个例子是让你看到对象引用对应的类标签。</p>
+<p class="sb-indenthangingN4"><strong>14&#8211;16.</strong>
+多态通过对三个不同类型对象调用各自的 <em>shoot()</em>
+方法来显明。因为 Perl
+会把对象引用作为第一个参数传递，因此这里不会弄错要调用的代码。祝福过的对象引用如下所示：</p>
 <p class="sb-indenthangingNP"><em>BasketballPlayer=HASH(0x7ff98a004ff0),</em></p>
 <p class="sb-indenthangingNP"><em>Director=HASH(0x7ff98a033128),</em></p>
 <p class="sb-indenthangingNP"><em>Rifleman=HASH(0x7ff98a02d4d8)</em></p>
 <hr/></div>
 <div class="heading">
-<h4 id="ch14lev2sec10">14.2.7 Destructors and Garbage Collection</h4>
+<h4 id="ch14lev2sec10">14.2.7 析构器和垃圾回收机制</h4>
 <p class="noindent">Perl keeps track of the number of references to an object, and when the
 count reaches <em>0</em>, the object is automatically destroyed. If a
 reference goes out of scope or your program exits, Perl handles the garbage
