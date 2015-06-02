@@ -1021,20 +1021,18 @@ to shoot targets.</span></p>
 <hr/></div>
 <div class="heading">
 <h4 id="ch14lev2sec10">14.2.7 析构器和垃圾回收机制</h4>
-<p class="noindent">Perl keeps track of the number of references to an object, and when the
-count reaches <em>0</em>, the object is automatically destroyed. If a
-reference goes out of scope or your program exits, Perl handles the garbage
-collection by destroying every object associated with a reference and
-deallocating any memory that was used. So, you don&#8217;t have to worry
-about cleaning up memory.<sup><a id="ch14fn6a"
-href="ch14.html#ch14fn6">6</a></sup> However, you can define a
-<em>DESTROY</em> method in your program to get control of the object just
-before it goes away.</p>
+<p class="noindent">Perl
+时刻跟踪着对象的引用计数，这样可以在引用计数为零是自动销毁对象。如果引用超出了代码的语法范围，Perl
+就会触发垃圾收集机制，对失去引用的对象进行销毁并释放内存。所以，你不必担心内存会意外的浪费掉。<sup><a
+id="ch14fn6a"
+href="ch14.html#ch14fn6">6</a></sup>不过，你还是可以定义
+<em>DESTROY</em> 方法来将对象的销毁进行自定义的控制。</p>
 </div>
-<p class="footnote"><a id="ch14fn6" href="ch14.html#ch14fn6a">6</a>. If you use self-referencing
-data structures, you will be responsible for destroying those references.</p>
+<p class="footnote"><a id="ch14fn6"
+href="ch14.html#ch14fn6a">6</a>.
+如果你定义了一个自引用的数据结构，那么就得自己负责数据对象的销毁。</p>
 <div class="sidebar"><hr/>
-<p class="title"><a id="page_477"/><a id="ch14exa11"/>EXAMPLE 14.11</p>
+<p class="title"><a id="page_477"/><a id="ch14exa11"/>例 14.11</p>
 <p class="codelink1"><a id="p14exa11" href="ch14_images.html#p14exa11a">Click here to view code
 image</a></p>
 <p class="pre1">(The Class)<br/>1&#160;&#160;package Employee;<br/>&#160;&#160;&#160;sub new{<br/>&#160;&#160;&#160;&#160;&#160;&#160;my $class = shift;<br/>&#160;&#160;&#160;&#160;&#160;&#160;my $name = shift;<br/>&#160;&#160;&#160;&#160;&#160;&#160;my $ref={"Name"=&gt;$name};<br/>&#160;&#160;&#160;&#160;&#160;&#160;bless($ref, $class);<br/>&#160;&#160;&#160;&#160;&#160;&#160;return $ref;<br/>&#160;&#160;&#160;}<br/><br/>2&#160;&#160;<span class="EmpStrong">sub DESTROY{</span><br/>&#160;&#160;&#160;&#160;&#160;&#160;<span class="EmpStrong">my $self =
@@ -1049,18 +1047,17 @@ destroyed.</span></p>
 <hr/></div>
 <div class="sidebar"><hr/>
 <p class="title">代码解读</p>
-<p class="sb-indenthangingN"><strong>1.</strong> The <em>Employee</em> class is declared and its
-constructor method defined.</p>
-<p class="sb-indenthangingN"><strong>2.</strong> When an <em>Employee</em> object is no longer in scope,
-the <em>DESTROY</em> method is called and this line is printed. The object
-on line 6 is defined within a block. It goes out of scope when the block
-exits. The other objects go out of scope when the program ends.</p>
-<p class="sb-indenthangingN"><strong>3.</strong> Each time an object goes out of scope, this line is
-printed.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> The <em>Employee</em> module will be used.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> A new <em>Employee</em> object, referenced by
-<em>$emp1</em>, is being created by calling the constructor method and
-passing the name as <em>&#8220;1: Daniel&#8221;.</em></p>
+<p class="sb-indenthangingN"><strong>1.</strong> <em>Employee</em>
+类在此得到声明，也同时定义了构造器方法。</p>
+<p class="sb-indenthangingN"><strong>2.</strong> 当 <em>Employee</em>
+对象不再有存在的必要时，<em>DESTROY</em>
+方法被调用，并打印这行信息。第六行的对象是定义在一个块中的。所以，当这块代码执行完毕之后，它就没有存在的必要了。而其他对象要等到整个程序退出时才消亡。</p>
+<p class="sb-indenthangingN"><strong>3.</strong>
+每当某个对象失去存在的意义时，这一行就被打印出来。</p>
+<p class="sb-indenthangingN"><strong>4.</strong> 这里载入 <em>Employee</em> 模块。</p>
+<p class="sb-indenthangingN"><strong>5.</strong> 这里通过构造器创建了 <em>Employee</em>
+类的一个对象引用
+<em>$emp1</em>，这个员工的名字是参数中的 <em>Daniel</em>。</p>
 <p class="sb-indenthangingN"><strong>6.</strong> Another <em>Employee</em> object is created within a
 block. The object is assigned a name value of <em>&#34;2:
 Tom&#34;</em>. Since it is a <em>my</em> variable, it is lexically scoped,
