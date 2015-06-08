@@ -1058,46 +1058,34 @@ destroyed.</span></p>
 <p class="sb-indenthangingN"><strong>5.</strong> 这里通过构造器创建了 <em>Employee</em>
 类的一个对象引用
 <em>$emp1</em>，这个员工的名字是参数中的 <em>Daniel</em>。</p>
-<p class="sb-indenthangingN"><strong>6.</strong> Another <em>Employee</em> object is created within a
-block. The object is assigned a name value of <em>&#34;2:
-Tom&#34;</em>. Since it is a <em>my</em> variable, it is lexically scoped,
-meaning the object will go out of scope when the block is exited, at which
-time the <em>DESTROY</em> method will be called and remove it from memory.</p>
-<p class="sb-indenthangingN"><a id="page_478"/><strong>7.</strong> This line is printed just before the
-object (<em>&#34;2: Tom&#34;</em>) goes out of scope. Then <em>DESTROY</em>
-is called. The <em>Employee</em> objects are assigned key/value pairs.</p>
-<p class="sb-indenthangingN"><strong>8.</strong> The last object is created (<em>&#34;3: Jenny&#34;</em>)
-and this is the last one to be destroyed when the program ends.</p>
+<p class="sb-indenthangingN"><strong>6.</strong> 这里又在块里面创建了一个 <em>Employee</em>
+对象。这个对象被赋予了一个 <em>Tom</em>
+的名字。因为这个对象是用 <em>my</em>
+创建的，所以只能存活在语法范围内。因此，一旦块执行完毕，这个对象就已经没必要存在了，因此会调用它的
+<em>DESTROY</em> 方法，然后清理为它分配的内存。</p>
+<p class="sb-indenthangingN"><a id="page_478"/><strong>7.</strong> 这一行打印的顺序在名为
+<em>Tom</em> 的对象消亡之前。然后 <em>Employee</em>
+对象被赋予了键值，然后就是 <em>DESTROY</em> 调用的时机。</p>
+<p class="sb-indenthangingN"><strong>8.</strong> 最后又是一个对象（名为
+Jenny）被创建，也是这个程序退出之前最后销毁的对象。</p>
 <hr/></div>
 <div class="heading">
-<h3 id="ch14lev1sec3">14.3 Anonymous Subroutines, Closures, and Privacy</h3>
-<p class="noindent">One of the problems with the object-oriented examples we have used thus far
-is that a user can manipulate the object directly once he gets a reference
-to it. Even if he is supposed to use the methods provided by the module,
-there is nothing to stop him from accessing the object&#8217;s data
-directly, since Perl does not specifically provide a private section for the
-class data. But for those who feel this lack of guaranteed privacy is an
-affront to the object-oriented approach, Perl provides several
-solutions. One of them is the use of closures.</p>
+<h3 id="ch14lev1sec3">14.3 匿名子程序、闭包和私有数据</h3>
+<p class="noindent">目前我们所有的面向对象代码中都有一个问题，那就是用户可以通过引用来随意操纵数据修改。哪怕我们告诉他们必须通过模块方法来访问对象，仍然没有什么机制能阻止他们来直接访问对象内部的数据。这是因为
+Perl
+并没有什么特殊的机制来保护类中的数据私有性。不过，对于那些认为无法实现私有数据就不能算面向对象语言的人来说，Perl其实是有许多种方法来做到这点的。其中一种就是使用闭包。</p>
 </div>
 <div class="heading">
-<h4 id="ch14lev2sec11">14.3.1 What Is a Closure?</h4>
-<p class="noindent">Larry Wall describes <strong>closures</strong> as just anonymous subroutines
-with an attitude.<sup><a id="ch14fn7a" href="ch14.html#ch14fn7">7</a></sup>
-Barrie Slaymaker calls closures &#8220;inside-out objects,&#8221; in that
-objects are data that have some subroutines attached to them, whereas
-closures are subroutines that have some data attached to them.</p>
+<h4 id="ch14lev2sec11">14.3.1 什么是闭包？</h4>
+<p class="noindent">Larry Wall 把闭包说成是一个有态度的匿名函数<sup><a
+id="ch14fn7a" href="ch14.html#ch14fn7">7</a></sup> 。Barrie Slaymaker
+则把闭包说成是“内衣外穿的对象”。因为对象其实是带有子程序的数据，而闭包则是带有数据的子程序。</p>
 </div>
-<p class="footnote"><a id="ch14fn7" href="ch14.html#ch14fn7a">7</a>. Wall, L., Christianson, T.,
-and Orwant, J., <em>Programming Perl, 3rd ed.,</em> O&#8217;Reilly &#38;
-Associates: Sebastopol, CA, 2000, p. 262.</p>
-<p class="indent">A closure is a subroutine that has access to <em>my</em> (lexical) variables
-even if it is called from outside the block where the variables were defined
-and it seems as though those variables should no longer be in scope. The
-subroutine clings to the lexical variables it references. Each time the
-subroutine is called via its reference, the same lexical variables are
-used. The lexical variables stay in scope until they are no longer being
-referenced.</p>
+<p class="footnote"><a id="ch14fn7" href="ch14.html#ch14fn7a">7</a>. Perl
+编程，第三版，第 262 页；O’Reilly 出版社，Sebastopol
+加州，2000 年由 Larry Wall、Tom Christianson 和  Jon Orwant 合著。</p>
+<p class="indent">闭包就是一个子程序，它总能保持对 <em>my</em>
+变量的访问，哪怕调用的位置已经越过了变量定义所在的块范围也是如此。这个子程序似乎“贴伏”着这些词法变量，在每次调用时都能重用同一组变量。而这些词法变量也总是活跃，直到所有的引用都不再活跃为止。</p>
 <div class="sidebar"><hr/>
 <p class="title"><a id="ch14exa12"/>EXAMPLE 14.12</p>
 <p class="codelink1"><a id="p14exa12" href="ch14_images.html#p14exa12a">Click here to view code
