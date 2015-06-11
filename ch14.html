@@ -1087,7 +1087,7 @@ id="ch14fn7a" href="ch14.html#ch14fn7">7</a></sup> 。Barrie Slaymaker
 <p class="indent">闭包就是一个子程序，它总能保持对 <em>my</em>
 变量的访问，哪怕调用的位置已经越过了变量定义所在的块范围也是如此。这个子程序似乎“贴伏”着这些词法变量，在每次调用时都能重用同一组变量。而这些词法变量也总是活跃，直到所有的引用都不再活跃为止。</p>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa12"/>EXAMPLE 14.12</p>
+<p class="title"><a id="ch14exa12"/>例 14.12</p>
 <p class="codelink1"><a id="p14exa12" href="ch14_images.html#p14exa12a">Click here to view code
 image</a></p>
 <p class="pre1">(The Script)<br/>1&#160;&#160;my $name="Tommy";<br/><br/>2&#160;&#160;{&#160;&#160;my $name = "Grandfather";&#160;&#160;# <span
@@ -1100,30 +1100,27 @@ subroutine</span><br/>&#160;&#160;&#160;}<br/>5&#160;&#160;print "$name is back\
 <hr/></div>
 <div class="sidebar"><hr/>
 <p class="title">代码解读</p>
-<p class="sb-indenthangingN"><strong>1.</strong> The lexical variable <em>$name</em> is assigned
-<em>Tommy</em>. The variable is visible from here to the end of the file.</p>
-<p class="sb-indenthangingN"><strong>2.</strong> A block is entered. A new lexical variable,
-<em>$name,</em> is assigned <em>Grandfather</em>. It is visible from here to
-the end of its block.</p>
-<p class="sb-indenthangingN"><strong>3.</strong> Another lexical variable, <em>$age</em>, is defined. It
-is visible from here to the end of the enclosing block.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> An anonymous subroutine is defined within the same block
-as the two lexical variables (<em>my</em> variables), <em>$name</em> and
-<em>$age</em>. The address of the subroutine is assigned to
-<em>$ref</em>. The subroutine has access to those variables even if it is
-called from outside the block. The subroutine is called a closure because
-the variables referenced within the subroutine are enclosed there until they
-are no longer needed.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> The value of <em>$name</em>, <em>Tommy</em>, is now
-visible.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> The anonymous subroutine is called via the pointer
-<em>$ref</em>. The lexical variables are still available even though they
-appear to be out of scope. They remain in scope because the reference still
-needs access to them. Perl doesn&#8217;t clean up the variables until they
-are no longer referenced.</p>
+<p class="sb-indenthangingN"><strong>1.</strong> 这里给词法变量 <em>$name</em> 赋值
+<em>Tommy</em>。这个变量的生存周期从这里延伸到程序的末尾。</p>
+<p class="sb-indenthangingN"><strong>2.</strong>
+程序再次进入一个块中。这里给一个新的词法变量
+<em>$name</em> 赋值
+<em>Grandfather</em>。这个变量直到块的结尾都是有效的。</p>
+<p class="sb-indenthangingN"><strong>3.</strong> 这里定义了另一个词法变量
+<em>$age</em>，它也是从此直到快结尾有效。</p>
+<p class="sb-indenthangingN"><strong>4.</strong>
+在同一个块内又定义了一个匿名子程序，它引用了同一个块内的两个词法变量（也就是
+<em>my</em> 变量：<em>$name</em> 和
+<em>$age</em>）。然后把这个子程序的引用赋值给
+<em>$ref</em>。这个子程序，不论在哪里调用，总是可以访问这两个变量。这个子程序就被称为闭包，因为不论怎么调用，它必然能够访问所在块内的变量。</p>
+<p class="sb-indenthangingN"><strong>5.</strong> 执行到这里，<em>$name</em> 的值又变成了
+<em>Tommy</em>。</p>
+<p class="sb-indenthangingN"><strong>6.</strong> 匿名子程序通过 <em>$ref</em>
+引用得到调用。词法变量看似已经超出了生存周期，但是却仍然存在。这是因为引用的存在导致变量不能被释放。只要引用尚存，Perl
+就永远不能释放这些变量。</p>
 <hr/></div>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa13"/>EXAMPLE 14.13</p>
+<p class="title"><a id="ch14exa13"/>例 14.13</p>
 <p class="codelink1"><a id="p14exa13" href="ch14_images.html#p14exa13a">Click here to view code
 image</a></p>
 <p class="pre1">(The Script)<br/>&#160;&#160;&#160;# <span class="EmpItalic">Closure</span><br/>1&#160;&#160;sub paint {<br/>2&#160;&#160;&#160;&#160;&#160;my $color = shift;&#160;&#160;&#160;&#160;#
@@ -1143,49 +1140,45 @@ $object $color.\n";</span><br/>&#160;&#160;&#160;<span class="EmpItalic">};</spa
 <hr/></div>
 <div class="sidebar"><hr/>
 <p class="title">代码解读</p>
-<p class="sb-indenthangingN"><strong>1.</strong> The <em>paint()</em> subroutine is defined.</p>
-<p class="sb-indenthangingN"><strong>2.</strong> The lexical scalar <em>$color</em> is assigned the value
-shifted from the <em>@_</em> array.</p>
-<p class="sb-indenthangingN"><strong>3.</strong> The value in <em>$ref</em> is assigned an anonymous
-subroutine.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> The anonymous subroutine takes one argument from the
-<em>@_</em> array. In this example, the value of <em>$object</em> will be
-<em>&#34;flower&#34;</em> the first time this subroutine is called, and
-<em>&#34;sky&#34;</em> the next time.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> Here is where we see a closure in action. The lexical
-variable <em>$color</em> is still in scope. The lexical variable
-<em>$color</em> doesn&#8217;t go out of scope even after the subroutine
-called <em>paint()</em> is called and exited, because the anonymous
-subroutine still needs it. <em>$color</em> is still available here even
-though the <em>paint()</em> function was called and exited.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> The <em>paint()</em> subroutine returns a reference to
-the anonymous subroutine. The reference looks like this:
-<em>(CODE(0x100804ee8)).</em> The reference forms the closure; it keeps the
-lexical variables, in this case <em>$color</em>, around until no longer
-being referenced.</p>
-<p class="sb-indenthangingN"><strong>7.</strong> The <em>paint()</em> subroutine is called twice with
-different arguments. Each time <em>paint()</em> is called, Perl creates a
-new lexical scalar, <em>$color</em>, with its own value. The <em>$color</em>
-variable gets wrapped up in the closure that is returned. So <em>$p1</em>
-encloses one <em>$color</em>, which is initialized to
-<em>&#34;red&#34;</em>, and <em>$p2</em> encloses a totally different
-<em>$color</em>, initialized to <em>&#34;blue&#34;</em>. You can see that
-these variables get their own addresses, by printing <em>\$color</em> each
-time the function <em>paint()</em> is called to produce:</p>
+<p class="sb-indenthangingN"><strong>1.</strong> 这里定义了 <em>paint()</em> 子程序。</p>
+<p class="sb-indenthangingN"><strong>2.</strong> 这里从 <em>@_</em>
+数组中取出值并赋予词法变量 <em>$color</em>。</p>
+<p class="sb-indenthangingN"><strong>3.</strong> 这里把一个匿名子程序的引用赋予
+<em>$ref</em>。</p>
+<p class="sb-indenthangingN"><strong>4.</strong> 这个匿名子程序从 <em>@_</em>
+数组中提取一个参数出来。这里提取的值放在
+<em>$object</em> 中，第一次提取出来的值是
+<em>flower</em>，而第二次提取出来的是 <em>sky</em>。</p>
+<p class="sb-indenthangingN"><strong>5.</strong>
+这里是闭包真正开始工作的部分。因为之前的词法变量
+<em>$color</em> 仍然在作用范围内，而且它会一直存在，哪怕
+<em>paint()</em>
+子程序调用并退出了也是一样。原因就是匿名子程序仍然需要它的存在。所以，无论何时，<em>$color</em>
+都可以使用。</p>
+<p class="sb-indenthangingN"><strong>6.</strong> 这里的 <em>paint()</em>
+子程序返回了一个对匿名子程序的引用。如果打印出来的话，引用的内容看上去是这样的：<em>(CODE(0x100804ee8))</em>。引用导致了闭包的存在，也保存了词法变量
+<em>$color</em>。</p>
+<p class="sb-indenthangingN"><strong>7.</strong> 这里两次调用 <em>paint()</em>
+子程序，并且每次参数都不同。每当 <em>paint()</em>
+被调用时候，Perl 都会创建一个新的词法标量
+<em>$color</em>。并且每次的值都不同。然后这个变量因为返回的引用而被闭包保护起来。所以，<em>$p1</em>
+对应的闭包变量 <em>$color</em> 的值是 <em>red</em>，而
+<em>$p2</em> 对应的闭包变量 <em>$color</em> 的值则是
+<em>blue</em>。你可以通过在调用 <em>paint()</em> 时打印
+<em>\$color</em> 来确认每个变量的地址是不同的。</p>
 <p class="pre1">&#160;&#160;&#160;&#160;&#160;&#160;SCALAR(0x7f947382db80)<br/>&#160;&#160;&#160;&#160;&#160;&#160;SCALAR(0x7f947382d4c0)</p>
-<p class="sb-indenthangingN"><strong>8, 9.</strong> <em>$p1</em> and <em>$p2</em> are references to the
-anonymous subroutine defined on line 3. They have formed a
-&#8220;closure&#8221; around the variable <em>$color</em> defined in
-<em>paint()</em> and will have access to their own copy of that variable
-until it is no longer being referenced.</p>
-<p class="sb-indenthangingN1"><strong>10.</strong> We can use <em>Data::Dumper</em> to display the values
-of the code references, but unless we set the
-<em>$Data::Dumper::Deparse</em> variable to 1, the contents of an anonymous
-subroutine will be printed as <em>DUMMY</em>. <em>Data::Dumper</em> displays
-the contents of the anonymous subroutine.</p>
+<p class="sb-indenthangingN"><strong>8, 9.</strong> <em>$p1</em> 和 <em>$p2</em>
+其实都是指向第三行定义的匿名子程序的引用。只是因为闭包的存在，导致它们在访问
+<em>paint()</em> 定义的 <em>$color</em>
+变量的时候访问的是不同的版本。</p>
+<p class="sb-indenthangingN1"><strong>10.</strong> 我们可以使用 <em>Data::Dumper</em>
+来打印出代码引用的内容，但是如果我们不把
+<em>$Data::Dumper::Deparse</em>
+变量设置为一，就不能打印出匿名子程序的内容，而只能打印出
+<em>DUMMY</em>。</p>
 <hr/></div>
 <div class="heading">
-<h4 id="ch14lev2sec12"><a id="page_481"/>14.3.2 Closures and Objects</h4>
+<h4 id="ch14lev2sec12"><a id="page_481"/>14.3.2 闭包和对象</h4>
 <p class="noindent">Closures provide a way to encapsulate the object&#8217;s data and thereby
 prevent the user from directly accessing the object. This can be done by
 defining the constructor with the object&#8217;s data and an anonymous
