@@ -1179,37 +1179,21 @@ $object $color.\n";</span><br/>&#160;&#160;&#160;<span class="EmpItalic">};</spa
 <hr/></div>
 <div class="heading">
 <h4 id="ch14lev2sec12"><a id="page_481"/>14.3.2 闭包和对象</h4>
-<p class="noindent">Closures provide a way to encapsulate the object&#8217;s data and thereby
-prevent the user from directly accessing the object. This can be done by
-defining the constructor with the object&#8217;s data and an anonymous
-subroutine that will act as the closure. The anonymous subroutine will be
-the only way to set and get data for the object. Instead of blessing the
-data (for example, anonymous hash into the class), the anonymous subroutine
-will be blessed. The reference to the anonymous subroutine will be returned
-and serve as the only way to access the private data defined in the
-constructor. The blessed anonymous subroutine will have access to the
-object&#8217;s data because it was declared within the same lexical
-scope. It encapsulates the data with the subroutine; thus, it forms a
-closure. As long as the anonymous subroutine refers to the object&#8217;s
-data, the data will be accessible.</p>
+<p class="noindent">闭包的作用就是让对象能够隐藏数据，从而避免用户直接存取对象的敏感数据。具体来说，就是在构造器中定义对象的数据，然后用一个匿名子程序来形成闭包。在进行祝福的时候，不是对数据（比如哈希的引用）进行
+bless，而是对匿名子程序引用来祝福。于是，构造器返回的是子程序引用，而且这也成了唯一的一个访问私有数据的方法。这个受祝福的匿名子程序之所以能访问对象的数据，是因为他们在定义的时候在同一个词法有效范围中。因为通过子程序来封装数据，所以可以被看成是闭包。从此，只要匿名子程序的引用仍然存在，就可以存取对象的数据。</p>
 </div>
-<p class="indent"><a href="ch14.html#ch14exa14">Example 14.14</a> demonstrates how to use a
-closure to encapsulate the data for an object by following these steps:</p>
-<p class="indenthangingN"><strong>1.</strong> A constructor method is defined for a <em>Student</em>
-class. The constructor will define an empty anonymous hash that will be used
-to set properties for each new <em>Student</em> object, a global class
-variable to keep track of the number of students, and an anonymous
-subroutine to encapsulate the data to be assigned to and retrieved from the
-object. The blessing will return a pointer to the anonymous subroutine.</p>
-<p class="indenthangingN"><strong>2.</strong> The instance methods will be defined for the object for
-setting and getting the data. Instead of getting back a pointer to the
-object&#8217;s data, these methods will get back a pointer to the anonymous
-subroutine. The only way they can access the data is by calling this
-anonymous subroutine with the appropriate arguments.</p>
-<p class="indenthangingN"><strong>3.</strong> A destructor method will be defined to display each
-<em>Student</em> object as it is being destroyed.</p>
+<p class="indent"><a href="ch14.html#ch14exa14">例 14.14</a>
+展示了如何使用闭包来为对象封装数据的，具体是以下的步骤：</p>
+<p class="indenthangingN"><strong>1.</strong> 首先为 <em>Student</em>
+类定义构造器方法。构造器将会定义一个空的匿名哈希，用来给每一个新的
+<em>Student</em>
+对象设置属性。另外，还有一个全局类变量用于记录学生的数量，以及一个匿名子程序用于封装数据，也用于存取对象数据。所以，最后受到祝福并返回的是一个匿名子程序。</p>
+<p class="indenthangingN"><strong>2.</strong>
+然后定义实例方法来读写数据。记住，这些方法不能直接从参数中获取对象引用了。所以要读写数据现在得通过匿名子程序的引用，而且调用时候得提供合适的参数。</p>
+<p class="indenthangingN"><strong>3.</strong> 这里要定义一个析构器来显示将被销毁的
+<em>Student</em> 对象。</p>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa14"/>EXAMPLE 14.14</p>
+<p class="title"><a id="ch14exa14"/>例 14.14</p>
 <p class="codelink1"><a id="p14exa14" href="ch14_images.html#p14exa14a">Click here to view code
 image</a></p>
 <p class="pre1"># <span class="EmpItalic">File is House.pm</span><br/><br/>&#160;&#160;&#160;package House;<br/><br/>1&#160;&#160;my @props=qw(Owner Color Price);&#160;&#160;# <span
@@ -1231,56 +1215,47 @@ sub</span><br/>&#160;&#160;&#160;}&#160;&#160;# <span class="EmpItalic">End new<
 <hr/></div>
 <div class="sidebar"><hr/>
 <p class="title">代码解读</p>
-<p class="sb-indenthangingN"><strong>1.</strong> The <em>House</em> class objects will have the
-properties, <em>Owner, Color,</em> and <em>Price</em>, assigned to the array
-<em>@props</em>.</p>
-<p class="sb-indenthangingN"><strong>2.</strong> The constructor will be used to create and bless the
-object. First the properties are set in a hash, the values supplied by the
-user.</p>
-<p class="sb-indenthangingN"><strong>3.</strong> The key/value pairs (properties) are assigned to the
-hash <em>%data</em>. This is an example of a hash slice.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> The variable <em>$access_ref</em> is assigned a
-reference to an anonymous subroutine to serve as a closure. This subroutine
-will be blessed into the class and will be used to set and get the data for
-<em>House</em> objects. The user will use the reference to get access to the
-object&#8217;s data which is encapsulated within the function. The closure
-will allow access to the properties in <em>%data</em> even though it appears
-that <em>%data</em> should be out of scope.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> The subroutine takes three arguments: the access type
-(which is <em>&#34;set&#34;</em> or <em>&#34;get&#34;)</em>, a key for the
-object, and a value for the object.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> The Perl built-in function <em>caller()</em> returns the
-name of the package (class) from where the function was called. If the
-caller is trying to call this method from a package other than
-<em>House</em>, the error will be printed and the program will die. This
-will become clear later. For now, you cannot access the object&#8217;s data
-directly from the user program. You must access the data through methods
-defined by the class.</p>
-<p class="sb-indenthangingN"><strong>7.</strong> If the access type is <em>&#34;set&#34;</em> and the key
-to the object is <em>&#34;Price&#34;</em>, then the user is not allowed to
-change the <em>Price</em> value and the program will die with the message.</p>
-<p class="sb-indenthangingN"><a id="page_483"/><strong>8.</strong> If the access type is
-<em>&#34;set&#34;</em>, the value will be set for the object.</p>
-<p class="sb-indenthangingN"><strong>9.</strong> If the access type is <em>&#34;get&#34;</em>, the value
-for the object will be retrieved.</p>
-<p class="sb-indenthangingN1"><strong>10.</strong> The blessing returns a blessed reference to an
-anonymous subroutine to the user. In the previous examples, a blessed
-<em>HASH</em> was returned.</p>
-<p class="sb-indenthangingN1"><strong>11.</strong> This is the <em>set</em> method that will be called by
-the user. It serves as a wrapper function in that it doesn&#8217;t set the
-data itself, but makes it possible for the user to get access to the
-function that does. The first argument coming in is a reference to the
-anonymous subroutine, not a reference to a hash, array, scalar, but a
-reference to a subroutine! The second argument is a key for the object, and
-finally a value for the object. <em>$self</em>, then, is a reference to the
-anonymous subroutine that was blessed into the class on line 10, and when
-called, allows access to the object&#8217;s data.</p>
-<p class="sb-indenthangingN1"><strong>12.</strong> The <em>get</em> method is similar to the <em>set</em>
-method in that it allows access to the object&#8217;s data by using the
-<em>$self</em> to call the anonymous subroutine that gets the data.</p>
+<p class="sb-indenthangingN"><strong>1.</strong> <em>House</em> 类的所有对象都有
+<em>Owner</em>、<em>Color</em> 和 <em>Price</em>
+属性，它们是存储在 <em>@props</em> 数组里面的。</p>
+<p class="sb-indenthangingN"><strong>2.</strong>
+构造器用来创建并祝福对象。首先是通过哈希来设置属性，然后是通过用户代码来设置具体的值。</p>
+<p class="sb-indenthangingN"><strong>3.</strong> 用键值对的方式来给 <em>%data</em>
+赋值，这里用到了哈希切片的语法。</p>
+<p class="sb-indenthangingN"><strong>4.</strong> 这个 <em>$access_ref</em>
+变量得到的赋值是一个匿名子程序，于是成为一个闭包。这个子程序引用被祝福成一个类的实例，也可以用来读写
+<em>House</em>
+对象的数据。用户代码必须通过这个函数引用来存取封装的数据。闭包使得
+<em>%data</em>
+中的属性可以存取，哪怕这个数据看似已经超出了定义范围。</p>
+<p class="sb-indenthangingN"><strong>5.</strong>
+这个子程序带有三个参数：存取类型（要么是
+<em>set</em>，要么是
+<em>get</em>）、一个对象的属性，以及对应的值。</p>
+<p class="sb-indenthangingN"><strong>6.</strong> 这里 Perl 内置的函数 <em>caller()</em>
+返回的是被调用的函数所在的包名。如果这个包与
+<em>House</em>
+不一致的话，就会打印错误信息并退出。这点我们后面会更加明白。目前来说，这意味着你不能在用户代码中直接存取对象的数据，而必须通过类定义的方法来完成。</p>
+<p class="sb-indenthangingN"><strong>7.</strong> 如果调用的参数中存取类型是
+<em>set</em>，而对象的属性是
+<em>Price</em>，那么就打印错误信息，拒绝设置价格属性的值，并且退出。</p>
+<p class="sb-indenthangingN"><a id="page_483"/><strong>8.</strong> 如果存取类型是
+<em>set</em>，那么就设置对象的值。</p>
+<p class="sb-indenthangingN"><strong>9.</strong> 如果存取类型是
+<em>get</em>，那么读取属性对应的值。</p>
+<p class="sb-indenthangingN1"><strong>10.</strong> 这里通过 bless
+来将匿名子程序的引用祝福，并返回调用者。而在之前的例子中，祝福并返回的都是
+<em>HASH</em>。</p>
+<p class="sb-indenthangingN1"><strong>11.</strong> 这里定义的是 <em>set</em>
+方法，用户调用它的时候其实不是直接完成数据的修改，而是通过间接呼叫对应的子程序来完成的。因为第一个参数就指向了匿名子程序，而不是匿名哈希、数组或者标量的引用。第二个参数则是对象的属性，最后一个参数才是对应的值。因此
+<em>$self</em>
+其实是在第十行祝福过的匿名子程序，访问对象的数据靠得也是它。</p>
+<p class="sb-indenthangingN1"><strong>12.</strong> 这里的 <em>get</em> 方法的工作机制与
+<em>set</em> 类似，因为也是通过调用 <em>$self</em>
+指向的匿名子程序来读取数据的。</p>
 <hr/></div>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa15"/>EXAMPLE 14.15</p>
+<p class="title"><a id="ch14exa15"/>例 14.15</p>
 <p class="codelink1"><a id="p14exa15" href="ch14_images.html#p14exa15a">Click here to view code
 image</a></p>
 <p class="pre1">&#160;&#160;&#160;# <span class="EmpItalic">User of the House Module</span><br/>1&#160;&#160;use House;&#160;&#160;# <span class="EmpItalic">Load the House
@@ -1294,37 +1269,38 @@ Alice</span><br/>5&#160;&#160;<span class="EmpItalic">After reset for Alice:</sp
 <hr/></div>
 <div class="sidebar"><hr/>
 <p class="title">代码解读</p>
-<p class="sb-indenthangingN"><strong>1.</strong> Load the <em>House</em> module.</p>
-<p class="sb-indenthangingN"><strong>2.</strong> Make two house objects and pass arguments to the
-constructor for each house. (The object for each house is a reference to a
-blessed anonymous subroutine.)</p>
-<p class="sb-indenthangingN"><strong>3.</strong> Use the <em>get()</em> method to print the owner for the
-first and second house. A reference to the house object is passed as the
-first argument. The second argument is the key <em>&#34;Owner&#34;</em>. Its
-value is retrieved. (See line 9 in <em>House.pm</em>.)</p>
-<p class="sb-indenthangingN"><a id="page_484"/><strong>4.</strong> The <em>set()</em> method in
-<em>House.pm</em> is called and sent a hash with a key and a value. (See
-line 11 in <em>House.pm</em>.)</p>
-<p class="sb-indenthangingN"><strong>5.</strong> This line shows that the owner was reset by calling
-<em>$obj1</em>-<em>&gt;get(&#8220;Owner&#8221;)</em>.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> User cannot change the <em>Price</em> to $50.00. See
-line 7 in the <em>House.pm</em> module. This rogram will die if you try to
-reset the price.</p>
-<p class="sb-indenthangingN"><strong>7.</strong> This is an attempt by the user to access the data
-directly by using the reference, <em>$obj1</em>, without calling the
-<em>set()</em> method provided by <em>House.pm</em>. If he does this, the
-<em>caller()</em> function (line 6 in <em>House.pm</em>) will return
-&#8220;main&#8221; if he is calling the function from his <em>main</em>
-package, causing an error message and the program to die. If he calls the
-<em>set()</em> method as
+<p class="sb-indenthangingN"><strong>1.</strong> 载入 <em>House</em> 模块。</p>
+<p class="sb-indenthangingN"><strong>2.</strong>
+创建两个房屋对象，通过构造器设置相应的参数属性。（这里所有的房屋对象其实都是祝福过的匿名子程序引用。）</p>
+<p class="sb-indenthangingN"><strong>3.</strong> 通过 <em>get()</em>
+方法来打印两个房屋的拥有者。这里的第一个参数是房屋对象的引用，而第二个参数则是具体的属性
+<em>Owner</em>。返回的是对应的键值。（请参考
+<em>House.pm</em> 第九行的定义。）</p>
+<p class="sb-indenthangingN"><a id="page_484"/><strong>4.</strong> 这里调用 <a
+id="page_484"/><strong>4.</strong> 中定义的 <em>set()</em>
+方法，用哈希格式来发送键和对应的值。（请参考
+<em>House.pm</em> 第十一行的定义。）</p>
+<p class="sb-indenthangingN"><strong>5.</strong> 这一行通过
+<em>$obj1</em>-<em>&gt;get(&#8220;Owner&#8221;)</em>
+打印出来的信息说明房屋的拥有者已经改变了。</p>
+<p class="sb-indenthangingN"><strong>6.</strong> 用户不能将 <em>Price</em> 设为 $50.00。请参考
+<em>House.pm</em>
+模块中第七行的代码。如果这么调用的话，程序会崩溃。</p>
+<p class="sb-indenthangingN"><strong>7.</strong> 这里显示用户如何企图（绕过
+<em>House.pm</em> 定义的 <em>set()</em> 方法）通过 <em>$obj1</em>
+引用来直接修改数据。如果这么做的话，<em>caller()</em>
+函数（<em>House.pm</em> 第六行）会返回
+&#8220;main&#8221;，于是会打印错误信息并退出。如果用户通过
 <em>$obj1</em>-<em>&gt;set(&#8217;Owner&#8217;=&gt;&#8217;Bank&#8217;)</em>
-from the <em>House.pm</em> module, as he should, the <em>set()</em> method
-will call the anonymous subroutine, and now the <em>caller()</em> function
-will return <em>House</em>. Bottom line: if the caller isn&#8217;t a
-<em>House</em>, die.</p>
+这样的方式来调用 <em>set()</em> 方法的话，就等于是从
+<em>House.pm</em> 模块的 <em>set()</em>
+方法中发起对匿名子程序的调用。所以 <em>set()</em>
+函数返回的就是
+<em>House</em>。也就是说，这里的底线是：调用者必须是
+<em>House</em>，否则退出。</p>
 <hr/></div>
 <div class="heading">
-<h3 id="ch14lev1sec4">14.4 Inheritance</h3>
+<h3 id="ch14lev1sec4">14.4 继承</h3>
 <p class="noindent"><strong>Inheritance</strong> means that a new class can inherit methods from
 an existing class. The new class can then add to or modify existing code in
 order to customize the class without having to reinvent what has already
