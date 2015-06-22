@@ -1301,44 +1301,27 @@ id="page_484"/><strong>4.</strong> 中定义的 <em>set()</em>
 <hr/></div>
 <div class="heading">
 <h3 id="ch14lev1sec4">14.4 继承</h3>
-<p class="noindent"><strong>Inheritance</strong> means that a new class can inherit methods from
-an existing class. The new class can then add to or modify existing code in
-order to customize the class without having to reinvent what has already
-been done. The principle is that a class may be subdivided into a number of
-subclasses that all share common features, but each subclass may provide its
-own additional features, refining what it borrows to a more specific
-functionality. The idea of this kind of organization is not new. You may
-have seen it in a biology class when learning about the plant and animal
-kingdoms and the breakdown of each kingdom, phylum, class, order, family,
-genus, species, and variety or in procedural programs with the use of
-functions to combine the common elements of a program into specific tasks.</p>
+<p class="noindent"><strong>继承</strong>的含义是从已有的某个类中继承方法定义，并形成一个新类。新类可以对已有类的代码进行增加或者修订，从而实现类的定制，而不必完全重头开始发明一切。这里的原则就是，从已有类可以延伸出许多的子类，而且所有子类都有共同的根基，但又可以发展出各自的细分特色来。这一类的思维或组织结构其实并不陌生，你应该在生物学的课程上看到过对植物和动物的分类方法：门纲目科属种等等。另外，面向程序的编程中也有类似的概念，就是通过组合代码中的可复用程序来完成指定的任务。</p>
 </div>
-<p class="indent">In object-oriented programming, once a class has been written and debugged,
-it can be stored in a library and reused by other programmers. The
-programmer can then add features and capabilities to the existing class
-without rewriting the whole thing. This is done through inheritance; that
-is, by deriving a new class from an already existing class. The reuse of
-software and the increased use of library classes where all this software is
-stored and organized have contributed to the wide popularity of OOP
-languages. Let&#8217;s see how Perl implements inheritance.</p>
+<p class="indent">在面向对象编程中，一旦类书写出来，也通过了调试，就可以把它部署在一个类库中供其他程序员调用。程序员可以对现存类增加功能，而不必重写整个类。这个实现的机制就是继承，也就是从现存类衍生新类。正是因为这个类库继承机制的存在，面向对象语言才得到广泛的接受。现在我们来看看
+Perl 是怎样实现继承的。</p>
 <div class="heading">
-<h4 id="ch14lev2sec13">14.4.1 The <em>@ISA</em> Array and Calling Methods</h4>
-<p class="noindent">The classes (packages) listed in the <em>@ISA</em> array are the
-<strong>parent</strong>, or <strong>base</strong>, <strong>classes</strong>
-of the current class. This is how Perl implements inheritance. The
-<em>@ISA</em> array contains a list of packages (classes) where Perl will
-search for a method if it can&#8217;t find it in the current package <a
-id="page_485"/>(class). If the method still isn&#8217;t found, then Perl
-searches for an <em>AUTOLOAD</em> function and calls that method
-instead. And if that isn&#8217;t found, then Perl searches for the last time
-in a special predefined package called <em>UNIVERSAL</em>. The
-<em>UNIVERSAL</em> class is a global base class for all packages, the
-highest class in the hierarchy of classes.</p>
+<h4 id="ch14lev2sec13">14.4.1 <em>@ISA</em> 数组和的方法调用</h4>
+<p class="noindent">列在 <em>@ISA</em>
+数组中的是当期类的父类，或者说是基类。这就是 Perl
+实现继承的方法。如果 Perl
+在调用某个方法，而且在当前的包（也就是类）中找不到，那么就会从
+<em>@ISA</em>
+数组中的其他包查找。如果仍然找不到的话，就会搜索
+<em>AUTOLOAD</em>
+函数，并进行调用。如果最后连这个也找不到的话，就搜索一个特殊的名为
+<em>UNIVERSAL</em> 的预定义包。其实这个 <em>UNIVERSAL</em>
+类是所有类的父类，也就是所有对象类的最高层次祖先。</p>
 </div>
-<p class="indent">The <em>@ISA</em> array is not searched in a call to a normal subroutine but
-in a call to a subroutine if it is called with the method invocation syntax.</p>
+<p class="indent">注意，在常见的子程序调用过程中不会搜索 <em>@ISA</em>
+数组，只有方法调用的语法才会触发这个搜索过程。</p>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa16"/>EXAMPLE 14.16</p>
+<p class="title"><a id="ch14exa16"/>例 14.16</p>
 <p class="codelink1"><a id="p14exa16" href="ch14_images.html#p14exa16a">Click here to view code
 image</a></p>
 <p class="pre1">&#160;&#160;&#160;#!/bin/perl<br/>&#160;&#160;&#160;# <span class="EmpItalic">Example of attempting
@@ -1355,23 +1338,22 @@ via package "Parent" at</span><br/>&#160;&#160;&#160;<span class="EmpItalic">inh
 <hr/></div>
 <div class="sidebar"><hr/>
 <p class="title">代码解读</p>
-<p class="sb-indenthangingN"><strong>1.</strong> The package <em>Grandpa</em> is declared.</p>
-<p class="sb-indenthangingN"><strong>2.</strong> The global scalar <em>$name</em> is assigned
-<em>Gramps</em> in package <em>Grandpa</em>.</p>
-<p class="sb-indenthangingN"><strong>3.</strong> The subroutine <em>greetme</em> is defined and when
-called, the <em>print</em> statement will be executed. <em>$Child::name</em>
-refers to the global scalar <em>$name</em> in the <em>Child</em> package.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> The package <em>Parent</em> is declared. It is empty.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> The package <em>Child</em> is declared. This package
-will try to call a method from another package. Although objects and methods
-aren&#8217;t being used here, the purpose of this example is to show you
-what happens if you try to inherit a method from a class that this package
-doesn&#8217;t know about.</p>
-<p class="sb-indenthangingN"><strong>8.</strong> Perl can&#8217;t find the method <em>greetme</em> in
-package <em>Parent</em> and prints the error message.</p>
+<p class="sb-indenthangingN"><strong>1.</strong> 这里声明了 <em>Grandpa</em> 包。</p>
+<p class="sb-indenthangingN"><strong>2.</strong> 这里在 <em>Grandpa</em> 包中将全局标量
+<em>$name</em> 设置为 <em>Gramps</em>。</p>
+<p class="sb-indenthangingN"><strong>3.</strong> 这里定义了 <em>greetme</em>
+子程序，在调用时会执行其中的 <em>print</em> 语句。而
+<em>$Child::name</em> 则值得是 <em>Child</em>
+包中定义的全局标量 <em>$name</em>。</p>
+<p class="sb-indenthangingN"><strong>4.</strong> 这里定义的是 <em>Parent</em>
+包，是一个空包。</p>
+<p class="sb-indenthangingN"><strong>5.</strong> 这里定义的是 <em>Child</em>
+包。这个包将会尝试调用另一个包中的方法。尽管这里的对象和方法无人使用，但是这个例子的目标是展示如何从另一个类中继承一个方法过来。</p>
+<p class="sb-indenthangingN"><strong>8.</strong> Perl 无法从 <em>Parent</em> 包中找到
+<em>greetme</em> 的定义，只能打印错误信息。</p>
 <hr/></div>
 <div class="sidebar"><hr/>
-<p class="title"><a id="page_486"/><a id="ch14exa17"/>EXAMPLE 14.17</p>
+<p class="title"><a id="page_486"/><a id="ch14exa17"/>例 14.17</p>
 <p class="codelink1"><a id="p14exa17" href="ch14_images.html#p14exa17a">Click here to view code
 image</a></p>
 <p class="pre1">&#160;&#160;&#160;#!/bin/perl<br/>&#160;&#160;&#160;# <span class="EmpItalic">Example of attempting
@@ -1389,20 +1371,21 @@ Grandpa.</span></p>
 <hr/></div>
 <div class="sidebar"><hr/>
 <p class="title">代码解读</p>
-<p class="sb-indenthangingN"><strong>1.</strong> The package <em>Grandpa</em> is declared.</p>
-<p class="sb-indenthangingN"><strong>2.</strong> The subroutine <em>greetme</em> is defined and, when
-called, the <em>print</em> statement will be executed. <em>$Child::name</em>
-refers to the scalar <em>$name</em> in the <em>Child</em> package.</p>
-<p class="sb-indenthangingN"><strong>3.</strong> The <em>Parent</em> package is declared.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> The <em>@ISA</em> array is assigned the name of the
-package <em>Grandpa</em>. Now if a method is called from this <em>Child</em>
-package and Perl can&#8217;t find it, it will try the <em>Grandpa</em>
-package listed in the <em>@ISA</em> array. If you try to call a normal
-subroutine without method invocation, Perl won&#8217;t consult the
-<em>@ISA</em> array, because it uses the <em>@ISA</em> array only when
-methods are being called. Even though the subroutines used here are not
-technically methods, by calling <em>greetme</em> as a class method, Perl
-will search the <em>@ISA</em> array.</p>
+<p class="sb-indenthangingN"><strong>1.</strong> 这里声明了 <em>Grandpa</em> 包。</p>
+<p class="sb-indenthangingN"><strong>2.</strong> 这里定义了 <em>greetme</em> 子程序，其中的
+<em>print</em>
+语句在调用时会得到执行机会。<em>$Child::name</em> 指向
+<em>Child</em> 包中定义的标量 <em>$name</em>。</p>
+<p class="sb-indenthangingN"><strong>3.</strong> 这里声明了 <em>Parent</em> 包。</p>
+<p class="sb-indenthangingN"><strong>4.</strong> 这里在 <em>@ISA</em> 数组中赋值 <em>Grandpa</em>
+包的名字。所以，如果 Perl 无法在 <em>Child</em>
+包中找到某个方法的定义，就会试着找 <em>@ISA</em>
+数组中列出的 <em>Grandpa</em>
+包里面有没有定义。在常规的子程序调用中并没有查询
+<em>@ISA</em>
+数组的步骤，因为这并不是方法调用。尽管这里子程序并不能从技术上称为方法，通过对
+<em>@ISA</em> 数组的搜索，它还是会调用 <em>greetme</em>
+这个类方法。</p>
 <p class="sb-indenthangingN"><strong>5.</strong> The <em>Child</em> package is declared.</p>
 <p class="sb-indenthangingN"><strong>6.</strong> This line will be printed from the <em>Child</em>
 package.</p>
@@ -1495,7 +1478,7 @@ Grandpa.</span></p>
 <hr/></div>
 <div class="sidebar"><hr/>
 <p class="title"><a id="page_489"/>Explanation</p>
-<p class="sb-indenthangingN"><strong>1.</strong> The package <em>Grandpa</em> is declared.</p>
+<p class="sb-indenthangingN"><strong>1.</strong> 这里声明了 <em>Grandpa</em> 包。</p>
 <p class="sb-indenthangingN"><strong>2.</strong> The subroutine <em>greetme</em> is defined in this
 package.</p>
 <p class="sb-indenthangingN"><strong>3.</strong> The package <em>Parent</em> is declared. It is empty.</p>
