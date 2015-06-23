@@ -1480,44 +1480,32 @@ Grandpa.</span></p>
 <div class="sidebar"><hr/>
 <p class="title"><a id="page_489"/>Explanation</p>
 <p class="sb-indenthangingN"><strong>1.</strong> 这里声明了 <em>Grandpa</em> 包。</p>
-<p class="sb-indenthangingN"><strong>2.</strong> The subroutine <em>greetme</em> is defined in this
-package.</p>
-<p class="sb-indenthangingN"><strong>3.</strong> The package <em>Parent</em> is declared. It is empty.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> The package <em>Child</em> is declared.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> This line is printed to show the flow of execution in
-the program.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> The <em>greetme</em> subroutine is called as one of the
-<em>Parent</em> package methods. Since the method could not be found in its
-own class or in the <em>@ISA</em> array, and an <em>AUTOLOAD</em> function
-is not supplied in the <em>Parent</em> package, Perl looks for package
-<em>UNIVERSAL</em> as a last resort.</p>
-<p class="sb-indenthangingN"><strong>7.</strong> This is the built-in base class called
-<em>UNIVERSAL</em> All modules inherit from <em>UNIVERSAL</em> which is
-implicitly on the end of the <em>@ISA</em> array.</p>
-<p class="sb-indenthangingN"><strong>8.</strong> The <em>AUTOLOAD</em> function will automatically be
-called from the <em>UNIVERSAL</em> class.</p>
-<p class="sb-indenthangingN2"><strong>9, 10.</strong> Within the <em>AUTOLOAD</em> function, the
-<em>greetme()</em> function in the <em>Grandpa</em> package will be invoked.</p>
+<p class="sb-indenthangingN"><strong>2.</strong> 这个包中定义了子程序 <em>greetme</em>。</p>
+<p class="sb-indenthangingN"><strong>3.</strong> 这里声明了 <em>Parent</em> 包，是一个空包。</p>
+<p class="sb-indenthangingN"><strong>4.</strong> 这里声明了 <em>Child</em> 包。</p>
+<p class="sb-indenthangingN"><strong>5.</strong>
+打印这一行是为了显明程序执行到了这里。</p>
+<p class="sb-indenthangingN"><strong>6.</strong> 这里用类方法的语法来调用 <em>Parent</em>
+包中的 <em>greetme</em>
+子程序。因为这个类中并未定义此方法，也不能在
+<em>@ISA</em> 数组中找到帮助，并且这个 <em>Parent</em>
+包也没有 <em>AUTOLOAD</em> 函数，因此 Perl 最终只能查找
+<em>UNIVERSAL</em> 包。</p>
+<p class="sb-indenthangingN"><strong>7.</strong> 这是内定的名为 <em>UNIVERSAL</em>
+的基类。因为所有的类都从此类继承，因此 <em>UNIVERSAL</em>
+其实就是隐含的附加在了 <em>@ISA</em> 数组的末尾。</p>
+<p class="sb-indenthangingN"><strong>8.</strong> 这里自动调用了 <em>UNIVERSAL</em> 类的
+<em>AUTOLOAD</em> 函数。</p>
+<p class="sb-indenthangingN2"><strong>9, 10.</strong> 在 <em>AUTOLOAD</em> 函数中最终调用了
+<em>Grandpa</em> 包中的 <em>greetme()</em> 函数。</p>
 <hr/></div>
 <div class="heading">
-<h4 id="ch14lev2sec15">14.4.3 Derived Classes</h4>
-<p class="noindent">As already discussed, <strong>inheritance</strong> is when one class can
-inherit methods from an existing class. The existing class is called the
-<strong>base</strong>, <strong>parent</strong>, or
-<strong>superclass</strong>, and the new class that inherits from it is
-called the <strong>derived</strong>, <strong>child</strong>, or
-<strong>subclass.</strong> The base class has capabilities that all its
-derived classes inherit, and the derived class can then go beyond those
-capabilities.</p>
+<h4 id="ch14lev2sec15">14.4.3 衍生类</h4>
+<p class="noindent">如同之前介绍的，所谓<strong>继承</strong>就是一个新类可以从另一个已有类继承方法定义。已有类被称为<strong>基类</strong>、<strong>父类</strong>，或者<strong>超类</strong>，而新类往往被称为<strong>衍生类</strong>、<strong>子类</strong>或者<strong>亚类</strong>。基类定义的方法所有的子类都会继承，而子类可以超越父类实现崭新的功能。</p>
 </div>
-<p class="indent">If a derived class inherits from one base class, it is called <strong>single
-inheritance</strong>. For example, single inheritance in real life might be
-that a child inherits his ability to draw from his father. If a derived or
-subclass inherits from more than one base class, this is called
-<strong>multiple inheritance</strong>. To continue the analogy, the child
-inherits his ability to draw from his father and his ability to sing from
-his mother. In Perl, the derived class inherits methods from its base class
-and can add and modify these methods when necessary.</p>
+<p class="indent">如果衍生类都来自于一个基类，那么就被称为是<strong>单继承</strong>。在实际生活中，如果一个小孩从父亲那里继承了画画的天赋，那么就是单继承。如果衍生类或子类来自于一个以上的基类，那么就被称为<strong>多继承</strong>。同样的，实际生活中一个小孩可能从父亲那里继承了画画的天赋，而且同时从母亲那里继承了歌唱的天赋。在
+Perl
+里面，衍生类从基类那里继承来的方法，可以事后增加或必要时进行修正。</p>
 <p class="indent">The classes are inherited by putting them in the <em>@ISA</em> array. In <a
 href="ch13.html#ch13">Chapter 13</a>, &#8220;<a
 href="ch13.html#ch13">Modularize It, Package It, and Send It to the
