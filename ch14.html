@@ -1383,43 +1383,41 @@ Grandpa.</span></p>
 数组中列出的 <em>Grandpa</em>
 包里面有没有定义。在常规的子程序调用中并没有查询
 <em>@ISA</em>
-数组的步骤，因为这并不是方法调用。尽管这里子程序并不能从技术上称为方法，通过对
+数组的步骤，因为这并不是方法调用。尽管这里的子程序从技术上来说不怎么像是一个方法，通过对
 <em>@ISA</em> 数组的搜索，它还是会调用 <em>greetme</em>
 这个类方法。</p>
-<p class="sb-indenthangingN"><strong>5.</strong> The <em>Child</em> package is declared.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> This line will be printed from the <em>Child</em>
-package.</p>
-<p class="sb-indenthangingN"><strong>7.</strong> The class method <em>greetme</em> is called in the
-<em>Parent</em> package. The <em>@ISA</em> array tells Perl to look in the
-<em>Grandpa</em> package if the method isn&#8217;t in the <em>Parent</em>
-package.</p>
+<p class="sb-indenthangingN"><strong>5.</strong> 这里声明的是 <em>Child</em> 包。</p>
+<p class="sb-indenthangingN"><strong>6.</strong> 这一行将会在 <em>Child</em>
+包中得到打印机会。</p>
+<p class="sb-indenthangingN"><strong>7.</strong> 这里在 <em>Parent</em> 包中调用类方法
+<em>greetme</em>。通过 <em>@ISA</em> 数组来触发 Perl 对
+<em>Grandpa</em> 包进行搜索，从而解决 <em>Parent</em>
+包中不能找到的方法带来的问题。</p>
 <hr/></div>
 <div class="heading">
-<h4 id="ch14lev2sec14">14.4.2 <em>$AUTOLOAD</em>, <em>sub AUTOLOAD</em>, and <em>UNIVERSAL</em></h4>
-<p class="noindent">If a subroutine (or method) cannot be found in the current package or in the
-<em>@ISA</em> array, the <em>AUTOLOAD</em> function will be called. The
-<em>$AUTOLOAD</em> variable is assigned the name of the missing subroutine
-if it is used with the <em>AUTOLOAD</em> function. Arguments passed to the
-undefined subroutine are stored in the <em>AUTOLOAD</em> subroutine&#8217;s
-<em>@_</em> array. If you <a id="page_487"/>assign a function name to the
-<em>$AUTOLOAD</em> variable, that subroutine will be called if the
-<em>AUTOLOAD</em> subroutine is provided in place of the missing
-subroutine. If the <em>$AUTOLOAD</em> variable is used with the
-<em>AUTOLOAD</em> subroutine, either the method or regular subroutine syntax
-can be used. If all fails and Perl still can&#8217;t find the subroutine, a
-final package (class) called <em>UNIVERSAL</em> is searched for the missing
-method. The <em>UNIVERSAL</em> class contains three methods that all classes
-inherit. They are <em>isa()</em>, <em>can()</em>, and <em>VERSION()</em>
-(see <a href="ch14.html#ch14tab02">Table 14.2</a>). Type at your command
-line prompt <em>perldoc UNIVERSAL</em> for most recent documentation.</p>
+<h4 id="ch14lev2sec14">14.4.2 <em>$AUTOLOAD</em>、<em>sub AUTOLOAD</em> 和 <em>UNIVERSAL</em></h4>
+<p class="noindent">如果在当前包以及 <em>@ISA</em>
+数组中的其他包里面都找不到某个方法的定义，那么就会试着调用
+<em>AUTOLOAD</em> 函数。在调用它的时候，<em>$AUTOLOAD</em>
+变量会被赋予正在调用的子程序的名字。而被掉子程序的参数也会进入
+<em>AUTOLOAD</em> 子程序的 <em>@_</em> 数组。如果你对
+<em>$AUTOLOAD</em>
+变量进行赋值的话，那个在无法匹配的方法调用发生的时候就会调用这个变量中的名字对应的方法。而且如果通过
+<em>AUTOLOAD</em> 子程序和 <em>$AUTOLOAD</em>
+变量进行匹配，那么无论是方法调用语法还是普通语法都会生效。如果以上一切都不能匹配的话，Perl
+就会尝试在 <em>UNIVERSAL</em> 包中定位方法。<em>UNIVERSAL</em>
+类最起码定义了三个方法，是所有类都必须继承的。他们是
+<em>isa()</em>、<em>can()</em> 和 <em>VERSION()</em>（请参考<a
+href="ch14.html#ch14tab02">表 14.2</a>）。另外，可以通过输入
+<em>perldoc UNIVERSAL</em> 命令来查询最新的文档。</p>
 </div>
 <div class="tab-heading">
 <div class="image"><a id="ch14tab02"/><img src="graphics/14tab02.jpg" alt="Image"/></div>
-<p class="tab-caption"><strong>Table 14.2</strong> The <em>isa()</em>, <em>can()</em>, and
-<em>VERSION()</em> Methods</p>
+<p class="tab-caption"><strong>表 14.2</strong><em>isa()</em>、<em>can()</em> 和
+<em>VERSION()</em> 方法</p>
 </div>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa18"/>EXAMPLE 14.18</p>
+<p class="title"><a id="ch14exa18"/>例 14.18</p>
 <p class="codelink1"><a id="p14exa18" href="ch14_images.html#p14exa18a">Click here to view code
 image</a></p>
 <p class="pre1">1&#160;&#160;{ <span class="EmpStrong">package Grandpa;</span><br/>&#160;&#160;&#160;&#160;&#160;&#160;$name = "Gramps";<br/>&#160;&#160;&#160;&#160;&#160;&#160;<span class="EmpStrong">sub greetme
@@ -1440,31 +1438,34 @@ Parent::unknown.</span></p>
 <p class="title"><a id="page_488"/>Explanation</p>
 <p class="sb-indenthangingN"><strong>1.</strong> The package <em>Grandpa i</em>s declared. It contains
 one subroutine.</p>
-<p class="sb-indenthangingN"><strong>2.</strong> This line is printed from the <em>Grandpa</em> package.</p>
-<p class="sb-indenthangingN"><strong>3.</strong> The package <em>Parent</em> is declared.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> It contains an <em>AUTOLOAD</em> subroutine. An
-undefined subroutine is called on line 10. It has two arguments,
-<em>Mom</em> and <em>Dad</em>. If Perl can&#8217;t find this subroutine in
-the <em>Child</em> package, it will look in the <em>@ISA</em> array, and if
-it is not there, Perl will look for an <em>AUTOLOAD</em> function.</p>
-<p class="sb-indenthangingNP">The subroutine <em>AUTOLOAD</em> is defined.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> Since this function was called as a class method, the
-first argument stored in the <em>@_</em> array is the name of the class. The
-remaining arguments are <em>Mom</em> and <em>Dad</em>.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> This line is printed to show that we got here.</p>
-<p class="sb-indenthangingN"><strong>7.</strong> The <em>$AUTOLOAD</em> variable contains the name of the
-class and the unnamed subroutine.</p>
-<p class="sb-indenthangingN"><strong>8.</strong> The package <em>Child</em> is declared.</p>
-<p class="sb-indenthangingN"><strong>9.</strong> This line is printed to show in what order the lines are
-executed.</p>
-<p class="sb-indenthangingN1"><strong>10.</strong> The <em>Child</em> package wants to access a method in
-the <em>Parent</em> package. The <em>Parent</em> package does not contain a
-method or subroutine called <em>unknown</em>. It does, on the other hand,
-contain an <em>AUTOLOAD</em> subroutine that will be executed because this
-subroutine can&#8217;t be found.</p>
+<p class="sb-indenthangingN"><strong>2.</strong> 这一行从 <em>Grandpa</em> 包中打印出来。</p>
+<p class="sb-indenthangingN"><strong>3.</strong> 这里定义了 <em>Parent</em> 包。</p>
+<p class="sb-indenthangingN"><strong>4.</strong> 这里因为存在 <em>AUTOLOAD</em>
+子程序。在第十行又有一个未定义的子程序调用（这个调用有两个参数
+<em>Mom</em> 和 <em>Dad</em>）。所以，Perl 意识到 <em>Child</em>
+包中找不到子程序定义，于是就去查看 <em>@ISA</em>
+数组，因为仍然找不到，就会去查找 <em>AUTOLOAD</em>
+子程序。</p>
+<p class="sb-indenthangingNP">这里定义的是 <em>AUTOLOAD</em> 子程序。</p>
+<p class="sb-indenthangingN"><strong>5.</strong>
+因为这个函数是用类方法的方式来调用的，所以 <em>@_</em>
+数组中的第一个参数是类的名字。其余的参数就是之前提到的
+<em>Mom</em> 和 <em>Dad</em>。</p>
+<p class="sb-indenthangingN"><strong>6.</strong>
+打印这一行是为了显明我们执行到了这里。</p>
+<p class="sb-indenthangingN"><strong>7.</strong> 这里的 <em>$AUTOLOAD</em>
+变量包含了类名和未定义的子程序名。</p>
+<p class="sb-indenthangingN"><strong>8.</strong> 这里定义的是 <em>Child</em> 包。</p>
+<p class="sb-indenthangingN"><strong>9.</strong>
+打印这一行是为了显明我们执行到了这里。</p>
+<p class="sb-indenthangingN1"><strong>10.</strong> 这里 <em>Child</em> 包想要调用 <em>Parent</em>
+包中的一个方法。而 <em>Parent</em> 包并未定义这个名为
+<em>unknown</em> 的子程序。不过，它确实定义了一个
+<em>AUTOLOAD</em>
+子程序，所以这里它会得到执行，因为没有其他的子程序可以找到。</p>
 <hr/></div>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa19"/>EXAMPLE 14.19</p>
+<p class="title"><a id="ch14exa19"/>例 14.19</p>
 <p class="codelink1"><a id="p14exa19" href="ch14_images.html#p14exa19a">Click here to view code
 image</a></p>
 <p class="pre1">1&#160;&#160;{ <span class="EmpStrong">package Grandpa;</span><br/>&#160;&#160;&#160;&#160;&#160;&#160;$name = "Gramps";<br/>2&#160;&#160;&#160;&#160;&#160;sub greetme {<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;print "Hi $Child::name
