@@ -1506,44 +1506,39 @@ Grandpa.</span></p>
 <p class="indent">如果衍生类都来自于一个基类，那么就被称为是<strong>单继承</strong>。在实际生活中，如果一个小孩从父亲那里继承了画画的天赋，那么就是单继承。如果衍生类或子类来自于一个以上的基类，那么就被称为<strong>多继承</strong>。同样的，实际生活中一个小孩可能从父亲那里继承了画画的天赋，而且同时从母亲那里继承了歌唱的天赋。在
 Perl
 里面，衍生类从基类那里继承来的方法，可以事后增加或必要时进行修正。</p>
-<p class="indent">The classes are inherited by putting them in the <em>@ISA</em> array. In <a
-href="ch13.html#ch13">Chapter 13</a>, &#8220;<a
-href="ch13.html#ch13">Modularize It, Package It, and Send It to the
-Library!</a>&#8221; we looked at modules from the Perl standard library and
-modules you could create yourself. In order to include a module or pragma
-into your program, the <em>use</em> function was called with the module name
-(minus the.<em>pm</em> extension). The module had the capability of
-exporting symbols to other packages that might need to use the module. A
-special module called <em>Exporter.pm</em> handled the details for exporting
-and importing symbols between modules and the symbols were listed in the
-<em>@EXPORT</em> and <em>@EXPORT_OK</em> arrays. The <em>Exporter.pm</em>
-module, you may recall, was listed in the <em>@ISA</em> array in order to
-inherit methods necessary for it to do its job. But if a module functions as
-a class, then its methods can be called without using
-<em>Exporter</em>. Note in the following examples, the class methods and the
-instance methods are not exported.</p>
-<p class="indent">The following examples demonstrate inheritance. The user program need not
-make any reference to the base class, <em>Employee.</em> The
-<em>Salesman</em> class and the <em>Teacher</em> class are derived from
-<em>Employee</em>. The <em>Salesman</em> and <em>Teacher</em> class
-&#8220;use&#8221; the <em>Employee</em> class. <a
-href="ch14.html#ch14fig05">Figure 14.5</a> shows this inheritance hierarchy
-graphically.</p>
+<p class="indent">实现继承的机制就是通过 <em>@ISA</em> 数组。在<a
+href="ch13.html#ch13">第十三章
+“模块化、封包话和库！”</a>当中，我们分析了 Perl
+的标准库和我们可以自行构建的模块。为了将模块或者语义引入程序，要使用
+<em>use</em> 函数（调用的时候只需要模块名，不需要带上
+.<em>pm</em>
+附属名）。模块可以选择在载入时向其他包输出符号表。通过一个名为
+<em>Exporter.pm</em> 的特殊模块来进行符号表（主要是列在
+<em>@EXPORT</em> 和 <em>@EXPORT_OK</em>
+数组中）的输入和输出。如果你还记得的话，<em>Exporter.pm</em>
+模块就是通过列入 <em>@ISA</em>
+数组的方法来继承必要的方法，从而完成它的使命的。但是，如果一个模块的功能主要是实现一个类的话，那么大多数情况下是不需要
+<em>Exporter</em>
+支持就可以工作的。注意在下面的例子中，类方法和实例方法都未进行任何形式的符号表输出。</p>
+<p class="indent">下面的例子是关于继承的。用户程序不必和基类
+<em>Employee</em> 发生任何直接关联。衍生类 <em>Salesman</em> 和
+<em>Teacher</em> 都继承了 <em>Employee</em>，因此它们都会通过
+use 来载入基类 <em>Employee</em>。<a "href="ch14.html#ch14fig05">图
+14.5</a> 会更好的显明继承关系。</p>
 <div class="fig-heading">
 <div class="image"><a id="page_490"/><a id="ch14fig05"/><img src="graphics/14fig05.jpg" alt="Image"/></div>
-<p class="fig-caption"><strong>Figure 14.5</strong> Inheritance hierarchy&#8212;deriving classes
-from a base class.</p>
+<p class="fig-caption"><strong>图 14.5</strong>，共同基类的继承关系图</p>
 </div>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa20"/>EXAMPLE 14.20</p>
+<p class="title"><a id="ch14exa20"/>例 14.20</p>
 <p class="codelink1"><a id="p14exa20" href="ch14_images.html#p14exa20a">Click here to view code
 image</a></p>
 <p class="pre1">&#160;&#160;&#160;# <span class="EmpItalic">Module Employee.pm</span><br/><br/>&#160;&#160;&#160;# <span class="EmpItalic">The Base Class</span><br/>1&#160;&#160;<span class="EmpStrong">package Employee;</span><br/>&#160;&#160;&#160;use strict;<br/>&#160;&#160;&#160;use warnings;<br/>&#160;&#160;&#160;# <span class="EmpItalic">Constructor method</span><br/>2&#160;&#160;<span class="EmpStrong">sub init</span> {<br/>3&#160;&#160;&#160;&#160;&#160;my $class = shift;<br/>4&#160;&#160;&#160;&#160;&#160;my %info = @_;<br/>5&#160;&#160;&#160;&#160;&#160;my $self = {_Name=&gt;$info{"_Name"},<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;_StartDate=&gt;$info{"_StartDate"},<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;_BasePay=&gt;$info{"_BasePay"},<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;};<br/>6&#160;&#160;&#160;&#160;&#160;return bless($self, $class);<br/>&#160;&#160;&#160;}<br/>&#160;&#160;&#160;# <span class="EmpItalic">Some instance methods</span><br/>&#160;&#160;&#160;sub get_name{<br/>&#160;&#160;&#160;&#160;&#160;&#160;my $self=shift;<br/>&#160;&#160;&#160;&#160;&#160;&#160;return $self-&gt;{_Name};<br/>&#160;&#160;&#160;}<br/>&#160;&#160;&#160;&#160;sub get_startdate{<br/>&#160;&#160;&#160;&#160;&#160;&#160;my $self=shift;<br/>&#160;&#160;&#160;&#160;&#160;&#160;return $self-&gt;{_StartDate};<br/>&#160;&#160;&#160;}<br/>&#160;&#160;&#160;sub get_basepay{<br/>&#160;&#160;&#160;&#160;&#160;&#160;my $self=shift;<br/>&#160;&#160;&#160;&#160;&#160;&#160;return $self-&gt;{_BasePay};<br/>&#160;&#160;&#160;}<br/>&#160;&#160;&#160;1;</p>
 <hr/></div>
 <div class="sidebar"><hr/>
 <p class="title"><a id="page_491"/>Explanation</p>
-<p class="sb-indenthangingN"><strong>1.</strong> <em>Employee</em> is the base class in a file called
-<em>Employee.pm</em>.</p>
+<p class="sb-indenthangingN"><strong>1.</strong> 这里的 <em>Employee</em>
+基类其实源自一个名叫 <em>Employee.pm</em> 的文件。</p>
 <p class="sb-indenthangingN"><strong>2.</strong> The <em>init</em> method is a constructor. It sets
 properties for all employees.</p>
 <p class="sb-indenthangingN"><strong>3.</strong> The first argument is the class name from which the
