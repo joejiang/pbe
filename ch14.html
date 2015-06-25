@@ -1536,22 +1536,21 @@ image</a></p>
 <p class="pre1">&#160;&#160;&#160;# <span class="EmpItalic">Module Employee.pm</span><br/><br/>&#160;&#160;&#160;# <span class="EmpItalic">The Base Class</span><br/>1&#160;&#160;<span class="EmpStrong">package Employee;</span><br/>&#160;&#160;&#160;use strict;<br/>&#160;&#160;&#160;use warnings;<br/>&#160;&#160;&#160;# <span class="EmpItalic">Constructor method</span><br/>2&#160;&#160;<span class="EmpStrong">sub init</span> {<br/>3&#160;&#160;&#160;&#160;&#160;my $class = shift;<br/>4&#160;&#160;&#160;&#160;&#160;my %info = @_;<br/>5&#160;&#160;&#160;&#160;&#160;my $self = {_Name=&gt;$info{"_Name"},<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;_StartDate=&gt;$info{"_StartDate"},<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;_BasePay=&gt;$info{"_BasePay"},<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;};<br/>6&#160;&#160;&#160;&#160;&#160;return bless($self, $class);<br/>&#160;&#160;&#160;}<br/>&#160;&#160;&#160;# <span class="EmpItalic">Some instance methods</span><br/>&#160;&#160;&#160;sub get_name{<br/>&#160;&#160;&#160;&#160;&#160;&#160;my $self=shift;<br/>&#160;&#160;&#160;&#160;&#160;&#160;return $self-&gt;{_Name};<br/>&#160;&#160;&#160;}<br/>&#160;&#160;&#160;&#160;sub get_startdate{<br/>&#160;&#160;&#160;&#160;&#160;&#160;my $self=shift;<br/>&#160;&#160;&#160;&#160;&#160;&#160;return $self-&gt;{_StartDate};<br/>&#160;&#160;&#160;}<br/>&#160;&#160;&#160;sub get_basepay{<br/>&#160;&#160;&#160;&#160;&#160;&#160;my $self=shift;<br/>&#160;&#160;&#160;&#160;&#160;&#160;return $self-&gt;{_BasePay};<br/>&#160;&#160;&#160;}<br/>&#160;&#160;&#160;1;</p>
 <hr/></div>
 <div class="sidebar"><hr/>
-<p class="title"><a id="page_491"/>Explanation</p>
+<p class="title"><a id="page_491"/>代码解读</p>
 <p class="sb-indenthangingN"><strong>1.</strong> 这里的 <em>Employee</em>
 基类其实源自一个名叫 <em>Employee.pm</em> 的文件。</p>
-<p class="sb-indenthangingN"><strong>2.</strong> The <em>init</em> method is a constructor. It sets
-properties for all employees.</p>
-<p class="sb-indenthangingN"><strong>3.</strong> The first argument is the class name from which the
-method was called.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> The information being passed in from the caller of this
-function is a hash of key/value pairs.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> The values in the <em>%info</em> hash are assigned as
-the employee&#8217;s properties.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> The new employee referent is blessed into the class that
-called this subroutine (its name was passed in as the first argument).</p>
+<p class="sb-indenthangingN"><strong>2.</strong> 这里的 <em>init</em>
+方法是一个构造器，能设置所有员工的属性。</p>
+<p class="sb-indenthangingN"><strong>3.</strong> 第一个参数是被调用的方法所在的类名。</p>
+<p class="sb-indenthangingN"><strong>4.</strong>
+这个函数的调用接口是一个哈希格式的键值对。</p>
+<p class="sb-indenthangingN"><strong>5.</strong> 这里吧 <em>%info</em>
+哈希的值赋给员工的属性。</p>
+<p class="sb-indenthangingN"><strong>6.</strong>
+新员工的引用被祝福称为类的对象，类名（作为第一个参数）成为祝福的标签。</p>
 <hr/></div>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa21"/>EXAMPLE 14.21</p>
+<p class="title"><a id="ch14exa21"/>例 14.21</p>
 <p class="codelink1"><a id="p14exa21" href="ch14_images.html#p14exa21a">Click here to view code
 image</a></p>
 <p class="pre1">1&#160;&#160;package Salesman;<br/>&#160;&#160;&#160;use lib("/usr/local/bin/baseclass");&#160;&#160;# <span
@@ -1566,14 +1565,14 @@ count_salesman();<br/>&#160;&#160;&#160;&#160;&#160;&#160;return $emp;<br/>&#160
 firm.\n";<br/>&#160;&#160;&#160;}<br/>&#160;&#160;&#160;1;</p>
 <hr/></div>
 <div class="sidebar"><hr/>
-<p class="title"><a id="page_492"/>Explanation</p>
-<p class="sb-indenthangingN"><strong>1.</strong> The <em>Salesman</em> class is declared in
-<em>Salesman.pm</em>.</p>
-<p class="sb-indenthangingN"><strong>2.</strong> The <em>base</em> module updates the <em>@ISA</em> array
-and loads the <em>Employee.pm</em> module. Another way to update
-<em>@ISA</em> is to say:</p>
+<p class="title"><a id="page_492"/>代码解读</p>
+<p class="sb-indenthangingN"><strong>1.</strong> 通过 <em>Salesman.pm</em> 来声明了
+<em>Salesman</em> 类的存在。</p>
+<p class="sb-indenthangingN">通过 <em>base</em> 模块来修改 <em>@ISA</em> 数组，并载入
+<em>Employee.pm</em>
+模块。当然，也可以通过这样的方式来修改 <em>@ISA</em>：</p>
 <p class="pre2">push(@ISA,"Employee");<br/>use Employee;</p>
-<p class="sb-indenthangingNP">If using version 5.16 and above, you can say:</p>
+<p class="sb-indenthangingNP">在 Perl 5.16 和更高的版本中，你还可以这样写：</p>
 <p class="pre2">use parent Employee;</p>
 <p class="sb-indenthangingN4"><strong>3, 4.</strong> The counter subroutine will keep track of the number
 of salesmen created. It uses the <em>state</em> feature to allow the
