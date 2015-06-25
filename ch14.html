@@ -1574,40 +1574,39 @@ firm.\n";<br/>&#160;&#160;&#160;}<br/>&#160;&#160;&#160;1;</p>
 <p class="pre2">push(@ISA,"Employee");<br/>use Employee;</p>
 <p class="sb-indenthangingNP">在 Perl 5.16 和更高的版本中，你还可以这样写：</p>
 <p class="pre2">use parent Employee;</p>
-<p class="sb-indenthangingN4"><strong>3, 4.</strong> The counter subroutine will keep track of the number
-of salesmen created. It uses the <em>state</em> feature to allow the
-<em>$counter</em> variable to retain its value from one call to the next;
-meaning, it does not reset the variable to zero each time the function is
-called. This is a class function as it is specific to the class as a whole
-and does not take a reference to an object as its first argument.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> The constructor method for the <em>Salesman</em> class
-is defined.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> Here we see inheritance being used when calling the
-<em>init</em> method which is defined in the <em>Employee</em> class (see
-<em>Employee.pm</em>), not in the current <em>Salesman</em> class. When
-<em>init</em> is called, Perl will look in the current <em>Salesman</em>
-class first, and since it is not defined there, will then look in the
-<em>@ISA</em> array to see if it is listed there. It is. Note that the class
-name being sent to to the <em>Employee</em>&#8217;s <em>init()</em> function
-is <em>Salesman</em> (meaning, in the <em>Employee</em> class the blessing
-will bless the object into the <em>Salesman</em> class, not the
-<em>Employee</em> class). The remaining arguments are the properties for any
-<em>Employee</em>. A blessed reference to a new <em>Salesaman</em> object is
-returned.</p>
-<p class="sb-indenthangingN"><strong>7.</strong> Now the blessed salesman will get additional properties
-that further define all salesmen.</p>
-<p class="sb-indenthangingN"><strong>8.</strong> Each time a new <em>Salesman</em> object is created, the
-<em>count_salesman</em> function is called. It is a class function and does
-not require a reference to the object.</p>
-<p class="sb-indenthangingN"><strong>9.</strong> An access method, <em>calculate_pay()</em>, is defined
-for the <em>Salesman</em>.</p>
-<p class="sb-indenthangingN1"><strong>10.</strong> The first argument is a reference to the object
-implicitly sent by Perl when the function is called.</p>
-<p class="sb-indenthangingN1"><strong>11.</strong> The <em>DESTROY</em> method is called each time an
-object goes out of scope, usually when the program ends.</p>
+<p class="sb-indenthangingN4"><strong>3, 4.</strong>
+这里的计数子程序会记录目前为止创建的销售人员的数量。这里使用了
+<em>state</em> 这个功能来保持 <em>$counter</em>
+变量的值在多次调用之间保持有效，也就是说每次访问的时候不必担心它的值已经恢复到了零。这个子程序是一个类方法，它对某个具体的对象实例来说没有意义，因此它的第一个参数也不会是引用。</p>
+<p class="sb-indenthangingN"><strong>5.</strong> 这里定义了 <em>Salesman</em>
+类的构造器方法。</p>
+<p class="sb-indenthangingN"><strong>6.</strong> 这里我们看到，从 <em>Employee</em> 类（参考
+<em>Employee.pm</em>）继承来的 <em>init</em> 方法（不在当前类
+<em>Salesman</em>  中定义）得到了调用。当 <em>init</em>
+调用发生的时候，Perl 会先查看当前的 <em>Salesman</em>
+类，因为无法找到定义，于是就查看 <em>@ISA</em>
+数组，发现了其中的关键所在。注意，这里调用
+<em>Employee</em> 类的 <em>init()</em>
+方法的时候，发送的第一个参数是
+<em>Salesman</em>。因为这里的对象是被祝福成了
+<em>Salesman</em> 类的，而不是 <em>Employee</em>
+类。其他的参数都是为 <em>Employee</em>
+对象的属性而设的。最终，一个祝福过的新 <em>Salesaman</em>
+对象被返回。</p>
+<p class="sb-indenthangingN"><strong>7.</strong>
+现在祝福过的销售人员对象，会得到更多有关销售人员的属性。</p>
+<p class="sb-indenthangingN"><strong>8.</strong> 每当一个新的 <em>Salesman</em>
+对象创建的时候，都会调用 <em>count_salesman</em>
+函数。这个类方法不需要对象引用就能调用。</p>
+<p class="sb-indenthangingN"><strong>9.</strong> 为 <em>Salesman</em> 类定义了一个存取方法
+<em>calculate_pay()</em>。</p>
+<p class="sb-indenthangingN1"><strong>10.</strong> 第一个参数是对象引用，是由 Perl
+在调用时候默认发送的。</p>
+<p class="sb-indenthangingN1"><strong>11.</strong> 这里的 <em>DESTROY</em>
+方法是在对象的有效期达到时调用的，通常这意味着程序退出的时候。</p>
 <hr/></div>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa22"/>EXAMPLE 14.22</p>
+<p class="title"><a id="ch14exa22"/>例 14.22</p>
 <p class="codelink1"><a id="p14exa22" href="ch14_images.html#p14exa22a">Click here to view code
 image</a></p>
 <p class="pre1">1&#160;&#160;<span class="EmpStrong">package Teacher</span>;<br/>&#160;&#160;&#160;use v5.10.0;<br/>&#160;&#160;&#160;use strict;<br/>&#160;&#160;&#160;use warnings;<br/>&#160;&#160;&#160;use feature qw(state say);<br/>2&#160;&#160;<span class="EmpStrong">our @ISA=qw(Employee)</span>;<br/>&#160;&#160;&#160;<span class="EmpStrong">use Employee</span>;<br/><br/>&#160;&#160;&#160;my $tracker;<br/><a id="page_493"/>3&#160;&#160;sub count_teacher{&#160;&#160;&#160;# <span
@@ -1618,38 +1617,38 @@ created.\n";<br/>&#160;&#160;&#160;}</p>
 <hr/></div>
 <div class="sidebar"><hr/>
 <p class="title">代码解读</p>
-<p class="sb-indenthangingN"><strong>1.</strong> The <em>Teacher</em> class is defined here.</p>
-<p class="sb-indenthangingN"><strong>2.</strong> In this module, the <em>@ISA</em> is updated directly
-rather than by using the <em>base.pm</em> or <em>parent.pm</em> pragmas. The
-name of the base class is listed so that the subclass, <em>Teacher</em>, can
-inherit from it. Not only does the <em>@ISA</em> array need to be updated,
-but the <em>use</em> directive must name the base class and load it. This is
-done automatically when you say <em>use parent</em> or <em>use base</em>.</p>
-<p class="sb-indenthangingN"><strong>3.</strong> This class function will track the number of new
-<em>Teacher</em> objects added to the class.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> The <em>new()</em> constructor method for the teacher
-defines the properties for the teacher as a hash and returns a blessed
-teacher reference.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> Like the <em>Salesman</em> class described previously,
-the <em>Teacher</em> inherits from the <em>Employee</em> class and call its
-<em>init()</em> method. The <em>init()</em> constructor in the
-<em>Employee</em> class will then assign the basic properties for an
-<em>Employee</em> and return a blessed <em>Teacher</em> object.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> The teacher object is sent to the <em>set_courses()</em>
-method along with a reference to a list of courses. These courses will be
-set as a new attribute to the object.</p>
-<p class="sb-indenthangingN"><strong>7.</strong> The <em>get_courses()</em> method will retrieve and send
-back the list of the teacher&#8217;s courses by derefencing the pointer,
-<em>$self-&gt;{Courses}</em>.</p>
-<p class="sb-indenthangingN"><a id="page_494"/><strong>8.</strong> When the program is is ready to exit,
-the special <em>END</em> subroutine prints out the number of
-<em>Teacher</em> objects that were created. This works better than using the
-<em>DESTROY</em> method because the <em>DESTROY</em> method would print out
-the message whenever a teacher object goes out of scope, so that if you had
-created six teacher objects, the message would print six times.</p>
+<p class="sb-indenthangingN"><strong>1.</strong> 这里定义了 <em>Teacher</em> 类。</p>
+<p class="sb-indenthangingN"><strong>2.</strong> 在这个模块中，<em>@ISA</em>
+是直接修改的，没有使用 <em>base.pm</em> 或者 <em>parent.pm</em>
+这类语法结构。这里列出了它的基类，所以 <em>Teacher</em>
+这个子类可以继承基类的方法。其实，这里要做的不只是修改
+<em>@ISA</em> 数组的修改，也必须通过 <em>use</em>
+语句来载入基类。而使用 <em>use parent</em> 或者 <em>use
+base</em> 语法的时候，这两个动作其实是自动完成的。</p>
+<p class="sb-indenthangingN"><strong>3.</strong> 这里使用类方法来跟踪目前为止创建的
+<em>Teacher</em> 对象的数量。</p>
+<p class="sb-indenthangingN"><strong>4.</strong> 这里定义的 <em>new()</em>
+构造器方法通过哈希来定义教师对象的属性，并且将祝福过的引用返回给调用者。</p>
+<p class="sb-indenthangingN"><strong>5.</strong> 同样的，这里类似于之前的 <em>Salesman</em>
+类的构造，<em>Teacher</em> 从 <em>Employee</em> 继承了
+<em>init()</em> 方法，也进行了调用。这里调用的
+<em>init()</em> 构造器对 <em>Employee</em>
+类进行了基础属性的初始化，并且将 <em>Employee</em> 对象以
+<em>Teacher</em> 对象引用的形式返回。</p>
+<p class="sb-indenthangingN"><strong>6.</strong> 这里对教师对象调用 <em>set_courses()</em>
+方法，并将课程列表作的引用作为附加参数。这些课程会设置为对象的一个新属性。</p>
+<p class="sb-indenthangingN"><strong>7.</strong> 这里的 <em>get_courses()</em>
+方法将会通过查找
+<em>$self-&gt;{Courses}</em>，获得教师的课程列表并返回。</p>
+<p class="sb-indenthangingN"><a id="page_494"/><strong>8.</strong>
+当程序将要退出的时候，这个特殊的 <em>END</em>
+子程序将会打印目前创建的 <em>Teacher</em>
+对象的数量。这比起使用 <em>DESTROY</em>
+方法要好一些，因为 <em>DESTROY</em>
+方法每当教师对象将被释放的时候就会被调用。因此，如果你创建了六个教师对象，那么打印信息的数量也就是六行。</p>
 <hr/></div>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa23"/>EXAMPLE 14.23</p>
+<p class="title"><a id="ch14exa23"/>例 14.23</p>
 <p class="codelink1"><a id="p14exa23" href="ch14_images.html#p14exa23a">Click here to view code
 image</a></p>
 <p class="pre1">&#160;&#160;&#160;# <span class="EmpItalic">The Driver (user) Program</span><br/>1&#160;&#160;use Salesman;<br/>2&#160;&#160;use Teacher;<br/>&#160;&#160;&#160;use Data::Dumper;<br/>&#160;&#160;&#160;use strict;<br/>&#160;&#160;&#160;use warnings;<br/>3&#160;&#160;<span class="EmpStrong">my
@@ -1706,32 +1705,32 @@ created.</span></p>
 <hr/></div>
 <div class="sidebar"><hr/>
 <p class="title">代码解读</p>
-<p class="sb-indenthangingN"><strong>1.</strong> The <em>Salesman</em> class is loaded into memory.</p>
-<p class="sb-indenthangingN"><strong>2.</strong> The <em>Teacher</em> class is also loaded into memory.</p>
-<p class="sb-indenthangingN"><strong>3.</strong> A new <em>Salesman</em> object is created with a call to
-the new constructor. The properties are sent as a hash. In this way the
-properties can be sent in any order, because both key and value are sent.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> The <em>Salesman&#8217;s</em> instance/access method,
-<em>calculate_pay</em>, is called and returns the object&#8217;s pay.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> Another <em>Salesman</em> object is created.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> Pay for the second <em>Salesman</em> object is
-calculated and returned.</p>
-<p class="sb-indenthangingN"><strong>7.</strong> A new <em>Teacher</em> object is created. Because the
-classname for a <em>Teacher</em> class is the first argument, the
-<em>new()</em> constructor for the <em>Teacher</em> is called (polymorphism
-in action).</p>
-<p class="sb-indenthangingN"><a id="page_496"/><strong>8.</strong> The teacher&#8217;s access method,
-<em>set_courses</em>(), is called. Its arguments are the object reference,
-implicitly sent by Perl, and a reference to an array of courses. These
-courses will be added as another attribute for the <em>Teacher</em>. In the
-next lines, the values are fetched using the base class methods (inherited)
-and the <em>Teacher</em>&#8217;s method.</p>
-<p class="sb-indenthangingN"><strong>9.</strong> The data for two employees, the first salesman and
-teacher, are displayed by <em>Data::Dumper</em>. You can see that each
-employee was blessed into his respective class.</p>
+<p class="sb-indenthangingN"><strong>1.</strong> 这里将 <em>Salesman</em> 类载入内存。</p>
+<p class="sb-indenthangingN"><strong>2.</strong> 这里将 <em>Teacher</em> 类也载入内存。</p>
+<p class="sb-indenthangingN"><strong>3.</strong> 这里通过调用构造器方法来创建一个新的
+<em>Salesman</em>
+对象。属性是通过哈希的方式来设置的。发送的是键值对，这样，用户就可以按照任何喜欢的顺序来设置属性。</p>
+<p class="sb-indenthangingN"><strong>4.</strong> 这里调用了 <em>Salesman</em> 的实例方法
+<em>calculate_pay</em> 来获取对象的薪酬属性。</p>
+<p class="sb-indenthangingN"><strong>5.</strong> 这里创建了另一个 <em>Salesman</em> 对象。</p>
+<p class="sb-indenthangingN"><strong>6.</strong> 这里为另一个 <em>Salesman</em>
+对象来计算薪酬。</p>
+<p class="sb-indenthangingN"><strong>7.</strong> 这里创建了一个新的 <em>Teacher</em>
+对象。因为这里构造器 <em>new()</em> 的第一个参数是类名
+<em>Teacher</em>，所以调用的构造器也是针对 <em>Teacher</em>
+对象的（多态性）。</p>
+<p class="sb-indenthangingN"><a id="page_496"/><strong>8.</strong> 这里调用了教师的存取方法
+<em>set_courses</em>()。它的参数首先是隐含的对象引用，然后就是一个课程数组的引用。这些课程将会被设置为
+<em>Teacher</em>
+的一个属性。下面几行中，使用了从基类继承来的方法来获取
+<em>Teacher</em> 的属性。</p>
+<p class="sb-indenthangingN"><strong>9.</strong>
+这里导出了两个员工对象，一个是销售，另一个是教师。他们都是通过
+<em>Data::Dumper</em>
+展示的。你可以看到每个员工都有各自合适的类。</p>
 <hr/></div>
 <div class="heading">
-<h4 id="ch14lev2sec16">14.4.4 Multiple Inheritance and Roles with Moose</h4>
+<h4 id="ch14lev2sec16">14.4.4 多重继承和 Moose 角色</h4>
 <p class="noindent">When a class inherits methods from more than one base, or parent, class, it
 is called <strong>multiple inheritance</strong>. In Perl, multiple
 inheritance is accomplished by adding more than one class to the
