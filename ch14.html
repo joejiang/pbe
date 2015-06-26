@@ -1817,50 +1817,45 @@ class="EmpItalic">}, 'Shape::Circle' );</span></p>
 <hr/></div>
 <div class="sidebar"><hr/>
 <p class="title">代码解读</p>
-<p class="sb-indenthangingN"><strong>1.</strong> <em>Radius.pm</em> serves as a Moose role. It can be
-used, or &#8220;consumed,&#8221; by any class that requires a radius.</p>
-<p class="sb-indenthangingN"><strong>2.</strong> <em>Moose::Role</em> is an extension of the Moose
-module. (You may have to download Moose if you are using a version of Perl
-prior to 5.16.)</p>
-<p class="sb-indenthangingN"><strong>3.</strong> The <em>Role</em> has an attribute called
-<em>&#39;radius&#39;</em> that takes an integer for its value, is readable
-and writeable (<em>rw</em>), and requires that a value for the radius be
-provided as an argument to the constructor of the &#8220;consuming&#8221;
-class. When a class &#8220;consumes&#8221; a role, it means that all the
-methods and attributes defined here in this role, are added directly to that
-class as though the class itself defined them. Moose automatically creates a
-constructor and setter and getter accessor methods (called
-<em>&#39;radius&#39;</em>) for the consuming class.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> The <em>Shape::Circle</em> class is declared.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> The <em>Shape::Circle</em> class will
-&#8220;consume&#8221; the <em>Radius</em> role. The <em>with</em> function
-is used to import or compose the role into the current class. Now this class
-will have the radius attribute that was defined in the <em>Radius</em> role.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> The <em>Circle</em> defines a <em>color</em>
-attribute. The <em>color</em> is a read/write (<em>rw</em>), a string
-(<em>Str</em>) with a default value of <em>&#39;blue&#39;</em>.</p>
-<p class="sb-indenthangingN"><a id="page_499"/><strong>7.</strong> The <em>calculate_area</em> method
-uses the <em>radius</em> attribute (consumed from the role) and the
-<em>pi</em> function from <em>Math::Trig</em> to calculate the area of a
-circle.</p>
-<p class="sb-indenthangingN"><strong>8.</strong> Moose provides a <em>new</em> constructor that creates a
-blessed object. The user calls <em>new</em> with the value for the radius as
-its argument. This was required by the role when defining the
-<em>&#39;radius&#39;</em> attribute on line 3: <em>required=&gt;1</em>;.</p>
-<p class="sb-indenthangingN"><strong>9.</strong> The the <em>new</em> object and its attibutes are
-displayed by <em>Dumper</em>.</p>
-<p class="sb-indenthangingN1"><strong>10.</strong> The radius value is reset to 3. Moose automatically
-created a setter called <em>&#39;radius&#39;</em> when the role was defined.</p>
-<p class="sb-indenthangingN1"><strong>11.</strong> Moose provided a getter method called
-<em>&#39;radius&#39;</em>. This time we use it to get the value of the
-radius.</p>
-<p class="sb-indenthangingN1"><strong>12.</strong> The <em>calculate_area</em> method is called and
-returns the area of the circle, <em>$c1;.</em></p>
-<p class="sb-indenthangingN1"><strong>13.</strong> <em>Dumper</em> displays the <em>Shape::Circle</em>
-object.</p>
+<p class="sb-indenthangingN"><strong>1.</strong> 这里的 <em>Radius.pm</em> 其实是一个 Moose
+角色。它可以被其他需要半径的类来使用（或者说被消化）。</p>
+<p class="sb-indenthangingN"><strong>2.</strong> 这里的 <em>Moose::Role</em> 其实是 Moose
+的扩展模块。如果你的 Perl 版本是早于 5.16，那么 Moose
+是需要单独下载的。</p>
+<p class="sb-indenthangingN"><strong>3.</strong> 这里的角色中设置了一个叫做 <em>radius</em>
+的属性，它的值应该是整数，是可读写的（<em>rw</em>）。对于消化这个角色的类的构造器来说，提供半径也是必须的。当类消化角色的时候，角色中所有的方法和属性都被添加到类里面去了，好像类自己定义了它们一样。Moose
+会自动为消化它的类创建构造器，以及属性的存取方法（名为
+<em>radius</em>）。</p>
+<p class="sb-indenthangingN"><strong>4.</strong> 这里声明了 <em>Shape::Circle</em> 类。</p>
+<p class="sb-indenthangingN"><strong>5.</strong> 这个 <em>Shape::Circle</em> 类将要消化
+<em>Radius</em> 角色。这里的 <em>with</em>
+函数用来将角色载入当前类。现在这个类将会获取
+<em>Radius</em> 角色引入的半径属性。</p>
+<p class="sb-indenthangingN"><strong>6.</strong> 为 <em>Circle</em> 定义了一个 <em>color</em>
+属性。这个属性是可读写的（<em>rw</em>）字符串（<em>Str</em>），默认的值是
+<em>blue</em>。</p>
+<p class="sb-indenthangingN"><a id="page_499"/><strong>7.</strong> 这里的 <em>calculate_area</em>
+方法使用了 <em>radius</em>
+属性（从角色消化而来），以及来自 <em>Math::Trig</em> 的
+<em>pi</em> 函数，用来计算圆形的面积。</p>
+<p class="sb-indenthangingN"><strong>8.</strong> Moose 提供了 <em>new</em>
+构造器，用来创建新的祝福过的对象。用户调用 <em>new</em>
+的时候要带上半径作为参数。这是角色在第三行定义
+<em>radius</em> 属性的时候规定的：<em>required=&gt;1</em>;。</p>
+<p class="sb-indenthangingN"><strong>9.</strong> 这里用 <em>Dumper</em>
+来打印新创建的对象和属性。</p>
+<p class="sb-indenthangingN1"><strong>10.</strong> 这里将半径设为 3。Moose
+根据角色的定义，自动为 <em>radius</em>
+属性创建了一个同名的设置方法。</p>
+<p class="sb-indenthangingN1"><strong>11.</strong> Moose 同样创建了一个读取方法，名为
+<em>radius</em>，用来读取半径的大小。</p>
+<p class="sb-indenthangingN1"><strong>12.</strong> 这里为 <em>$c1</em> 对象调用了
+<em>calculate_area</em> 方法，来获取面积的大小。</p>
+<p class="sb-indenthangingN1"><strong>13.</strong> 这里用 <em>Dumper</em> 来打印
+<em>Shape::Circle</em> 对象。</p>
 <hr/></div>
 <div class="heading">
-<h4 id="ch14lev2sec17">14.4.5 Overriding a Parent Method and the <em>SUPER</em> Pseudo Class</h4>
+<h4 id="ch14lev2sec17">14.4.5 覆盖父类的方法，以及 <em>SUPER</em> 虚类</h4>
 <p class="noindent">There are times when two classes may have a method with the same name. If a
 derived class has a method with the same name as the base class, its method
 will take precedence over the base method. To override the method in the
