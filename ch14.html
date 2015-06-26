@@ -1731,81 +1731,66 @@ created.</span></p>
 <hr/></div>
 <div class="heading">
 <h4 id="ch14lev2sec16">14.4.4 多重继承和 Moose 角色</h4>
-<p class="noindent">When a class inherits methods from more than one base, or parent, class, it
-is called <strong>multiple inheritance</strong>. In Perl, multiple
-inheritance is accomplished by adding more than one class to the
-<em>@ISA</em> array.</p>
+<p class="noindent">当一个类从多于一个的基类（或父类）继承时，就被称为多重继承。在
+Perl 当中，多重继承其实就是某个类的 <em>@ISA</em>
+数组中有多个类。</p>
 </div>
 <p class="codelink"><a id="p596pro01" href="ch14_images.html#p596pro01a">Click here to view code
 image</a></p>
 <p class="pre">package&#160;&#160;Child;<br/>our @ISA = qw (Mother Father Teacher);</p>
-<p class="indent">The search is depth-first, meaning that Perl will search for classes in
-<em>Mother</em> and the hierarchy of classes it descends from, then
-<em>Father</em> and the hierarchy of classes it descends from, and finally
-<em>Teacher</em> and all its ancestors. Just as in real life, the hierarchy
-can get confusing when there are multiple parents on the family tree.</p>
-<p class="indent">Roles are an alternative to multiple inheritance. Similar to <em>Java</em>
-interfaces, or Smalltalk traits, a role defines a set of methods or
-attributes for a class that must be implemented by the class and can be
-shared by other classes. A role itself is not a class. From the Moose manual
-on describing roles:</p>
-<p class="blockquote">A role is <em>composed</em> into a class. In practical terms, this means
-that all of the methods, method modifiers, and attributes defined in a role
-are added directly to (we sometimes say &#8220;flattened into&#8221;) the
-class that consumes the role. These attributes and methods then appear as if
-they were defined in the class itself. A subclass of the consuming class
-will inherit all of these methods and attributes.</p>
-<p class="indent">For example, if a <em>Guard</em> class and a <em>Researcher</em> class are
-extended from the <em>Employee</em> class we created earlier, and these two
-classes require a method to get a security clearance, you could use multiple
-inheritance and inherit from both the <em>Employee</em> and a
-<em>Clearance</em> class. But inheritance is an &#8220;is a&#8221;
-relationship where the derived class is a specialization of the parent
-class. You can say a <em>Guard</em> &#8220;is a&#8221; <em>Employee</em>,
-but he is not a <em>Clearance</em>. It&#8217;s more that a <em>Guard</em>
-requires a clearance. Not every employee needs a clearance, but some do. Our
-<em>Salesman</em> didn&#8217;t need one. Creating a role would better
-satisfy this requirement for those classes that need it. A role allows one
-class to consist of or consume a role to make it complete. For example, a
-<em>Guard</em> and a <em>Salesman</em> inherit from the <em>Employee</em>
-class all those basic requirements of an employee, but the <em>Guard</em>
-class isn&#8217;t complete until it gets a <em>Clearance</em> while the
-<em>Salesman</em> doesn&#8217;t need one. We can create a role that does the
-job. Roles are a &#8220;does a&#8221; relationship, rather than an &#8220;is
-a&#8221; relationship.</p>
-<p class="indent"><a id="page_497"/>Since Perl does not implement a built-in way to create
-roles, there are a number of modules in the Perl library that support
-them. The most popular is the Moose module, which is an extension of the
-Perl 5 object system. Try <em>perldoc Moose</em> for complete
-documentation. Examples of using Moose are found in <a
-href="app03.html#app03">Appendix C</a>, &#8220;<a
-href="app03.html#app03">Introduction to Moose (A Postmodern Object System
-for Perl 5)</a>.&#8221; There is also a subset of Moose called Moo that may
-be better for optimized rapid startup. (See <em><a
-href="http://perlmaven.com/videos/oop-with-moo">http://perlmaven.com/videos/oop-with-moo</a>.</em>)
-Another watered-down version of Moose is the <em>Role::Tiny</em> module
-described in its documentation &#8220;like a nouvelle cuisine portion size
-slice of Moose.&#8221;</p>
-<p class="indent">In the following example, we demonstrate how to create and use a role with
-<em>Moose::Role</em>. In this example, we define a package called
-<em>Radius</em>. The class is a <em>Shape::Circle</em>. The <em>Circle</em>
-class will have a <em>color</em> property and a <em>calculate_area</em>
-method. In order to get the area of a circle, it must have a radius. If we
-provide a <em>setRadius</em> method in the <em>Circle</em>, and then if we
-want to create a sphere or a cone object, we would still be required to set
-the radius for those objects. If we put it in an inheritance tree, we could
-say a <em>Circle</em> is a <em>Shape</em>, and a <em>Rectangle</em> is a
-<em>Shape</em>, but only the <em>Circle</em> requires a radius. So with role
-composition, any object that requires a radius can share the <em>Radius</em>
-role to define the <em>setRadius</em> and <em>getRadius</em> methods or
-simply ensure a <em>setRadius</em> method is implemented in the module. If
-it is not, Perl will throw an exception. Using the <em>Moose::Role</em>
-module, we create a role like an ordinary module in a <em>.pm</em> file with
-a package declaration and then assign the attributes and methods that the
-using module will &#8220;consume.&#8221; Moose roles are not classes and
-cannot be instantiated. They are simply roles.</p>
+<p class="indent">这里的搜索是深度优先的，也就是说 Perl 会首先查看
+<em>Mother</em> 和它的父类，然后才查看 <em>Father</em>
+和它的父类，最后才是 <em>Teacher</em>
+和它的父类。这就类似于日常生活中的情况，在家族树的上方有多条祖先路径几乎总是会带来困惑。</p>
+<p class="indent">角色是多重继承的一个选择。类似于 <em>Java</em>
+当中的接口，或者 Smalltalk 中的
+Traits（特性，也就是一个角色，定义了方法和属性的集合，类要实现角色的要求，就可以被其他的类共享）。角色本身并不是类。下面是
+Moose 手册中对角色的描述：</p>
+<p class="blockquote">角色是植入类的。实际上来说，角色当中定义的方法、方法修饰词和属性都是融入那个消化角色的类。这些属性和方法看起来好象是类当中定义的一样。那些消耗类的子类会继承所有的方法和属性。</p>
+<p class="indent">例如，架设 <em>Guard</em> 类和 <em>Researcher</em>
+类都从我们之前创建的 <em>Employee</em>
+类进行扩展，而且他们都需要一个方法来确认合乎安保协定。那么，你可以通过多重继承来设计，让他们都同时继承
+<em>Employee</em> 和 <em>Clearance</em>
+类。但是，继承其实意味着这样的关系，就是衍生类其实是父类的特例。你可以说
+<em>Guard</em>
+类其实就是特殊的员工类，但是他并不是一个特殊的
+<em>Clearance</em>
+类。另外，也不是所有的员工都需要安保协定，比如我们的
+<em>Salesman</em>
+就不必。所以，在这里创建角色似乎更加能够满足我们的需求。角色意味着类需要达到特定的条件，或者说“消化”某个类来满足角色的需要。比如，<em>Guard</em>
+和 <em>Salesman</em> 都可以从 <em>Employee</em>
+继承所有员工的基本要求，但是 <em>Guard</em> 类必须满足
+<em>Clearance</em> 的角色需要，而 <em>Salesman</em>
+则不必。所以，这里最适合我们的就是构造一个角色。换句话说，角色真正关心的是“能不能”，而非“是不是”。</p>
+<p class="indent"><a id="page_497"/>因为 Perl
+没有实现内置的角色机制，所以就必须通过模块来支持。目前最为常见的是
+Moose 模块，它对 Perl 5 的对象机制进行了拓展。可以参考<a
+href="app03.html#app03">附录 C Moose，Perl 5
+的后现代对象系统简介</a>。另外还有一个叫做 Moo 的 Moose
+子集，在启动方面更加迅速。（参考 <em><a
+href="http://perlmaven.com/videos/oop-with-moo">http://perlmaven.com/videos/oop-with-moo</a>.</em>。）另外，Moose
+还有一个简化版本，叫做 <em>Role::Tiny</em>
+的模块，可以理解为新概念的 Moose 简餐。</p>
+<p class="indent">在下面额度例子中，我们展示了如何用 <em>Moose::Role</em>
+来创建角色。在这个例子中，我们定义了一个名为
+<em>Radius</em> 的包。类的名字叫做
+<em>Shape::Circle</em>。这里的 <em>Circle</em> 类有一个
+<em>color</em> 属性，和一个 <em>calculate_area</em>
+方法。为了计算圆的面积，我们必须知道半径。如果我们想要为
+<em>Circle</em> 类编写 <em>setRadius</em>
+方法的话，那么对于球体或者圆锥体对象，还是要再次提供设置半径的机制。如果我们想要通过继承树来解决这个问题的话，我们可能会描述
+<em>Circle</em> 是 <em>Shape</em> 的特例，而 <em>Rectangle</em>
+虽然是 <em>Shape</em> 的特例，但是只有 <em>Circle</em>
+有半径概念。所以，如果通过角色来解决这个问题，就要容易的多。任何有半径概念的类都可以共享
+<em>Radius</em> 角色，确保它提供了 <em>setRadius</em> 和
+<em>getRadius</em> 方法，或者最起码确保模块中有
+<em>setRadius</em> 方法。否则的话，Perl 就会报出一场。通过
+<em>Moose::Role</em> 模块，我们可以创建一个类似常规模块的
+<em>.pm</em>
+文件，定义一个角色包，其中指定的属性和方法必须由客户模块来“消化”。Moose
+的角色不是类，也不能实例化，他们就是简单的角色而已。</p>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa24"/>EXAMPLE 14.24</p>
+<p class="title"><a id="ch14exa24"/>例 14.24</p>
 <p class="codelink1"><a id="p14exa24" href="ch14_images.html#p14exa24a">Click here to view code
 image</a></p>
 <p class="pre1">1&#160;&#160;package Radius;<br/><br/>2&#160;&#160;<span class="EmpStrong">use
