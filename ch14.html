@@ -1856,27 +1856,22 @@ class="EmpItalic">}, 'Shape::Circle' );</span></p>
 <hr/></div>
 <div class="heading">
 <h4 id="ch14lev2sec17">14.4.5 覆盖父类的方法，以及 <em>SUPER</em> 虚类</h4>
-<p class="noindent">There are times when two classes may have a method with the same name. If a
-derived class has a method with the same name as the base class, its method
-will take precedence over the base method. To override the method in the
-derived class so you can access the method in the base class, the name of
-the method must be fully qualified with the class name and two colons. The
-pseudo class called <em>SUPER</em> can also be used by a subclass to call a
-method in the parent class; for example,
-<em>$self</em>-<em>&gt;SUPER::setName</em> would call the method
-<em>setName</em> in the parent class of the current module, and override the
-<em>setName</em> method in the current class. This allows the subclass to
-wrap or specialize an existing method with its parent method or completely
-override its own method with the parent&#8217;s method. (You can also
-download the <em>SUPER</em> module from cpan to control dispatching methods
-to a superclass.)<sup><a id="ch14fn8a" href="ch14.html#ch14fn8">8</a></sup></p>
+<p class="noindent">有的时候两个类可以有相同的方法名。如果衍生类的方法名和基类相同的话，那么就会优先于基类得到调用机会。想要跳过衍生类，直接调用基类的同名方法，就得提供完整的方法名（类名加上两个引号，然后是方法名）。不过，也可以用虚类
+<em>SUPER</em>
+来实现对父类方法的调用。比如，<em>$self</em>-<em>&gt;SUPER::setName</em>
+调用的就是当前模块的父类的 <em>setName</em>
+方法，跳过了当前类的 <em>setName</em>
+方法。这个机制使得子类能对父类的方法进行包装或者修饰，从而形成自己的方法。也可以完全忽略自己的方法，而完全采用父类的方法。（你也可以从
+CPAN 下载 <em>SUPER</em>
+模块来对父类的寻找进行定制。）<sup><a id="ch14fn8a"
+href="ch14.html#ch14fn8">8</a></sup></p>
 </div>
-<p class="footnote"><a id="ch14fn8" href="ch14.html#ch14fn8a">8</a>. <em>SUPER</em> isn&#8217;t
-a method. It&#8217;s a virtual package, documented in <em>perlobj</em> under
-the &#8220;Method Invocation&#8221; section. It bases itself on the current
-package, not the package of the object you call it with.</p>
+<p class="footnote"><a id="ch14fn8" href="ch14.html#ch14fn8a">8</a>. 注意 <em>SUPER</em>
+其实不是一个方法，而是一个虚拟包。关于它的文档可以在
+<em>perlobj</em> 的 Method Invocation
+那一节找到。另外，它的位置是相对于当前包来说的，而不是你调用的时候所处的包。</p>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa25"/>EXAMPLE 14.25</p>
+<p class="title"><a id="ch14exa25"/>例 14.25</p>
 <p class="codelink1"><a id="p14exa25" href="ch14_images.html#p14exa25a">Click here to view code
 image</a></p>
 <p class="pre1">1&#160;&#160;<span class="EmpStrong">package Employee;</span>&#160;&#160;#
@@ -1906,84 +1901,76 @@ method is Salesman</span></p>
 <hr/></div>
 <div class="sidebar"><hr/>
 <p class="title"><a id="page_501"/>Explanation</p>
-<p class="sb-indenthangingN"><strong>1.</strong> The class <em>Employee</em> is declared. It contains a
-constructor method called <em>new</em> and an instance method called
-<em>display.</em></p>
-<p class="sb-indenthangingN"><strong>2.</strong> The <em>display</em> access method is defined for the
-<em>Employee</em> class.</p>
-<p class="sb-indenthangingN"><strong>3.</strong> The attributes for the employee are displayed.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> The <em>ref</em> function returns the name of the class
-of a blessed object.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> The <em>Salesman</em> class is declared.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> It will inherit from the <em>Employee</em> base
-class. It is a derived class.</p>
-<p class="sb-indenthangingN"><strong>7.</strong> This is the <em>Saleman</em>&#8217;s constructor.</p>
-<p class="sb-indenthangingN"><strong>8.</strong> The <em>SUPER</em> pseudo class is used to call
-<em>new</em> in the <em>Employee</em> class. It sends <em>Salesman</em> to
-the <em>Employee</em> class where it will be assigned initial properties and
-blessed and returned as a new <em>Salesman</em>.</p>
-<p class="sb-indenthangingN"><strong>9.</strong> This is the <em>display</em> method for the
-<em>Salesman</em> class.</p>
-<p class="sb-indenthangingN1"><strong>10.</strong> By qualifying the name of the method to be of class
-<em>SUPER</em>, this <em>display</em> method will invoke the
-<em>display</em> method in the parent class, <em>Employee</em>.</p>
-<p class="sb-indenthangingN1"><strong>11.</strong> This is the driver program. It uses the
-<em>Salesman</em> module.</p>
-<p class="sb-indenthangingN1"><strong>12.</strong> A new <em>Salesman</em> object is created, using the
-pseudo <em>SUPER</em> class.</p>
-<p class="sb-indenthangingN1"><strong>13.</strong> The <em>display</em> method is called. Since there is a
-<em>display</em> subroutine in the <em>Salesman</em> class, it is the one
-that will be called.</p>
+<p class="sb-indenthangingN"><strong>1.</strong> 这里声明了 <em>Employee</em>
+类。它包含了一个叫做 <em>new</em>
+的构造器方法，以及一个实例方法名为 <em>display</em>。</p>
+<p class="sb-indenthangingN"><strong>2.</strong> 这里定义了 <em>Employee</em> 类的
+<em>display</em> 方法。</p>
+<p class="sb-indenthangingN"><strong>3.</strong> 这里显示了员工的属性。</p>
+<p class="sb-indenthangingN"><strong>4.</strong> 这里用 <em>ref</em>
+函数返回了对象所属的类名。</p>
+<p class="sb-indenthangingN"><strong>5.</strong> 这里声明了 <em>Salesman</em> 类。</p>
+<p class="sb-indenthangingN"><strong>6.</strong> 它是一个衍生类，基类是 <em>Employee</em>。</p>
+<p class="sb-indenthangingN"><strong>7.</strong> 这里定义的是 <em>Saleman</em> 的析构器。</p>
+<p class="sb-indenthangingN"><strong>8.</strong> 这里通过 <em>SUPER</em> 虚类来调用
+<em>Employee</em> 类的 <em>new</em> 方法。它能将 <em>Salesman</em>
+发送到 <em>Employee</em>
+类中，同时附带上那些初始化需要的属性，然后经过祝福得到一个新的
+<em>Salesman</em> 对象。</p>
+<p class="sb-indenthangingN"><strong>9.</strong> 这是 <em>Salesman</em> 类的 <em>display</em>
+方法。</p>
+<p class="sb-indenthangingN1"><strong>10.</strong> 这里通过使用虚类 <em>SUPER</em>
+这个名字，使得对 <em>display</em> 方法的调用转向了父类
+<em>Employee</em> 中的同名方法。</p>
+<p class="sb-indenthangingN1"><strong>11.</strong> 这里是用户代码，它载入了 <em>Salesman</em>
+模块。</p>
+<p class="sb-indenthangingN1"><strong>12.</strong> 这里创建了一个新的 <em>Salesman</em>
+对象，不过是通过 <em>SUPER</em> 虚类来实现的。</p>
+<p class="sb-indenthangingN1"><strong>13.</strong> 这里调用了 <em>display</em> 方法。因为
+<em>Salesman</em> 类中就有一个 <em>display</em>
+方法，因此它会优先得到执行机会。</p>
 <hr/></div>
 <div class="heading">
-<h3 id="ch14lev1sec5">14.5 Plain Old Documentation&#8212;Documenting a Module</h3>
-<p class="noindent">One of the most important phases in creating a useful class is providing the
-user with good documentation describing how a module should be used. This is
-called the <strong>public user interface</strong>. Whether a module is an
-object-oriented class or a procedural module, there must be some published
-user interface&#8212;the written documentation&#8212;available describing
-how the programmer (client) should use a class (for example, what arguments
-will be passed to a method). The publicly defined interface should not
-change, even if something in the class is changed.</p>
+<h3 id="ch14lev1sec5">14.5 老旧文档，为模块撰写文档</h3>
+<p class="noindent">对于类的用户来说，模块作者最重要的一个任务就是：认真的书写模块的使用手册。这也被称为公布调用接口。不论是一个面向对象的类还是一个过程化的模块，关于如何调用功能的用户手册（比如方法的参数列表）都是必不可少的。而且，哪怕是未来对功能的实现进行了改进，公开的调用接口也不应该轻易变动。</p>
 </div>
-<p class="indent">Perl 5 introduced <em>pod</em> commands as a way to document modules. This
-is done by interspersing the program with <em>pod</em> (Plain Old
-Documentation) instructions, similar to embedding HTML or <em>nroff</em>
-instructions within the text of a file. Then the program is run through a
-Perl filtering program, which translates the commands into manual pages in a
-number of different formats. Wikipedia has excellent documentation on how to
-use <em>pod.</em><sup><a id="ch14fn9a" href="ch14.html#ch14fn9">9</a></sup></p>
-<p class="footnote"><a id="ch14fn9" href="ch14.html#ch14fn9a">9</a>. See <em><a
+<p class="indent">Perl 5 为了书写模块文档而提供了一个叫做 <em>pod</em>
+的文档格式。这个 <em>pod</em> 系列的指令集，类似于 HTML
+标签或者 <em>nroff</em>
+指令，可以嵌入于代码文件中。这种被戏称为老旧文档的格式，一旦经过
+Perl
+的工具指令的处理，就可以翻译成许多种著名的文档格式。维基百科是这样描述
+<em>pod</em> 格式的。<sup><a id="ch14fn9a"
+href="ch14.html#ch14fn9">9</a></sup></p>
+<p class="footnote"><a id="ch14fn9" href="ch14.html#ch14fn9a">9</a>. 参见 <em><a
 href="http://en.wikipedia.org/wiki/Plain_Old_Documentation#Example">http://en.wikipedia.org/wiki/Plain_Old_Documentation#Example</a>.</em></p>
 <div class="fig-heading">
 <div class="image"><a id="page_502"/><a id="ch14fig06"/><img src="graphics/14fig06.jpg" alt="Image"/></div>
-<p class="fig-caption"><strong>Figure 14.6</strong> The example <em>pod</em> at Wikipedia.org.</p>
+<p class="fig-caption"><strong>图 14.6</strong> 维基百科的 <em>pod</em> 例子</p>
 </div>
 <div class="heading">
-<h4 id="ch14lev2sec18">14.5.1 <em>pod</em> Files</h4>
-<p class="noindent">If you look in the standard Perl library, you will find that the modules
-contain documentation explaining what the module is supposed to do and how
-to use it. (At the command line, type <em>perldoc perlpod</em>.) The
-documentation is either embedded within the program or placed at the end of
-the program right after the special literal <em>_ _END_ _</em>. This
-documentation is called <em>pod</em>, short for Plain Old Documentation. A
-<em>pod</em> file is just an ASCII, utf-8, Unicode text file embedded with
-special commands that can be translated by one of Perl&#8217;s special
-interpreters, <em>pod2html</em>, <em>pod2latex</em>, <em>pod2text,</em> or
-<em>pod2man</em>. The purpose is to create formatted <a
-id="page_503"/>documents that can be represented in a number of ways. The
-UNIX <em>man</em> pages are an example of documentation that has been
-formatted with <em>nroff</em> instructions. It is now easy to embed a set of
-<em>pod</em> formatting instructions in your scripts to provide
-documentation in any of the four formats: text, HTML, LaTeX, or
-<em>nroff</em>.</p>
+<h4 id="ch14lev2sec18">14.5.1 <em>pod</em> 文件</h4>
+<p class="noindent">如果你钻研 Perl
+的标准库的话，就会发现许多文档，用于描述模块的功能和使用方法。（你可以从输入
+<em>perldoc perlpod</em>
+开始。）这些文档要么与程序混合在一起，要么是附加在程序的末尾的
+<em>_ _END_ _</em> 标记之后。这些文档全都可以统称为
+<em>pod</em>，也就是老旧文档的意思。所谓 <em>pod</em>
+文件，其实就是那些在纯文本（utf-8）文件中嵌入的特殊标记指令。这些标记可以被类似
+<em>pod2html</em>、<em>pod2latex</em>、<em>pod2text</em> 或
+<em>pod2man</em>
+的工具程序翻译成各种文档格式。宗旨就是通过简单的文档格式来获取多种多样的文档呈现效果。其实
+UNIX 的 <em>man</em> 格式就是一个用 <em>nroff</em>
+指令来编写的文档格式。因为 <em>pod</em>
+指令的存在，如今在脚本当中嵌入可以翻译为文本、HTML、LaTex
+或者 <em>nroff</em> 格式文档变得十分简单。</p>
 </div>
-<p class="indent">The first line of the <em>pod</em> documentation starts with an equal sign
-(<em>=</em>). Each <em>pod</em> instruction starting with an equal sign is a
-formatting instruction for the <em>pod</em> translator. <strong>Each
-formatting instruction must be terminated with a blank line.</strong></p>
+<p class="indent">任何的 <em>pod</em>
+文档都是用等号（<em>=</em>）开头的。对于 <em>pod</em>
+翻译器来说，等号开头的 <em>pod</em>
+指令有着特殊的意义。而指令的结尾则是一个空行。</p>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa26"/>EXAMPLE 14.26</p>
+<p class="title"><a id="ch14exa26"/>例 14.26</p>
 <p class="codelink1"><a id="p14exa26" href="ch14_images.html#p14exa26a">Click here to view code
 image</a></p>
 <p class="pre1">(The standard Perl library, under the subdirectory Math.)<br/><br/>=<span class="EmpStrong">head1</span> NAME<br/><br/>Math::BigFloat - Arbitrary length float math package<br/><br/>=<span class="EmpStrong">head1</span> SYNOPSIS<br/><br/>&#160;&#160;use Math::BigFloat;<br/>&#160;&#160;$f = Math::BigFloat-&gt;new($string);<br/><br/>&#160;&#160;$f-&gt;fadd(NSTR) return
@@ -2009,41 +1996,41 @@ class="EmpStrong">=head1</span> DESCRIPTION<br/><br/>All basic math operations a
 <hr/></div>
 <div class="sidebar"><hr/>
 <p class="title">代码解读</p>
-<p class="sidebarpara">The preceding text is a <em>pod</em> file. It consists of lines starting
-with an equal sign and a <em>pod</em> command, then a blank line, and
-text. Perl provides a special translator program that reads the <em>pod</em>
-file and translates it into a readable file in plain text, HTML format,
-<em>nroff</em> text, or LaTeX. The next section describes how to use the
-<em>pod</em> filter programs to make the translation for you.</p>
+<p class="sidebarpara">之前的文本就是一个 <em>pod</em>
+文档。文档中许多行都是用等号开头的，等号后面是一个
+<em>pod</em>
+指令，然后就是一个空行，再跟着就是一段文本。Perl
+提供的翻译程序可以读入 <em>pod</em>
+文件，然后翻译成易于阅读的纯文本、HTML、LaTeX 或者
+<em>nroff</em> 文件。下一节会介绍这些 <em>pod</em>
+文件翻译器。</p>
 <hr/></div>
 <div class="heading">
-<h4 id="ch14lev2sec19">14.5.2 <em>pod</em> Commands</h4>
-<p class="noindent">It&#8217;s easy to embed <em>pod</em> instructions in a text file. Commands
-are placed at the beginning of a line, starting with <em>=pod</em> (or any
-other <em>pod</em> command) and ending with <em>=cut</em>. Everything after
-the first <em>=pod</em> instruction to the <em>=cut</em> instruction will be
-ignored by the compiler, just as comments are ignored. The nice thing about
-using the commands is that they allow you to create bold, italic, or plain
-text, to indent, to create headings, and more. <a
-href="ch14.html#ch14tab03">Table 14.3</a> contains a list of instructions.</p>
+<h4 id="ch14lev2sec19">14.5.2 <em>pod</em> 指令</h4>
+<p class="noindent">在文本中嵌入 <em>pod</em>
+指令是非常简单的。命令开始于任何一行的起点，总是用类似
+<em>=pod</em>（或者其他的 <em>pod</em>
+指令）开始的，而且都是用 <em>=cut</em> 终止的。从
+<em>=pod</em> 到 <em>=cut</em>
+之间的文本对编译器来说都是被忽略的（好像注释行一样）。这些指令比注释强的地方在于，它们可以用于创建各种格式的文本（比如粗体、斜体、纯文本、缩进或者标题行等等）。</p>
 </div>
 <div class="tab-heading">
 <div class="image"><a id="ch14tab03"/><img src="graphics/14tab03.jpg" alt="Image"/></div>
-<p class="tab-caption"><strong>Table 14.3</strong> <em>pod</em> Commands</p>
+<p class="tab-caption"><strong>表 14.3</strong> <em>pod</em> 指令集</p>
 </div>
 <div class="heading">
-<h5 id="ch14lev3sec14">Checking Your pod Commands</h5>
-<p class="noindent">To check that you have correct <em>pod</em> instructions in your file, you
-can use Perl&#8217;s <em>podchecker</em> command. First, to find the path to
-your modue, type at your prompt:</p>
+<h5 id="ch14lev3sec14">检查 pod 指令</h5>
+<p class="noindent">为了检查 <em>pod</em> 指令书写的正确性，你可以使用 Perl
+提供的 <em>podchecker</em>
+工具。首先，要正确定位模块所在的路径，可以输入这个命令：</p>
 </div>
 <p class="pre"><span class="EmpStrong">perldoc -l</span> Module.pm</p>
-<p class="noindent"><a id="page_505"/>and then,</p>
+<p class="noindent">然后输入</p>
 <p class="pre"><span class="EmpStrong">podchecker</span> path/Module.pm</p>
-<p class="noindent">and hope that it displays the following:</p>
+<p class="noindent">最好是它这样返回：</p>
 <p class="pre">path/Module.pm <span class="EmpStrong">pod syntax OK.</span></p>
 <div class="heading">
-<h4 id="ch14lev2sec20"><a id="page_506"/>14.5.3 How to Use the <em>pod</em> Interpreters</h4>
+<h4 id="ch14lev2sec20"><a id="page_506"/>14.5.3 怎样使用 <em>pod</em> 翻译器</h4>
 <p class="noindent">The <em>pod</em> interpreters come with the Perl distribution and are
 located in the <em>bin</em> directory under the main Perl directory; for
 example, in <em>/usr/bin/perl5/bin.</em></p>
