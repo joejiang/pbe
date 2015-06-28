@@ -2031,42 +2031,38 @@ class="EmpStrong">=head1</span> DESCRIPTION<br/><br/>All basic math operations a
 <p class="pre">path/Module.pm <span class="EmpStrong">pod syntax OK.</span></p>
 <div class="heading">
 <h4 id="ch14lev2sec20"><a id="page_506"/>14.5.3 怎样使用 <em>pod</em> 翻译器</h4>
-<p class="noindent">The <em>pod</em> interpreters come with the Perl distribution and are
-located in the <em>bin</em> directory under the main Perl directory; for
-example, in <em>/usr/bin/perl5/bin.</em></p>
+<p class="noindent">Perl 发行版中带来的 <em>pod</em> 翻译器，它们都存放在主
+Perl 目录下的 <em>bin</em> 子目录中，比如
+<em>/usr/bin/perl5/bin</em> 就是一个常见的位置。</p>
 </div>
-<p class="indent">The four interpreters are</p>
-<p class="indenthangingB">&#8226; <em>pod2html</em> (translate to HTML)</p>
-<p class="indenthangingB">&#8226; <em>pod2text</em> (translate to plain text)</p>
-<p class="indenthangingB">&#8226; <em>pod2man</em> (translate to <em>nroff</em>, like UNIX
-<em>man</em> pages)</p>
-<p class="indenthangingB">&#8226; <em>pod2latex</em> (translate to LaTeX)</p>
-<p class="indent">The easiest way to use the interpreters is to copy the one you want into
-your own directory. For example:</p>
+<p class="indent">主要的四个翻译器是</p>
+<p class="indenthangingB">&#8226; <em>pod2html</em>（HTML 翻译器）</p>
+<p class="indenthangingB">&#8226; <em>pod2text</em>（纯文本翻译器）</p>
+<p class="indenthangingB">&#8226; <em>pod2man</em>（<em>nroff</em> 翻译器，就是 UNIX
+<em>man</em> 文档格式）</p>
+<p class="indenthangingB">&#8226; <em>pod2latex</em>（LaTex 翻译器）</p>
+<p class="indent">最简单的使用方法就是把他们都拷贝到你自己的目录中去。比如：</p>
 <p class="codelink"><a id="p506pro01" href="ch14_images.html#p506pro01a">Click here to view code
 image</a></p>
-<p class="pre">$ cp /usr/bin/perl5/bin/pod2text</p>
-<p class="noindent">You may also copy the library routine into your directory:</p>
+<p class="pre">$ cp /usr/bin/perl5/bin/pod2text ~/</p>
+<p class="noindent">你也可以把工具脚本拷贝到同一个目录中：</p>
 <p class="codelink"><a id="p506pro02" href="ch14_images.html#p506pro02a">Click here to view code
 image</a></p>
-<p class="pre">$ cp /usr/bin/perl5/lib/BigFloat.pm</p>
-<p class="indent">Now when you list the contents of the directory, you should have both the
-<em>pod</em> interpreter and the library module.</p>
+<p class="pre">$ cp /usr/bin/perl5/lib/BigFloat.pm ~/</p>
+<p class="indent">现在，如果你列出自己的目录当中的内容，就能看到
+<em>pod</em> 翻译器和样例模块。</p>
 <p class="pre">$ ls<br/>BigFloat.pm<br/>pod2text</p>
 <div class="heading">
-<h4 id="ch14lev2sec21">14.5.4 Translating <em>pod</em> Documentation into Text</h4>
-<p class="noindent">The easiest way to translate the <em>pod</em> commands to text for your
-terminal screen is to use the <em>perldoc</em> command that comes with the
-Perl distribution. It may not be in your search path, but it is usually
-found in the <em>bin</em> directory under <em>perl</em>. The following
-command would display all the documentation for the <em>BigFloat.pm</em>
-module:</p>
+<h4 id="ch14lev2sec21">14.5.4 把 <em>pod</em> 文档翻译成纯文本</h4>
+<p class="noindent">对于文本终端用户来说，最简单的翻译 <em>pod</em>
+文档的指令就是 Perl 内置的 <em>perldoc</em>
+命令。它可能不在你的执行路径中，但是通常就在 Perl
+的执行路径 <em>bin</em> 目录中。下面的指令可以展示
+<em>BigFloat.pm</em> 模块内置的文档：</p>
 </div>
 <p class="pre">perldoc Math::BigFloat</p>
-<p class="indent">Another way to translate <em>pod</em> directives to text is to let the
-<em>pod</em> interpreter filter through the module and create an output file
-to save the translated text. If you don&#8217;t redirect the output to a
-file, it will simply go to the screen.</p>
+<p class="indent">另一个翻译 <em>pod</em>
+指令到文本文件的方式就是用翻译器来处理模块文件，并且将产生的文本转储于文件中。如果你没有进行文件转储，那么输出就会发送到屏幕。</p>
 <p class="codelink"><a id="p506pro03" href="ch14_images.html#p506pro03a">Click here to view code
 image</a></p>
 <p class="pre">$ pod2text BigFloat.pm &gt; BigFloat.Text<br/>$ cat BigFloat.Text&#160;&#160;(The output file after pod commands have been<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;translated
@@ -2096,56 +2092,51 @@ scale.<br/><br/>BUGS<br/>&#160;&#160;&#160;&#160;The current version of this mod
 version of<br/>&#160;&#160;&#160;&#160;the real thing that is currently (as of perl5.002)
 under<br/>&#160;&#160;&#160;&#160;development.<br/><br/>AUTHOR<br/>&#160;&#160;&#160;&#160;Mark Biggar</p>
 <div class="heading">
-<h4 id="ch14lev2sec22">14.5.5 Translating <em>pod</em> Documentation into HTML</h4>
-<p class="noindent">To create an HTML document, use the <em>pod2html</em> command:</p>
+<h4 id="ch14lev2sec22">14.5.5 将 <em>pod</em> 转化成 HTML</h4>
+<p class="noindent">要产生 HTML 格式的文档，需要使用 <em>pod2html</em> 指令：</p>
 </div>
 <p class="codelink"><a id="p507pro01" href="ch14_images.html#p507pro01a">Click here to view code
 image</a></p>
 <p class="pre">$ pod2html BigFloat.pm BigFloat.pm.html</p>
-<p class="indent">The <em>pod2html</em> translator will create a file called
-<em>BigFloat.pm.html.</em> Now open your browser window click on File &gt;
-Open or &lt;CTRL&gt;+O and get <em>BigFloat.pm.html</em> as file protocol in
-the URL location box; for example, &lt;<em>file:///yourdirectory
-path/BigFloat.pm.html</em>&gt;.<sup><a id="ch14fn10a"
+<p class="indent">这里 <em>pod2html</em> 翻译器会创建一个名为
+<em>BigFloat.pm.html</em>
+的文件。于是你可以打开浏览器，用【文件】【打开】菜单或者【CTRL+O】热键来打开
+<em>BigFloat.pm.html</em> 文件。如果直接输入 URL
+的话，应该是类似 <em>file:///yourdirectory
+path/BigFloat.pm.html</em> 这样的地址。<sup><a id="ch14fn10a"
 href="ch14.html#ch14fn10">10</a></sup></p>
-<p class="footnote"><a id="ch14fn10" href="ch14.html#ch14fn10a">10</a>. If you receive some
-obscure diagnostic messages, it may be that the documentation for the
-<em>.pm</em> file contains links to some other page that cannot be resolved
-by the <em>pod</em> filter.</p>
+<p class="footnote"><a id="ch14fn10"
+href="ch14.html#ch14fn10a">10</a>.
+如果你执行翻译指令的时候看到了很奇怪的警告信息，那么很可能是因为
+<em>.pm</em> 文件当中有链接文档，但是 <em>pod</em>
+翻译器无法定位那个文档。</p>
 <div class="fig-heading">
 <div class="image"><a id="page_508"/><a id="ch14fig07"/><img src="graphics/14fig07.jpg" alt="Image"/></div>
-<p class="fig-caption"><strong>Figure 14.7</strong> Plain Old Documentation Viewed in a Browser.</p>
+<p class="fig-caption"><strong>图 14.7</strong> 通过浏览器来查看 Perl 文档</p>
 </div>
 <div class="heading">
-<h3 id="ch14lev1sec6">14.6 Using Objects from the Perl Library</h3>
-<p class="noindent">In <a href="ch13.html#ch13">Chapter 13</a>, &#8220;<a
-href="ch13.html#ch13">Modularize It, Package It, and Send It to the
-Library!</a>&#8221; we first looked into the standard Perl library that was
-provided with this distribution, Perl 5.16. In that library were a number of
-Perl modules and subdirectories or folders containing additional modules and
-subdirectories. The examples covered in <a href="ch13.html#ch13">Chapter
-13</a> dealt with modules that did not require knowledge about Perl&#8217;s
-use of objects. Those files utilized standard subroutines, not methods. Now
-that you know how objects and methods are used in Perl, the following
-examples will demonstrate how to use those modules that require the OOP
-methodology.</p>
+<h3 id="ch14lev1sec6">14.6 使用 Perl 标准库中的对象</h3>
+<p class="noindent">在<a href="ch13.html#ch13">第 13 章
+模块、封包和发布！</a>中，我们首先查看了 Perl 5.16
+发行包中的标准库。在其中有许多 Perl
+模块以及子目录中的附加模块。<a href="ch13.html#ch13">第 13
+章</a>的例子主要覆盖的是那些非面向对象的模块。所以，主要的编程接口都是子程序，而非方法。现在，你已经了解了
+Perl
+是如何处理对象和方法的，下面的例子就会展示那些使用了面向对象技术的模块。</p>
 </div>
 <div class="heading">
-<h4 id="ch14lev2sec23"><a id="page_509"/>14.6.1 An Object-Oriented Module from the Standard Perl
-Library</h4>
-<p class="noindent">The following module, <em>BigFloat</em>, is an object-oriented module that
-allows the use of floating-point numbers of arbitrary length. Number strings
-have the form <em>/[+-]\d*\.?\d*E[+-]\d+/</em>. When NaN is returned, it
-means that a non-number was entered as input, that perhaps you tried to
-divide by zero, or that you tried to take the square root of a negative
-number. <em>BigFloat</em> uses the <em>overload</em> module, which allows
-you to define Perl&#8217;s built-in operators to methods that will cause the
-operators to behave in a new way. The operator is the key and the method
-assigned is the value as you can see in the following example. (See
-<em>overload.pm</em> in the standard Perl library.)</p>
+<h4 id="ch14lev2sec23"><a id="page_509"/>14.6.1 一个 Perl 标准库中的面向对象模块</h4>
+<p class="noindent">下面介绍的 <em>BigFloat</em>
+模块，就是一个面向对象模块，主要的功能是提供任意精度的浮点数计算。它能支持
+<em>/[+-]\d*\.?\d*E[+-]\d+/</em> 这样的数据格式。当你得到 NaN
+这样的结果时，就意味着一个无法处理的数值，比如任何数字除以零的结果，或者是对负数进行平方根计算的结果。这个
+<em>BigFloat</em> 模块使用了 <em>overload</em>
+模块提供的功能，从而能够让你重定义 Perl
+内置的运算符的功能。在下面的例子中，操作符是用键的形式来表达的，而相应的方法则是用键值的形式来表达。（可以参考
+Perl 标准库当中的 <em>overload.pm</em> 了解更多。）</p>
 </div>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa27"/>EXAMPLE 14.27</p>
+<p class="title"><a id="ch14exa27"/>例 14.27</p>
 <p class="codelink1"><a id="p14exa27" href="ch14_images.html#p14exa27a">Click here to view code
 image</a></p>
 <p class="pre1">(The File: <span class="EmpItalic">BigFloat.pm</span>)<br/><br/>1&#160;&#160;package Math::BigFloat;<br/>2&#160;&#160;use Math::BigInt;<br/><br/>&#160;&#160;&#160;use Exporter;&#160;&#160;# <span class="EmpItalic">Just
@@ -2189,9 +2180,9 @@ x $scale),$ym),<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
 <hr/></div>
 <div class="sidebar"><hr/>
 <p class="title">代码解读</p>
-<p class="sb-indenthangingN"><strong>1.</strong> The <em>BigFloat</em> class is declared. The file,
-<em>BigFloat.pm</em> resides in the <em>Math</em> subdirectory of the
-standard Perl library.</p>
+<p class="sb-indenthangingN"><strong>1.</strong> 这里声明了 <em>BigFloat</em> 类。这里的
+<em>BigFloat.pm</em> 文件存放在 Perl 标准库目录中的
+<em>Math</em> 子目录下。</p>
 <p class="sb-indenthangingN"><strong>2.</strong> The <em>BigFloat</em> class also needs to use the
 <em>BigInt</em> module.</p>
 <p class="sb-indenthangingN"><strong>3.</strong> With the <em>overload</em> pragma you can change the
