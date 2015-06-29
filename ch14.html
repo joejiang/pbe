@@ -2183,29 +2183,26 @@ x $scale),$ym),<br/>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
 <p class="sb-indenthangingN"><strong>1.</strong> 这里声明了 <em>BigFloat</em> 类。这里的
 <em>BigFloat.pm</em> 文件存放在 Perl 标准库目录中的
 <em>Math</em> 子目录下。</p>
-<p class="sb-indenthangingN"><strong>2.</strong> The <em>BigFloat</em> class also needs to use the
-<em>BigInt</em> module.</p>
-<p class="sb-indenthangingN"><strong>3.</strong> With the <em>overload</em> pragma you can change the
-meaning of the built-in Perl operators. For example, when in
-<em>BigFloat,</em> the <em>+</em> operator is a key and its value an
-anonymous subroutine that creates an object and calls the <em>fadd</em>
-subroutine.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> The <em>+</em> operator is overloaded. See previous
-explanation.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> This is <em>BigFloat</em>&#8217;s constructor method for
-creating an object.</p>
-<p class="sb-indenthangingN"><a id="page_511"/><strong>6.</strong> If the value is not a number, this
-panic message is printed.</p>
-<p class="sb-indenthangingN"><strong>7.</strong> The object is blessed into the class.</p>
-<p class="sb-indenthangingN"><strong>8.</strong> This is the subroutine that performs addition on the
-object.</p>
-<p class="sb-indenthangingN"><strong>9.</strong> This is the subroutine that performs division on the
-object.</p>
+<p class="sb-indenthangingN"><strong>2.</strong> 这里 <em>BigFloat</em> 类会用到 <em>BigInt</em>
+模块的功能。</p>
+<p class="sb-indenthangingN"><strong>3.</strong> 载入 <em>overload</em> 之后，我们就可以修改
+Perl 内置操作符的功能。比如，对于 <em>BigFloat</em>
+类来说，操作符 <em>+</em>
+可以是一个键，而它的值则是一个匿名子程序，其逻辑是创建一个对象，然后调用
+<em>fadd</em> 子程序完成加法。</p>
+<p class="sb-indenthangingN"><strong>4.</strong> 这里覆盖了 <em>+</em>
+操作符的功能，原理之前已经解释了。</p>
+<p class="sb-indenthangingN"><strong>5.</strong> 这是 <em>BigFloat</em> 的构造器方法。</p>
+<p class="sb-indenthangingN"><a id="page_511"/><strong>6.</strong>
+如果某个值不能转化成数字的话，那么就打印这段错误信息。</p>
+<p class="sb-indenthangingN"><strong>7.</strong> 这里将对象祝福成类的成员。</p>
+<p class="sb-indenthangingN"><strong>8.</strong> 这是真正完成加法的子程序。</p>
+<p class="sb-indenthangingN"><strong>9.</strong> 这是完成除法的子程序。</p>
 <hr/></div>
 <div class="heading">
-<h4 id="ch14lev2sec24">14.6.2 Using a Module with Objects from the Standard Perl Library</h4>
+<h4 id="ch14lev2sec24">14.6.2 使用 Perl 标准库中的对象模块</h4>
 <div class="sidebar"><hr/>
-<p class="title"><a id="ch14exa28"/>EXAMPLE 14.28</p>
+<p class="title"><a id="ch14exa28"/>例 14.28</p>
 <p class="codelink1"><a id="p14exa28" href="ch14_images.html#p14exa28a">Click here to view code
 image</a></p>
 <p class="pre1">1&#160;&#160;use warnings;<br/>2&#160;&#160;<span class="EmpStrong">use Math::BigFloat;</span>&#160;&#160;#
@@ -2230,37 +2227,35 @@ class="EmpItalic">+4771632618453865336658354114713216957606E-63</span><br/>10 <s
 <hr/></div>
 </div>
 <div class="sidebar"><hr/>
-<p class="title"><a id="page_512"/>Explanation</p>
-<p class="sb-indenthangingN"><strong>1.</strong> Turn on <em>warnings</em>.</p>
-<p class="sb-indenthangingN"><strong>2.</strong> The <em>use</em> function loads the module
-<em>BigFloat.pm</em> into the program. Since this module is in a
-subdirectory of the library called <em>Math</em>, that subdirectory is
-included by prepending its name to the module with two colons.</p>
-<p class="sb-indenthangingN"><strong>3.</strong> A large number (<em>e</em> notation) is assigned to
-<em>$number</em>.</p>
-<p class="sb-indenthangingN"><strong>4.</strong> Now the methods from the module are utilized. The
-<em>BigFloat</em> constructor is called. A reference to the object is
-returned and assigned to <em>$mathref</em>.</p>
-<p class="sb-indenthangingN"><strong>5.</strong> The <em>ref</em> function returns the name of the class.</p>
-<p class="sb-indenthangingN"><strong>6.</strong> The <em>fnorm</em> method returns the
-&#8220;normal&#8221; value of <em>$number</em> in signed scientific
-notation. Leading zeros are stripped off.</p>
-<p class="sb-indenthangingN"><strong>7.</strong> The <em>fadd</em> method adds <em>500</em> to the
-number.</p>
-<p class="sb-indenthangingN"><strong>8.</strong> In this example, an overloaded operator is used. The
-<em>/</em> operator is assigned a class method, <em>fdiv</em>, to perform
-the division. See code from <em>BigFloat.pm</em> shown in <a
-href="ch14.html#ch14exa26">Example 14.26</a>.</p>
-<p class="sb-indenthangingN"><strong>9.</strong> This time the <em>fdiv</em> method is called directly
-without using overloading to perform the division. The output is slightly
-different.</p>
-<p class="sb-indenthangingN1"><strong>10.</strong> The user is asked to enter a number.</p>
-<p class="sb-indenthangingN1"><strong>11.</strong> If <em>NaN</em> (not a number) is returned from the
-<em>fadd</em> method, the message is printed. This is a way you could check
-that user input is a valid numeric value.</p>
+<p class="title"><a id="page_512"/>代码解读</p>
+<p class="sb-indenthangingN"><strong>1.</strong> 打开 <em>warnings</em> 选项。</p>
+<p class="sb-indenthangingN"><strong>2.</strong> 这里通过 <em>use</em> 函数来载入
+<em>BigFloat.pm</em>
+模块。因为这个模块文件是存放在库目录的 <em>Math</em>
+子目录下的，所以载入的时候要在前面加上这个目录和两个冒号。</p>
+<p class="sb-indenthangingN"><strong>3.</strong> 这里对 <em>$number</em>
+赋予一个高精度的数值（<em>e</em> 的幂值）。</p>
+<p class="sb-indenthangingN"><strong>4.</strong> 现在真正通过 <em>BigFloat</em>
+构造器方法创建一个对象引用，并存入 <em>$mathref</em> 中。</p>
+<p class="sb-indenthangingN"><strong>5.</strong> 这里的 <em>ref</em> 函数能返回类的名字。</p>
+<p class="sb-indenthangingN"><strong>6.</strong> 这里调用了 <em>fnorm</em>
+方法来对原先存放在 <em>$number</em>
+中的数值进行规范化。对前置的多余的零进行了清理。</p>
+<p class="sb-indenthangingN"><strong>7.</strong> 用 <em>fadd</em> 方法来给这个数加了
+<em>500</em>。</p>
+<p class="sb-indenthangingN"><strong>8.</strong>
+这次使用了操作符覆盖的方法来进行除法运算，这里的
+<em>/</em> 操作符被指向一个名为 <em>fdiv</em>
+的类方法。你可以参考<a href="ch14.html#ch14exa26">例
+14.26</a>中的 <em>BigFloat.pm</em> 代码。</p>
+<p class="sb-indenthangingN"><strong>9.</strong> 这次又直接用 <em>fdiv</em>
+方法来进行除法运算，没有使用操作符来完成。输出稍稍有所不同。</p>
+<p class="sb-indenthangingN1"><strong>10.</strong> 用户被提示输入一个数字。</p>
+<p class="sb-indenthangingN1"><strong>11.</strong> 如果 <em>fadd</em> 方法返回的数值是
+<em>NaN</em>（不是一个数值），就打印这行信息。这样可以确保用户输入的是一个有效的数值。</p>
 <hr/></div>
 <div class="heading">
-<h3 id="ch14lev1sec7">14.7 What You Should Know</h3>
+<h3 id="ch14lev1sec7">14.7 应知应会</h3>
 <p class="indenthangingN"><strong>1.</strong> What does OOP mean?</p>
 </div>
 <p class="indenthangingN"><strong>2.</strong> What is the difference between a package and a class?</p>
