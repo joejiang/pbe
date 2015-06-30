@@ -2382,19 +2382,10 @@ Alpo。而狗这个类并没有定义自己的 <em>eat()</em>
 账户则有一个赊账保护机制，对于那些超额提取的账户收取每次
 $35 的罚金。而且，会在赊账总额超过 $300
 的时候锁定账户。这类的账户最小的起存额度是 $25。</p>
-<p class="indenthangingNA"><strong>e.</strong> The <em>Checking.pm</em> and <em>Savings.pm</em> modules
-will each have its own account numbers and registers.</p>
-<p class="indenthangingNA"><a id="page_516"/><strong>f.</strong> The ATM script will use both
-modules. The user script will have a main menu allowing the user to select
-either of the two accounts. After getting a new account object, the user can
-select from the types of transactions (submenu in your original
-<em>Checking.pm</em> module) for that account and continue transactions
-until he is ready to quit. When he exits, his account register balance will
-be updated and he will be asked if he wants to return to the main menu. If
-he says &#8220;yes,&#8221; he will see the main menu again, and if he says
-&#8220;no,&#8221; the program will exit, giving him his balance. You will
-have to uniquely name the register for each account so you can differentiate
-between savings and checking accounts.</p>
+<p class="indenthangingNA"><strong>e.</strong> <em>Checking.pm</em> 和 <em>Savings.pm</em>
+都有自己的帐号和细目。</p>
+<p class="indenthangingNA"><a id="page_516"/><strong>f.</strong> ATM
+脚本程序要使用两个模块。用户可以操作一个菜单，选择是处理那种账户。在选择后创建一个新的对象，并显示子菜单宫用户选择具体的交易类型。处理交易之后继续等待用户选择，直到用户退出。在用户退出时，要修改其账户的余额到最新的值，并询问是否要回到主菜单。如果用户确认的话，再次显示主菜单。如果用户拒绝的话，程序退出并打印账户余额。你要想办法给每个交易细目取唯一的名字，这样才能区分存款和支票两个账户的业务。</p>
 <p class="indenthangingNAP">Example: <em>perl user.pl</em> (where user input is in bold)</p>
 <p class="indenthangingNAP">Welcome!</p>
 <p class="indenthangingNAP">Select an account type:</p>
@@ -2462,23 +2453,22 @@ between savings and checking accounts.</p>
 <p class="indenthangingNAPN">4) exit</p>
 <p class="indenthangingNAP"><strong>4</strong></p>
 <p class="indenthangingNAP">Your balance is 125.00.</p>
-<p class="indent"><strong>Part 5</strong></p>
-<p class="indenthangingN"><strong>1.</strong> Go to the <em>pod</em> directory in the standard Perl
-library. Look for <em>perlpod.html</em>. The file contains Larry
-Wall&#8217;s user interface for using <em>pod</em> commands to document your
-Perl programs.</p>
-<p class="indenthangingN"><strong>2.</strong> Go to your browser and in the Location box, type:</p>
+<p class="indent"><strong>第五部分</strong></p>
+<p class="indenthangingN"><strong>1.</strong> 去到标准 Perl 库目录的 <em>pod</em>
+子目录下面，查找一个名为 <em>perlpod.html</em>
+的文件。这是一份 Larry Wall 编写的关于如何使用
+<em>perlpod.html</em> 指令集书写文档的文档。</p>
+<p class="indenthangingN"><strong>2.</strong> 打开浏览器，在地址栏输入：</p>
 <p class="codelink"><a id="p518pro01" href="ch14_images.html#p518pro01a">Click here to view code
 image</a></p>
 <p class="pre2">file:/&lt;directory-to -your-library-file&gt;/Pod/pod.html</p>
-<p class="indenthangingNP">Now you have the instructions for creating <em>pod</em> documentation.</p>
-<p class="indenthangingN"><strong>3.</strong> Create a published interface for your
-<em>Checking.pm</em> module. Embed <em>pod</em> commands in your
-<em>Checking.pm</em> script explaining how the module should be used. Follow
-the guidelines of the modules in the library; for example, there should be a
-NAME, SYNOPSIS, DESCRIPTION, AUTHOR, and so forth. Run the <em>pod</em> file
-through the <em>pod2html</em> filter and display the documentation in your
-browser. Use the <em>perldoc</em> command to print your documentation on the
-terminal screen.</p>
+<p class="indenthangingNP">现在你就能够参照此文档来编写文档了。</p>
+<p class="indenthangingN"><strong>3.</strong> 为你的 <em>Checking.pm</em>
+模块编写一个用户接口手册。在脚本中嵌入 <em>pod</em>
+指令来解释模块的使用方法。你可以参考 Perl
+标准库中的那些模块的例子来书写各个段落，比如：NAME、SYNOPSIS、DESCRIPTION，AUTHOR
+等等。然后用 <em>pod2html</em>
+命令来产生浏览器可阅读的文档。在终端界面上使用
+<em>perldoc</em> 命令来展示你的文档。</p>
 </body>
 </html>
