@@ -1,0 +1,28 @@
+#!/usr/bin/env perl
+use Encode qw(encode decode); use Encode::CN;
+use Spreadsheet::ParseExcel;
+use Spreadsheet::XLSX;
+use Data::Dumper qw(Dumper);
+
+BEGIN{
+	$fn = shift;
+	if ($fn=~m{xls$}i) {
+	  $excel=Spreadsheet::ParseExcel->new()->Parse($fn);
+	} else {
+	  $excel=Spreadsheet::XLSX->new($fn);
+	}
+}
+for $sheetc (0 .. $excel -> {SheetCount}-1) {
+$sheet=$excel -> {Worksheet}->[$sheetc];
+$sheetName=$sheet->{Name};
+$sheetName=decode q(utf8), $sheetName if $fn=~m{xlsx$}i;
+print "--------- SHEET:", encode(q(utf8), $sheetName), "\n";
+print $_, qq(\n) for map {
+	$r=$_; $_= encode q(utf8), join qq(\t), map {
+		$_ = $sheet->{Cells}[$r][$_]->{_Value};
+	    $_= decode q(utf8), $_ if $fn=~m{xlsx$}i;
+	    s{\x{feff}}{}g; s{(\n|\r)}{ ~ }g;
+	    $_
+	} $sheet->{MinCol} .. $sheet->{MaxCol}
+} $sheet -> {MinRow} .. $sheet -> {MaxRow}
+}
