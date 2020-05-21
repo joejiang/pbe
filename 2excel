@@ -1,0 +1,2 @@
+perl -MEncode=encode,decode -MSpreadsheet::WriteExcel -F\\t -lane 'BEGIN{$s=($f=Spreadsheet::WriteExcel->new(shift))->add_worksheet()} END{$f->close} $s->write_unicode($.-1, $_, encode q(utf16), decode q(utf8), $F[$_]) for 0..$#F' $*
+
