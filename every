@@ -1,0 +1,6 @@
+#!/usr/bin/perl -ln
+
+use List::MoreUtils qw(natatime);
+BEGIN{$l=shift}
+END{$it=natatime $l, @keep; print join qq(\t), @l while @l=$it->()}
+push @keep, $_
