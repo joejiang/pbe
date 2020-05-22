@@ -1,0 +1,1 @@
+perl -MList::MoreUtils=each_arrayref -F\\t -lne 'END{ $ea=each_arrayref(@lines); print join qq(\t), @x while @x=$ea->()} push @lines, [split qq(\t), $_, -1]'
