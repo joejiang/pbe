@@ -1,0 +1,4 @@
+#!/usr/bin/perl
+use IO::File;
+@f= map { IO::File->new($_) } @ARGV;
+print $q,qq(\n) until ($q=join (qq(\t), map { m{(.*)} && $1 } map { $_->getline } @f))=~m{^\t+$}
